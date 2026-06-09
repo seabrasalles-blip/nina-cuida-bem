@@ -151,17 +151,17 @@ export const CELLS: Cell[] = [
   {
     id: 13,
     type: "question",
-    title: "Nariz escorrendo",
-    prompt: "O nariz da Nina está escorrendo. O que ela deve usar?",
+    title: "Hora de espirrar",
+    prompt: "Nina vai espirrar. O que ela pode fazer para não espalhar microrganismos?",
     alternatives: [
-      { text: "Lenço limpo", correct: true, icon: "🤧" },
-      { text: "Manga da camiseta", correct: false, icon: "👕" },
-      { text: "A mão", correct: false, icon: "✋" },
+      { text: "Cobrir com o braço dobrado", correct: true, icon: "💪" },
+      { text: "Espirrar para cima", correct: false, icon: "⬆️" },
+      { text: "Espirrar na mão do colega", correct: false, icon: "🙅" },
     ],
     feedbackCorrect:
-      "Muito bem! Usar lenço ajuda a limpar o nariz com cuidado. Depois, é importante jogar o lenço no lixo e lavar as mãos.",
+      "Muito bem! Cobrir o nariz e a boca com o braço ajuda a proteger os colegas dos microrganismos do espirro.",
     feedbackWrong:
-      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo.",
+      "Espirrar para o ar ou nas pessoas espalha microrganismos. Cobrir com o braço protege a turma.",
   },
   {
     id: 14,
