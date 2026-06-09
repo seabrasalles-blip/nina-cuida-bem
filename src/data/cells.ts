@@ -273,15 +273,16 @@ export const CELLS: Cell[] = [
     id: 23,
     type: "question",
     title: "Antes de dormir",
-    prompt: "Antes de dormir, o que Nina deve fazer com os dentes?",
+    prompt: "Nina vai dormir. O que ajuda o corpo a descansar bem?",
     alternatives: [
-      { text: "Escovar os dentes", correct: true, icon: "🪥" },
-      { text: "Guardar o travesseiro", correct: false, icon: "🛏️" },
-      { text: "Brincar com tinta", correct: false, icon: "🎨" },
+      { text: "Tomar banho e vestir roupa limpa", correct: true, icon: "🛁" },
+      { text: "Ir suja para a cama", correct: false, icon: "🙅" },
+      { text: "Pular na cama com sapato", correct: false, icon: "👟" },
     ],
     feedbackCorrect:
-      "Boa escolha! Escovar os dentes antes de dormir ajuda a cuidar da boca durante a noite.",
-    feedbackWrong: "Antes de dormir, também cuidamos da boca. Qual é o melhor cuidado?",
+      "Boa escolha! Estar limpa e com roupa de dormir ajuda o corpo a relaxar e descansar bem.",
+    feedbackWrong:
+      "Ir suja ou com sapato para a cama leva microrganismos para o lugar de descanso. O banho ajuda o corpo a relaxar.",
   },
   {
     id: 24,
