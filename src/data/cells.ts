@@ -106,16 +106,17 @@ export const CELLS: Cell[] = [
   {
     id: 8,
     type: "question",
-    title: "Depois de comer",
-    prompt: "Depois de comer, qual cuidado ajuda os dentes?",
+    title: "Hora da aula",
+    prompt: "Nina vai começar a aula e quer se sentir bem. Que cuidado ajuda o corpo de manhã?",
     alternatives: [
-      { text: "Escovar os dentes", correct: true, icon: "🪥" },
-      { text: "Lavar os sapatos", correct: false, icon: "👟" },
-      { text: "Vestir casaco", correct: false, icon: "🧥" },
+      { text: "Estar limpa e beber água", correct: true, icon: "💧" },
+      { text: "Correr sem parar", correct: false, icon: "🏃" },
+      { text: "Pular o café da manhã", correct: false, icon: "🚫" },
     ],
     feedbackCorrect:
-      "Ótima escolha! Escovar os dentes depois das refeições ajuda a retirar restos de comida e cuidar da boca.",
-    feedbackWrong: "Pense no que usamos para cuidar dos dentes depois de comer.",
+      "Muito bem! Começar o dia com o corpo limpo e bem hidratado ajuda Nina a se sentir disposta e saudável.",
+    feedbackWrong:
+      "Pense no que ajuda o corpo a ficar bem para começar o dia: cuidar da higiene e se alimentar.",
   },
   {
     id: 9,
@@ -150,17 +151,17 @@ export const CELLS: Cell[] = [
   {
     id: 13,
     type: "question",
-    title: "Nariz escorrendo",
-    prompt: "O nariz da Nina está escorrendo. O que ela deve usar?",
+    title: "Hora de espirrar",
+    prompt: "Nina vai espirrar. O que ela pode fazer para não espalhar microrganismos?",
     alternatives: [
-      { text: "Lenço limpo", correct: true, icon: "🤧" },
-      { text: "Manga da camiseta", correct: false, icon: "👕" },
-      { text: "A mão", correct: false, icon: "✋" },
+      { text: "Cobrir com o braço dobrado", correct: true, icon: "💪" },
+      { text: "Espirrar para cima", correct: false, icon: "⬆️" },
+      { text: "Espirrar na mão do colega", correct: false, icon: "🙅" },
     ],
     feedbackCorrect:
-      "Muito bem! Usar lenço ajuda a limpar o nariz com cuidado. Depois, é importante jogar o lenço no lixo e lavar as mãos.",
+      "Muito bem! Cobrir o nariz e a boca com o braço ajuda a proteger os colegas dos microrganismos do espirro.",
     feedbackWrong:
-      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo.",
+      "Espirrar para o ar ou nas pessoas espalha microrganismos. Cobrir com o braço protege a turma.",
   },
   {
     id: 14,
@@ -194,17 +195,17 @@ export const CELLS: Cell[] = [
   {
     id: 17,
     type: "question",
-    title: "Depois do banheiro",
-    prompt: "Depois de usar o banheiro, o que Nina deve fazer?",
+    title: "Antes da fruta",
+    prompt: "Antes de comer a fruta, Nina percebe que as mãos estão sujas. O que fazer?",
     alternatives: [
-      { text: "Lavar as mãos com sabonete", correct: true, icon: "🧼" },
-      { text: "Brincar com a bola", correct: false, icon: "⚽" },
-      { text: "Colocar o casaco", correct: false, icon: "🧥" },
+      { text: "Lavar com água e sabão", correct: true, icon: "🧼" },
+      { text: "Morder a fruta mesmo assim", correct: false, icon: "🍎" },
+      { text: "Passar a mão no cabelo", correct: false, icon: "💁" },
     ],
     feedbackCorrect:
-      "Isso mesmo! Depois de usar o banheiro, lavar as mãos com sabonete ajuda a proteger a saúde.",
+      "Isso mesmo! Lavar as mãos antes de comer a fruta tira microrganismos que podem fazer mal ao corpo.",
     feedbackWrong:
-      "Observe o momento: Nina saiu do banheiro. Qual cuidado ajuda a proteger a saúde?",
+      "Comer com a mão suja pode levar microrganismos para a boca. Lavar as mãos protege a saúde.",
   },
   {
     id: 18,
@@ -272,15 +273,16 @@ export const CELLS: Cell[] = [
     id: 23,
     type: "question",
     title: "Antes de dormir",
-    prompt: "Antes de dormir, o que Nina deve fazer com os dentes?",
+    prompt: "Nina vai dormir. O que ajuda o corpo a descansar bem?",
     alternatives: [
-      { text: "Escovar os dentes", correct: true, icon: "🪥" },
-      { text: "Guardar o travesseiro", correct: false, icon: "🛏️" },
-      { text: "Brincar com tinta", correct: false, icon: "🎨" },
+      { text: "Tomar banho e vestir roupa limpa", correct: true, icon: "🛁" },
+      { text: "Ir suja para a cama", correct: false, icon: "🙅" },
+      { text: "Pular na cama com sapato", correct: false, icon: "👟" },
     ],
     feedbackCorrect:
-      "Boa escolha! Escovar os dentes antes de dormir ajuda a cuidar da boca durante a noite.",
-    feedbackWrong: "Antes de dormir, também cuidamos da boca. Qual é o melhor cuidado?",
+      "Boa escolha! Estar limpa e com roupa de dormir ajuda o corpo a relaxar e descansar bem.",
+    feedbackWrong:
+      "Ir suja ou com sapato para a cama leva microrganismos para o lugar de descanso. O banho ajuda o corpo a relaxar.",
   },
   {
     id: 24,

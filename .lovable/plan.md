@@ -1,42 +1,53 @@
-# Revisão pedagógica — Corpo Bem Cuidado
+## Contexto
 
-Foco: substituir perguntas mecânicas ("escolha o objeto X") por situações cotidianas da Nina, mantendo todo o restante (tabuleiro, dado 1–3, 30 casas, layout 1200×675, sem scroll, feedbacks grandes).
+As substituições de texto das casas 2, 3, 7, 11, 14, 18, 21 e 24 já foram aplicadas em `src/data/cells.ts` na rodada anterior, junto com o renome do chip para "Cuidado do momento". Esta rodada foca em fechar o que ficou pendente para cumprir a diretriz pedagógica por completo.
 
-## 1. `src/data/cells.ts` — reescrever conteúdo das casas
+## Pendências identificadas
 
-Aplicar exatamente os textos fornecidos pelo usuário:
+1. **Casa 21 — múltipla seleção real**
+   O enunciado pergunta "Quais itens ajudam nesse cuidado?" (plural), mas o `ObjectCard` atual fecha no primeiro clique. A criança não consegue marcar Sabonete + Shampoo + Toalha juntos. Precisa virar seleção múltipla com confirmação.
 
-- **Casa 2** (pergunta): "Nina acordou e vai começar o dia. O que ela pode fazer para cuidar do rosto?" + 3 alternativas (Lavar o rosto ✓, Pintar a parede, Calçar as meias) + feedbacks novos.
-- **Casa 3** (era objeto "toalha"): vira situação "Nina lavou o rosto. O que ela deve fazer depois?" — 3 alternativas (Secar com toalha limpa ✓, Secar na camiseta, Sair correndo molhada).
-- **Casa 7**: "Nina terminou o café da manhã. Qual cuidado ajuda a limpar os dentes?" — 3 alternativas (Escovar ✓, Lavar sapatos, Pentear mochila).
-- **Casa 11**: "Nina brincou no parque e ficou com as mãos sujas. O que ela deve fazer antes do lanche?" — 4 alternativas (Lavar com água e sabão ✓, Limpar na roupa, Comer mesmo assim, Esconder as mãos).
-- **Casa 14**: "O nariz da Nina está escorrendo. Como ela pode se cuidar e cuidar das pessoas ao redor?" — 4 alternativas (Lenço limpo ✓, Manga da camiseta, Mão, Papel do chão).
-- **Casa 18**: "Nina acabou de usar o banheiro. Qual cuidado ela precisa fazer agora?" — 4 alternativas (Lavar mãos ✓, Brincar com bola, Guardar travesseiro, Colocar casaco).
-- **Casa 21** (kit banho): "Depois de correr e suar bastante, Nina vai tomar banho. Quais itens ajudam nesse cuidado?" — apresentar múltiplos itens, corretos: Sabonete, Shampoo, Toalha; incorretos: Bola, Lápis, Colher. Feedbacks novos.
-- **Casa 24**: "Antes de dormir, Nina precisa cuidar da boca. O que ela deve fazer?" — 4 alternativas (Escovar dentes ✓, Comer doce e dormir, Esquecer os dentes, Só lavar mãos).
+2. **Casas duplicadas/redundantes (8, 13, 17, 23)**
+   Após a reescrita, surgiram pares quase idênticos:
+   - Casa 7 (object) e Casa 8 (question) — ambas "depois de comer, escovar os dentes".
+   - Casa 13 (question) e Casa 14 (object) — ambas "nariz escorrendo, usar lenço".
+   - Casa 17 (question) e Casa 18 (object) — ambas "depois do banheiro, lavar as mãos".
+   - Casa 23 (question) e Casa 24 (object) — ambas "antes de dormir, escovar os dentes".
 
-Todas mantêm o tipo existente (`question` ou `object`) — apenas o conteúdo muda. Casa 21 continua usando `object` (seleção múltipla de itens).
+   Cada par cobre o mesmo hábito duas vezes em poucas casas, o que enfraquece a progressão. Vou reescrever 8, 13, 17 e 23 com situações diferentes do mesmo eixo (higiene), mantendo o tipo `question` e preservando 30 casas no total.
 
-## 2. Renomear rótulo do tipo "Objeto certo"
+3. **Enunciados mais naturais nas casas comuns/conversa** (ajustes leves de linguagem em casas como 4, 9, 15, 19, 25) para alinhar ao tom pedido — sem mudar mecânica.
 
-Em `src/components/game/cards/ObjectCard.tsx`, trocar o chip "Objeto certo" por **"Cuidado do momento"**. Também ajustar legenda em `BoardGame.tsx` se houver referência (atualmente diz só "Objeto" — trocar para "Cuidado do momento").
+## Mudanças propostas
 
-## 3. Casa 21 — comportamento de múltipla seleção
+### `src/data/cells.ts`
 
-A casa 21 atualmente usa `ObjectCard` (clique único = correto/errado). Como o novo enunciado pede para escolher itens (plural), há duas opções:
+- **Casa 8** → "Nina vai começar a aula e quer se sentir bem. Que cuidado ajuda o corpo de manhã?" (alt.: tomar um copo de água e estar limpo ✓ / correr sem parar / pular o café).
+- **Casa 13** → "Nina vai espirrar. O que ela pode fazer para não espalhar microrganismos?" (alt.: cobrir com o braço dobrado ✓ / espirrar para cima / espirrar na mão do colega).
+- **Casa 17** → "Antes de comer a fruta, Nina percebe que as mãos estão sujas. O que fazer?" (alt.: lavar com água e sabão ✓ / morder a fruta com casca suja / passar a mão no cabelo).
+- **Casa 23** → "Nina vai dormir. O que ajuda o corpo a descansar bem?" (alt.: tomar banho e vestir roupa limpa ✓ / ir suja para a cama / pular na cama com sapato).
 
-- **A (mínima):** manter clique único, marcando como corretos quaisquer dos 3 itens de banho; criança acerta ao tocar em um item de banho. Simples e mantém o componente.
-- **B (mais fiel):** criar variante multi-select no `ObjectCard` com botão "Confirmar" — mais código.
+Todas com feedbacks explicativos no mesmo padrão (por que esse cuidado ajuda a saúde).
 
-Recomendo **A** para esta iteração (preserva mecânica atual; enunciado já educa sobre "quais itens"); posso evoluir para B numa próxima rodada se desejado.
+### `src/components/game/cards/ObjectCard.tsx`
+
+Adicionar modo múltipla seleção quando a casa tem mais de uma alternativa correta:
+- Estado local `selected: Set<index>`.
+- Clique alterna seleção (borda e check visíveis).
+- Botão "Confirmar" no rodapé.
+- Acerto = conjunto selecionado é exatamente o conjunto das alternativas `correct: true` (Sabonete, Shampoo, Toalha — sem nenhum incorreto marcado).
+- Quando há apenas uma alternativa correta, mantém o comportamento atual (clique único).
+
+### Ajustes leves de linguagem
+
+Reescrever os `body` das casas 4, 9, 15, 19, 25 para soarem mais como conversa com a criança (frases curtas e diretas), sem mudar a mecânica nem o tipo.
 
 ## Fora do escopo
 
-- Não mexer em mecânica de dado, movimentação, modais ou estilo geral.
-- Casas comuns, conversas, avanços/retornos e síntese permanecem como estão.
+- Tabuleiro, dado 1–3, Nina, número de casas, layout 1200×675, ausência de scroll, telas de início/instruções/final, modais e estilo geral permanecem intactos.
+- Casas de avanço/retorno (6, 12, 16, 22, 28), match (26), habits (27), synthesis (29) e finish (30) não mudam.
 
-## Arquivos alterados
+## Arquivos afetados
 
-- `src/data/cells.ts` (conteúdo das casas 2, 3, 7, 11, 14, 18, 21, 24)
-- `src/components/game/cards/ObjectCard.tsx` (rótulo do chip)
-- `src/components/game/BoardGame.tsx` (texto da legenda)
+- `src/data/cells.ts` — reescreve casas 8, 13, 17, 23 e ajusta texto de 4, 9, 15, 19, 25.
+- `src/components/game/cards/ObjectCard.tsx` — implementa múltipla seleção condicional.
