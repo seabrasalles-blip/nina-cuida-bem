@@ -106,16 +106,17 @@ export const CELLS: Cell[] = [
   {
     id: 8,
     type: "question",
-    title: "Depois de comer",
-    prompt: "Depois de comer, qual cuidado ajuda os dentes?",
+    title: "Hora da aula",
+    prompt: "Nina vai começar a aula e quer se sentir bem. Que cuidado ajuda o corpo de manhã?",
     alternatives: [
-      { text: "Escovar os dentes", correct: true, icon: "🪥" },
-      { text: "Lavar os sapatos", correct: false, icon: "👟" },
-      { text: "Vestir casaco", correct: false, icon: "🧥" },
+      { text: "Estar limpa e beber água", correct: true, icon: "💧" },
+      { text: "Correr sem parar", correct: false, icon: "🏃" },
+      { text: "Pular o café da manhã", correct: false, icon: "🚫" },
     ],
     feedbackCorrect:
-      "Ótima escolha! Escovar os dentes depois das refeições ajuda a retirar restos de comida e cuidar da boca.",
-    feedbackWrong: "Pense no que usamos para cuidar dos dentes depois de comer.",
+      "Muito bem! Começar o dia com o corpo limpo e bem hidratado ajuda Nina a se sentir disposta e saudável.",
+    feedbackWrong:
+      "Pense no que ajuda o corpo a ficar bem para começar o dia: cuidar da higiene e se alimentar.",
   },
   {
     id: 9,
