@@ -92,16 +92,16 @@ export const CELLS: Cell[] = [
   {
     id: 7,
     type: "object",
-    title: "Escolha o objeto",
-    prompt: "Escolha a escova de dentes.",
+    title: "Depois do café",
+    prompt: "Nina terminou o café da manhã. Qual cuidado ajuda a limpar os dentes?",
     alternatives: [
-      { text: "Escova de dentes", correct: true, icon: "🪥" },
-      { text: "Caneta", correct: false, icon: "🖊️" },
-      { text: "Garfo", correct: false, icon: "🍴" },
-      { text: "Chave", correct: false, icon: "🔑" },
+      { text: "Escovar os dentes", correct: true, icon: "🪥" },
+      { text: "Lavar os sapatos", correct: false, icon: "👟" },
+      { text: "Pentear a mochila", correct: false, icon: "🎒" },
     ],
-    feedbackCorrect: "Boa! A escova de dentes ajuda a cuidar da boca.",
-    feedbackWrong: "Procure o objeto que usamos para limpar os dentes.",
+    feedbackCorrect:
+      "Ótima escolha! Escovar os dentes ajuda a retirar restos de comida e cuidar da boca.",
+    feedbackWrong: "Pense no que usamos para cuidar da boca depois de comer.",
   },
   {
     id: 8,
