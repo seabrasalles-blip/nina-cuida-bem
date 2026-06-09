@@ -17,9 +17,11 @@ type Stage =
   | { kind: "idle" }
   | { kind: "rolling" }
   | { kind: "awaitingDrag"; steps: number; origin: number }
+  | { kind: "transition" }
   | { kind: "card" }
   | { kind: "feedback"; correct: boolean; text: string }
   | { kind: "awaitingSpecialDrag"; delta: number; origin: number };
+
 
 type Toast = { id: number; variant: "success" | "hint"; text: string };
 
