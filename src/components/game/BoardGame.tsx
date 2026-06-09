@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CELLS } from "@/data/cells";
 import { Board } from "./Board";
 import { Dice } from "./Dice";
+import { Nina } from "./Nina";
 import { NinaSpeech } from "./NinaSpeech";
 import { MoveToast } from "./MoveToast";
 import { QuestionCard } from "./cards/QuestionCard";
@@ -21,7 +22,6 @@ type Stage =
   | { kind: "card" }
   | { kind: "feedback"; correct: boolean; text: string }
   | { kind: "awaitingSpecialDrag"; delta: number; origin: number };
-
 
 type Toast = { id: number; variant: "success" | "hint"; text: string };
 
@@ -87,7 +87,6 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
     }, 80);
   };
 
-  // Drop handler used during awaitingDrag and awaitingSpecialDrag
   const handleDrop = (cellId: number | null) => {
     if (stage.kind === "awaitingDrag") {
       const target = Math.min(30, stage.origin + stage.steps);
@@ -96,7 +95,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         setStage({ kind: "transition" });
         showToast(
           "success",
-          "Muito bem! Você contou as casas e levou Nina ao lugar certo.",
+          "Muito bem! Você contou as casas e levou a Nina ao lugar certo.",
           1300,
         );
         setTimeout(() => openCardForCell(target), 900);
@@ -105,7 +104,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         const n = stage.steps;
         showToast(
           "hint",
-          `Vamos contar de novo? O dado mostrou ${n}. Arraste Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`,
+          `Vamos contar de novo? O dado mostrou ${n}. Arraste ${n} ${n === 1 ? "casa" : "casas"} para frente.`,
           2200,
         );
       }
@@ -114,7 +113,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
       if (cellId === target) {
         setPosition(target);
         setStage({ kind: "transition" });
-        showToast("success", "Boa! Nina chegou ao lugar certo.", 1200);
+        showToast("success", "Boa! A Nina chegou ao lugar certo.", 1200);
         setTimeout(() => {
           if (target >= 30) {
             onFinish();
@@ -129,7 +128,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         const dir = d > 0 ? "para frente" : "para trás";
         showToast(
           "hint",
-          `Arraste Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`,
+          `Arraste ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`,
           2200,
         );
       }
@@ -153,7 +152,6 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
   };
 
   const handleSpecial = () => {
-    // Special advance/retreat: close card, go to drag phase
     const delta = cell.delta ?? 0;
     if (delta === 0) {
       setStage({ kind: "idle" });
@@ -245,28 +243,32 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         draggable: true,
       };
     }
-    return { highlightedCells: [] as number[], targetCell: undefined, draggable: false };
+    return {
+      highlightedCells: [] as number[],
+      targetCell: undefined,
+      draggable: false,
+    };
   }, [stage]);
 
   const orientationText = (() => {
     if (stage.kind === "awaitingDrag") {
       const n = stage.steps;
-      return `O dado mostrou ${n}. Arraste Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`;
+      return `O dado mostrou ${n}. Arraste a Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`;
     }
     if (stage.kind === "awaitingSpecialDrag") {
       const d = stage.delta;
       const abs = Math.abs(d);
       const dir = d > 0 ? "para frente" : "para trás";
-      return `Arraste Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`;
+      return `Arraste a Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`;
     }
     if (stage.kind === "rolling") return "Sorteando o dado...";
     return "Toque no dado e vamos juntas!";
   })();
 
   return (
-    <div className="w-full h-full bg-gradient-to-br from-sky-50 to-amber-50 grid grid-cols-[1fr_320px] gap-4 p-5 relative">
-      {/* Board */}
-      <div className="relative bg-white/70 rounded-2xl border-2 border-sky-200 shadow-inner p-3">
+    <div className="w-full h-full bg-room grid grid-cols-[1fr_320px] gap-4 p-5 relative">
+      {/* Board panel */}
+      <div className="relative bg-white/85 rounded-[28px] border-[4px] border-white shadow-toy p-3 overflow-hidden">
         <Board
           position={position}
           highlightedCells={highlightedCells}
@@ -277,49 +279,76 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         />
         <AnimatePresence>
           {toast && (
-            <MoveToast key={toast.id} text={toast.text} variant={toast.variant} />
+            <MoveToast
+              key={toast.id}
+              text={toast.text}
+              variant={toast.variant}
+            />
           )}
         </AnimatePresence>
       </div>
 
-      {/* Side panel */}
+      {/* Sidebar */}
       <div className="flex flex-col gap-3">
-        <div className="bg-white rounded-2xl border-2 border-sky-200 p-3 shadow text-center">
-          <p className="text-xs uppercase tracking-wide text-slate-500 font-bold">Casa atual</p>
-          <p className="text-3xl font-extrabold text-sky-700">{position}</p>
-          <p className="text-sm text-slate-600">{cell.title}</p>
+        {/* Current cell */}
+        <div className="bg-white rounded-3xl border-[3px] border-game-sky-soft p-4 shadow-toy text-center relative overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-2 bg-game-sky" />
+          <p className="font-display text-xs uppercase tracking-wide text-game-ink-soft font-bold">
+            Casa atual
+          </p>
+          <p className="font-display text-4xl font-bold text-game-sky leading-none mt-1">
+            {position}
+          </p>
+          <p className="text-sm text-game-ink font-semibold mt-1">
+            {cell.title}
+          </p>
         </div>
 
-        <div className="bg-white rounded-2xl border-2 border-orange-200 p-4 shadow flex flex-col items-center gap-3">
+        {/* Dice */}
+        <div className="bg-white rounded-3xl border-[3px] border-orange-200 p-4 shadow-toy flex flex-col items-center gap-3 relative overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-2 bg-game-orange" />
           <Dice value={dice} rolling={stage.kind === "rolling"} />
           <button
             disabled={stage.kind !== "idle"}
             onClick={rollDice}
-            className="w-full px-4 py-3 rounded-full bg-orange-500 hover:bg-orange-600 disabled:bg-slate-300 text-white text-base font-bold shadow"
+            className="font-display w-full px-4 py-3 rounded-full bg-game-orange hover:brightness-110 disabled:bg-slate-300 disabled:shadow-none disabled:cursor-not-allowed text-white text-base font-bold shadow-toy-orange active:translate-y-1 transition"
           >
             Jogar dado
           </button>
         </div>
 
-        <NinaSpeech text={orientationText} />
+        {/* Nina speech */}
+        <div className="flex items-end gap-2">
+          <div className="shrink-0">
+            <Nina size={70} mood="happy" />
+          </div>
+          <div className="flex-1">
+            <NinaSpeech text={orientationText} />
+          </div>
+        </div>
 
-        <div className="bg-white/80 rounded-2xl border-2 border-slate-200 p-3 text-xs space-y-1.5 mt-auto">
-          <p className="font-bold text-slate-600 uppercase tracking-wide text-[10px]">Legenda</p>
-          <LegendItem color="#bae6fd" border="#0284c7" label="Pergunta" />
-          <LegendItem color="#bbf7d0" border="#16a34a" label="Cuidado do momento" />
-          <LegendItem color="#fde68a" border="#d97706" label="Conversa" />
-          <LegendItem color="#fed7aa" border="#ea580c" label="Avanço / Cuidado especial" />
+        {/* Legend */}
+        <div className="bg-white/90 rounded-3xl border-[3px] border-game-sky-soft p-3 mt-auto shadow-card-soft">
+          <p className="font-display text-[11px] uppercase tracking-wide text-game-ink-soft font-bold mb-2">
+            Legenda
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            <LegendChip color="#3fa9f5" label="Pergunta" />
+            <LegendChip color="#7ed957" label="Cuidado do momento" />
+            <LegendChip color="#ffd93d" label="Conversa" />
+            <LegendChip color="#ff8c42" label="Especial" />
+          </div>
         </div>
       </div>
 
-      {/* Modal layer */}
+      {/* Modal */}
       <AnimatePresence>
         {(stage.kind === "card" || stage.kind === "feedback") && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-6 z-20"
+            className="absolute inset-0 bg-slate-900/45 backdrop-blur-sm flex items-center justify-center p-6 z-20"
           >
             {stage.kind === "card" && renderCard()}
             {stage.kind === "feedback" && (
@@ -336,14 +365,17 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
   );
 }
 
-function LegendItem({ color, border, label }: { color: string; border: string; label: string }) {
+function LegendChip({ color, label }: { color: string; label: string }) {
   return (
-    <div className="flex items-center gap-2">
+    <span
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border-2 text-[11px] font-bold text-game-ink"
+      style={{ borderColor: color }}
+    >
       <span
-        className="w-4 h-4 rounded-full border-2"
-        style={{ background: color, borderColor: border }}
+        className="w-2.5 h-2.5 rounded-full"
+        style={{ background: color }}
       />
-      <span className="text-slate-700">{label}</span>
-    </div>
+      {label}
+    </span>
   );
 }
