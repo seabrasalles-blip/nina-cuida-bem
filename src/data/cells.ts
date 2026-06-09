@@ -127,16 +127,18 @@ export const CELLS: Cell[] = [
   {
     id: 11,
     type: "object",
-    title: "Depois de brincar",
-    prompt: "Depois de brincar, escolha o sabonete.",
+    title: "Antes do lanche",
+    prompt: "Nina brincou no parque e ficou com as mãos sujas. O que ela deve fazer antes do lanche?",
     alternatives: [
-      { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Boné", correct: false, icon: "🧢" },
-      { text: "Lápis", correct: false, icon: "✏️" },
-      { text: "Bola", correct: false, icon: "⚽" },
+      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
+      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
+      { text: "Comer mesmo assim", correct: false, icon: "🍞" },
+      { text: "Esconder as mãos", correct: false, icon: "🙈" },
     ],
-    feedbackCorrect: "Muito bem! O sabonete ajuda a limpar as mãos sujas da brincadeira.",
-    feedbackWrong: "Qual objeto ajuda a tirar a sujeira das mãos com água?",
+    feedbackCorrect:
+      "Muito bem! Lavar as mãos antes de comer ajuda a tirar sujeiras e microrganismos que podem fazer mal à saúde.",
+    feedbackWrong:
+      "Antes de comer, precisamos cuidar das mãos. Limpar na roupa ou comer com as mãos sujas não ajuda a proteger a saúde.",
   },
   {
     id: 12,
