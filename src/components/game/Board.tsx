@@ -22,31 +22,31 @@ export function getCellPosition(id: number) {
 }
 
 const COLORS: Record<CellType, string> = {
-  start: "#fbbf24",
-  finish: "#fbbf24",
-  common: "#f1f5f9",
-  question: "#bae6fd",
-  object: "#bbf7d0",
-  conversation: "#fde68a",
-  advance: "#fed7aa",
-  retreat: "#fed7aa",
-  match: "#fdba74",
-  habits: "#fdba74",
-  synthesis: "#fdba74",
+  start: "#ffd93d",
+  finish: "#ff8c42",
+  common: "#fff8ee",
+  question: "#3fa9f5",
+  object: "#7ed957",
+  conversation: "#ffd93d",
+  advance: "#ff8c42",
+  retreat: "#ff8c42",
+  match: "#ff8c42",
+  habits: "#ff8c42",
+  synthesis: "#ff8c42",
 };
 
 const BORDERS: Record<CellType, string> = {
-  start: "#d97706",
-  finish: "#d97706",
-  common: "#cbd5e1",
-  question: "#0284c7",
-  object: "#16a34a",
-  conversation: "#d97706",
-  advance: "#ea580c",
-  retreat: "#ea580c",
-  match: "#c2410c",
-  habits: "#c2410c",
-  synthesis: "#c2410c",
+  start: "#c08600",
+  finish: "#c75417",
+  common: "#e3d9c5",
+  question: "#1f78c1",
+  object: "#3fa53f",
+  conversation: "#c08600",
+  advance: "#c75417",
+  retreat: "#c75417",
+  match: "#c75417",
+  habits: "#c75417",
+  synthesis: "#c75417",
 };
 
 const ICONS: Partial<Record<CellType, string>> = {
@@ -55,8 +55,8 @@ const ICONS: Partial<Record<CellType, string>> = {
   question: "?",
   object: "🧼",
   conversation: "💬",
-  advance: "➡️",
-  retreat: "↩️",
+  advance: "✨",
+  retreat: "🔄",
   match: "🔗",
   habits: "⭐",
   synthesis: "📘",
@@ -75,7 +75,6 @@ export function Board({
   targetCell?: number;
   draggable?: boolean;
   onDrop?: (cellId: number | null) => void;
-  /** Increment this number to make Nina snap back to `position`. */
   rejectSignal?: number;
 }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -83,7 +82,6 @@ export function Board({
   const [drag, setDrag] = useState<{ x: number; y: number } | null>(null);
   const [selected, setSelected] = useState(false);
 
-  // Snap back when rejectSignal changes
   useEffect(() => {
     setDrag(null);
   }, [rejectSignal, position]);
@@ -119,7 +117,6 @@ export function Board({
     setSelected(false);
   };
 
-
   const onPointerMove = (e: React.PointerEvent<SVGGElement>) => {
     if (!draggable || drag === null) return;
     const local = toLocal(e.clientX, e.clientY);
@@ -146,31 +143,99 @@ export function Board({
   const isHighlighted = (id: number) => highlightedCells.includes(id);
   const isTarget = (id: number) => targetCell === id;
 
+  const trailPoints = CELLS.map((c) => {
+    const p = getCellPosition(c.id);
+    return `${p.x},${p.y}`;
+  }).join(" ");
+
   return (
     <svg
       ref={svgRef}
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       className="w-full h-full touch-none"
     >
-      {/* trail */}
+      <defs>
+        <radialGradient id="boardBg" cx="50%" cy="0%" r="100%">
+          <stop offset="0%" stopColor="#e8f4ff" />
+          <stop offset="100%" stopColor="#fff8ee" />
+        </radialGradient>
+        <pattern
+          id="dots"
+          x="0"
+          y="0"
+          width="32"
+          height="32"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="2" cy="2" r="1.5" fill="#3fa9f5" opacity="0.12" />
+        </pattern>
+        <filter id="cellShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="3" stdDeviation="2" floodOpacity="0.18" />
+        </filter>
+        <radialGradient id="ninaPin" cx="40%" cy="40%" r="60%">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#cfeaff" />
+        </radialGradient>
+      </defs>
+
+      {/* Background */}
+      <rect width={WIDTH} height={HEIGHT} rx="20" fill="url(#boardBg)" />
+      <rect width={WIDTH} height={HEIGHT} rx="20" fill="url(#dots)" />
+
+      {/* Decorative room elements */}
+      <g opacity="0.5">
+        {/* window */}
+        <rect x="22" y="20" width="90" height="64" rx="8" fill="#fff" stroke="#bcd9f0" strokeWidth="2" />
+        <line x1="67" y1="20" x2="67" y2="84" stroke="#bcd9f0" strokeWidth="2" />
+        <line x1="22" y1="52" x2="112" y2="52" stroke="#bcd9f0" strokeWidth="2" />
+        <text x="86" y="48" fontSize="20">☁️</text>
+        {/* shelf */}
+        <rect x={WIDTH - 130} y="30" width="110" height="6" rx="3" fill="#e0c9a6" />
+        <text x={WIDTH - 120} y="28" fontSize="18">🧴</text>
+        <text x={WIDTH - 92} y="28" fontSize="18">🪥</text>
+        <text x={WIDTH - 64} y="28" fontSize="18">🧼</text>
+      </g>
+
+      {/* Trail shadow */}
       <polyline
-        points={CELLS.map((c) => {
-          const p = getCellPosition(c.id);
-          return `${p.x},${p.y}`;
-        }).join(" ")}
+        points={trailPoints}
         fill="none"
-        stroke="#fcd34d"
-        strokeWidth="14"
+        stroke="#e8c34a"
+        strokeWidth="22"
         strokeLinecap="round"
         strokeLinejoin="round"
-        opacity="0.5"
-        strokeDasharray="2 10"
+        opacity="0.55"
+        transform="translate(0, 4)"
+      />
+      {/* Trail */}
+      <polyline
+        points={trailPoints}
+        fill="none"
+        stroke="#ffd93d"
+        strokeWidth="20"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.9"
+      />
+      {/* Trail dashes */}
+      <polyline
+        points={trailPoints}
+        fill="none"
+        stroke="#fff"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeDasharray="2 14"
+        opacity="0.95"
       />
 
       {CELLS.map((c) => {
         const p = getCellPosition(c.id);
         const highlighted = isHighlighted(c.id);
         const target = isTarget(c.id);
+        const fill = COLORS[c.type];
+        const stroke = BORDERS[c.type];
+        const isLight = c.type === "common";
         return (
           <g
             key={c.id}
@@ -181,51 +246,72 @@ export function Board({
               <motion.circle
                 cx={p.x}
                 cy={p.y}
-                r={36}
+                r={40}
                 fill="none"
-                stroke={target ? "#f59e0b" : "#22d3ee"}
+                stroke={target ? "#ef6b1e" : "#22d3ee"}
                 strokeWidth={target ? 5 : 3}
                 animate={{
                   opacity: [0.4, 1, 0.4],
-                  r: target ? [38, 44, 38] : [36, 40, 36],
+                  r: target ? [42, 48, 42] : [40, 44, 40],
                 }}
                 transition={{ duration: 1.2, repeat: Infinity }}
               />
             )}
+            {/* coin shadow */}
+            <circle cx={p.x} cy={p.y + 4} r={34} fill="#1f2a44" opacity="0.18" />
+            {/* base */}
             <circle
               cx={p.x}
               cy={p.y}
-              r={32}
-              fill={COLORS[c.type]}
-              stroke={BORDERS[c.type]}
-              strokeWidth={3}
+              r={34}
+              fill={fill}
+              stroke={stroke}
+              strokeWidth={4}
+              filter="url(#cellShadow)"
             />
+            {/* icon */}
             <text
               x={p.x}
-              y={p.y - 6}
+              y={p.y + 8}
               textAnchor="middle"
-              fontSize="11"
-              fontWeight="700"
-              fill="#1e293b"
-            >
-              {c.id}
-            </text>
-            <text
-              x={p.x}
-              y={p.y + 12}
-              textAnchor="middle"
-              fontSize="14"
-              fill="#1e293b"
+              fontSize="22"
+              fill={isLight ? "#1f2a44" : "#fff"}
             >
               {ICONS[c.type] ?? ""}
             </text>
+            {/* number badge */}
+            <g>
+              <circle
+                cx={p.x + 22}
+                cy={p.y - 22}
+                r="11"
+                fill="#fff"
+                stroke={stroke}
+                strokeWidth="2"
+              />
+              <text
+                x={p.x + 22}
+                y={p.y - 18}
+                textAnchor="middle"
+                fontSize="11"
+                fontWeight="800"
+                fill="#1f2a44"
+                fontFamily="Fredoka, system-ui"
+              >
+                {c.id}
+              </text>
+            </g>
           </g>
         );
       })}
 
       {/* Nina token */}
       <motion.g
-        animate={drag ? { x: ninaPos.x, y: ninaPos.y } : { x: ninaBase.x, y: ninaBase.y }}
+        animate={
+          drag
+            ? { x: ninaPos.x, y: ninaPos.y }
+            : { x: ninaBase.x, y: ninaBase.y }
+        }
         transition={
           drag
             ? { duration: 0 }
@@ -248,29 +334,46 @@ export function Board({
           {(draggable || selected) && (
             <motion.circle
               cx={0}
-              cy={-6}
-              r={32}
+              cy={-10}
+              r={38}
               fill="none"
-              stroke="#0ea5e9"
+              stroke="#3fa9f5"
               strokeWidth={3}
               initial={{ opacity: 0 }}
-              animate={{ opacity: [0.3, 0.8, 0.3] }}
+              animate={{ opacity: [0.3, 0.85, 0.3] }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2, repeat: Infinity }}
             />
           )}
         </AnimatePresence>
+        {/* pin shadow */}
+        <ellipse cx={0} cy={22} rx={20} ry={5} fill="#1f2a44" opacity="0.25" />
+        {/* pin */}
         <circle
           cx={0}
-          cy={-6}
-          r={26}
-          fill="#fff"
-          stroke={selected ? "#f59e0b" : "#0ea5e9"}
-          strokeWidth={3}
+          cy={-10}
+          r={30}
+          fill="url(#ninaPin)"
+          stroke={selected ? "#ef6b1e" : "#3fa9f5"}
+          strokeWidth={4}
         />
-        <text x={0} y={2} textAnchor="middle" fontSize="28">
-          👧
-        </text>
+        {/* mini Nina face */}
+        <g transform="translate(-22, -32)">
+          <ellipse cx="22" cy="14" rx="20" ry="18" fill="#3a1f12" />
+          <ellipse cx="22" cy="16" rx="16" ry="17" fill="#fdd9b5" />
+          <path d="M5 8 Q22 -6 39 8 Q30 4 22 6 Q14 4 5 8 Z" fill="#3a1f12" />
+          <circle cx="16" cy="18" r="2.2" fill="#1f1410" />
+          <circle cx="28" cy="18" r="2.2" fill="#1f1410" />
+          <circle cx="14" cy="22" r="2" fill="#ff8da1" opacity="0.6" />
+          <circle cx="30" cy="22" r="2" fill="#ff8da1" opacity="0.6" />
+          <path
+            d="M16 26 Q22 30 28 26"
+            stroke="#7a3a2a"
+            strokeWidth="1.8"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </g>
       </motion.g>
     </svg>
   );

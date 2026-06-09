@@ -9,15 +9,31 @@ const PIPS: Record<number, [number, number][]> = {
 export function Dice({ value, rolling }: { value: number; rolling: boolean }) {
   return (
     <motion.div
-      animate={rolling ? { rotate: [0, 360, 720], scale: [1, 1.1, 1] } : { rotate: 0 }}
+      animate={
+        rolling
+          ? { rotate: [0, 360, 720], scale: [1, 1.12, 1] }
+          : { rotate: 0, scale: 1 }
+      }
       transition={{ duration: 0.6 }}
-      className="w-24 h-24 bg-white rounded-2xl border-4 border-orange-400 shadow-lg relative"
+      className="w-28 h-28 rounded-3xl relative shadow-toy"
+      style={{
+        background:
+          "linear-gradient(180deg, #ffffff 0%, #fff4e0 100%)",
+        border: "5px solid var(--game-orange)",
+      }}
     >
       {PIPS[value]?.map(([x, y], i) => (
         <div
           key={i}
-          className="absolute w-4 h-4 rounded-full bg-orange-500"
-          style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-50%)" }}
+          className="absolute w-5 h-5 rounded-full"
+          style={{
+            left: `${x}%`,
+            top: `${y}%`,
+            transform: "translate(-50%,-50%)",
+            background:
+              "radial-gradient(circle at 35% 35%, #ffb96a, #ef6b1e)",
+            boxShadow: "inset 0 -2px 3px rgba(0,0,0,0.2)",
+          }}
         />
       ))}
     </motion.div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { CardShell, PrimaryButton } from "./CardShell";
 
 const OPTIONS = [
   { id: "a", text: "Lavar as mãos", icon: "🧼", good: true },
@@ -27,59 +28,58 @@ export function HabitsChallengeCard({
 
   const confirm = () => {
     if (selected.size < 3) return;
-    const goodCount = [...selected].filter((id) => OPTIONS.find((o) => o.id === id)!.good).length;
+    const goodCount = [...selected].filter(
+      (id) => OPTIONS.find((o) => o.id === id)!.good,
+    ).length;
     const badCount = selected.size - goodCount;
     onFinish(goodCount >= 3 && badCount === 0);
   };
 
   return (
-    <motion.div
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      className="bg-white rounded-2xl p-6 shadow-2xl border-4 border-orange-300 max-w-3xl w-full"
+    <CardShell
+      tone="orange"
+      tag="Desafio · Hábitos"
+      cellId={0}
+      prompt="Escolha três hábitos que ajudam a cuidar da saúde."
+      footer={
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-bold text-game-ink-soft">
+            Selecionados: {selected.size} de 3
+          </span>
+          <PrimaryButton disabled={selected.size < 3} onClick={confirm}>
+            Confirmar
+          </PrimaryButton>
+        </div>
+      }
     >
-      <div className="text-orange-700 font-bold uppercase tracking-wide text-sm">
-        <span className="px-2 py-0.5 bg-orange-100 rounded-full">Desafio • Hábitos</span>
-      </div>
-      <h3 className="mt-2 text-xl font-bold text-slate-800">
-        Escolha três hábitos que ajudam a cuidar da saúde.
-      </h3>
-
-      <div className="mt-4 grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-3 gap-4">
         {OPTIONS.map((o) => {
           const on = selected.has(o.id);
           return (
-            <button
+            <motion.button
               key={o.id}
+              whileHover={{ scale: 1.04, y: -3 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => toggle(o.id)}
-              className={`relative p-4 rounded-xl border-2 text-center transition ${
+              className={`relative bg-game-cream hover:bg-emerald-50 rounded-3xl p-5 text-center shadow-card-soft transition border-[3px] min-h-[150px] flex flex-col items-center justify-center ${
                 on
-                  ? "bg-emerald-100 border-emerald-500"
-                  : "bg-slate-50 border-slate-200 hover:bg-slate-100"
+                  ? "border-game-green ring-4 ring-emerald-200"
+                  : "border-amber-200"
               }`}
             >
               {on && (
-                <span className="absolute top-1 right-1 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center">
-                  <Check size={14} />
+                <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-game-green text-white flex items-center justify-center shadow">
+                  <Check size={16} />
                 </span>
               )}
-              <div className="text-4xl">{o.icon}</div>
-              <div className="mt-2 text-sm font-semibold text-slate-700">{o.text}</div>
-            </button>
+              <div className="text-5xl">{o.icon}</div>
+              <div className="mt-2 text-sm font-display font-bold text-game-ink">
+                {o.text}
+              </div>
+            </motion.button>
           );
         })}
       </div>
-
-      <div className="mt-5 flex items-center justify-between">
-        <span className="text-sm text-slate-500">Selecionados: {selected.size} de 3</span>
-        <button
-          disabled={selected.size < 3}
-          onClick={confirm}
-          className="px-8 py-3 rounded-full bg-orange-500 hover:bg-orange-600 disabled:bg-slate-300 text-white text-lg font-bold shadow"
-        >
-          Confirmar
-        </button>
-      </div>
-    </motion.div>
+    </CardShell>
   );
 }
