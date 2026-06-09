@@ -246,17 +246,20 @@ export const CELLS: Cell[] = [
   {
     id: 21,
     type: "object",
-    title: "Kit banho",
-    prompt: "Escolha o objeto que faz parte do kit banho.",
+    title: "Hora do banho",
+    prompt: "Depois de correr e suar bastante, Nina vai tomar banho. Qual item ajuda nesse cuidado?",
     alternatives: [
       { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Controle de TV", correct: false, icon: "📺" },
-      { text: "Mochila", correct: false, icon: "🎒" },
-      { text: "Brinquedo", correct: false, icon: "🧸" },
+      { text: "Shampoo", correct: true, icon: "🧴" },
+      { text: "Toalha", correct: true, icon: "🧺" },
+      { text: "Bola", correct: false, icon: "⚽" },
+      { text: "Lápis", correct: false, icon: "✏️" },
+      { text: "Colher", correct: false, icon: "🥄" },
     ],
     feedbackCorrect:
-      "Muito bem! Sabonete, shampoo e toalha são parte do kit banho.",
-    feedbackWrong: "Pense no que usamos durante o banho para limpar o corpo.",
+      "Muito bem! O banho ajuda a limpar o corpo depois de brincar, correr e suar. Sabonete, shampoo e toalha são parte desse cuidado.",
+    feedbackWrong:
+      "Alguns objetos servem para brincar ou estudar. Para o banho, Nina precisa de itens que ajudam a limpar e secar o corpo.",
   },
   {
     id: 22,
@@ -282,16 +285,18 @@ export const CELLS: Cell[] = [
   {
     id: 24,
     type: "object",
-    title: "Escova e creme",
-    prompt: "Escolha a escova e o creme dental.",
+    title: "Cuidar da boca à noite",
+    prompt: "Antes de dormir, Nina precisa cuidar da boca. O que ela deve fazer?",
     alternatives: [
-      { text: "Escova e creme dental", correct: true, icon: "🪥" },
-      { text: "Sapato", correct: false, icon: "👟" },
-      { text: "Boné", correct: false, icon: "🧢" },
-      { text: "Pirulito", correct: false, icon: "🍭" },
+      { text: "Escovar os dentes", correct: true, icon: "🪥" },
+      { text: "Comer doce e dormir", correct: false, icon: "🍭" },
+      { text: "Esquecer os dentes e dormir", correct: false, icon: "💤" },
+      { text: "Lavar apenas as mãos", correct: false, icon: "🧼" },
     ],
-    feedbackCorrect: "Muito bem! São os objetos certos para cuidar dos dentes.",
-    feedbackWrong: "Pense no que usamos para escovar os dentes.",
+    feedbackCorrect:
+      "Boa escolha! Escovar os dentes antes de dormir ajuda a cuidar da boca durante a noite.",
+    feedbackWrong:
+      "Antes de dormir, também precisamos cuidar dos dentes. Qual cuidado ajuda a boca?",
   },
   {
     id: 25,
