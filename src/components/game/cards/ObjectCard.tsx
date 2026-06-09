@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Cell } from "@/data/cells";
+import { CardShell, PrimaryButton } from "./CardShell";
 
 export function ObjectCard({
   cell,
@@ -33,61 +34,56 @@ export function ObjectCard({
     onAnswer(ok);
   };
 
-  const gridCols = alts.length >= 6 ? "grid-cols-3" : alts.length >= 4 ? "grid-cols-4" : "grid-cols-3";
+  const cols =
+    alts.length >= 6 ? "grid-cols-3" : alts.length === 4 ? "grid-cols-2" : "grid-cols-3";
 
   return (
-    <motion.div
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      className="bg-white rounded-2xl p-7 shadow-2xl border-4 border-emerald-300 max-w-3xl w-full"
+    <CardShell
+      tone="green"
+      tag="Cuidado do momento"
+      cellId={cell.id}
+      prompt={cell.prompt ?? cell.title}
+      hint={
+        isMulti
+          ? "Toque em todos os cuidados que ajudam e depois confirme."
+          : "Escolha o cuidado que combina com o momento."
+      }
+      footer={
+        isMulti ? (
+          <PrimaryButton disabled={selected.size === 0} onClick={confirm}>
+            Confirmar
+          </PrimaryButton>
+        ) : undefined
+      }
     >
-      <div className="flex items-center gap-2 text-emerald-700 font-bold uppercase tracking-wide text-sm">
-        <span className="px-2 py-0.5 bg-emerald-100 rounded-full">Cuidado do momento</span>
-        <span>Casa {cell.id}</span>
-      </div>
-      <h3 className="mt-3 text-2xl font-bold text-slate-800">{cell.prompt}</h3>
-      {isMulti && (
-        <p className="mt-2 text-sm text-emerald-700 font-medium">
-          Toque em todos os itens que ajudam nesse cuidado e depois clique em Confirmar.
-        </p>
-      )}
-      <div className={`mt-5 grid ${gridCols} gap-3`}>
+      <div className={`grid ${cols} gap-4`}>
         {alts.map((alt, i) => {
           const isSelected = selected.has(i);
           return (
             <motion.button
               key={i}
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.04, y: -4 }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => (isMulti ? toggle(i) : onAnswer(alt.correct))}
-              className={`relative bg-emerald-50 hover:bg-emerald-100 border-2 rounded-xl p-4 text-center transition ${
-                isSelected ? "border-emerald-600 ring-4 ring-emerald-200" : "border-emerald-300"
+              className={`relative bg-game-cream hover:bg-emerald-50 rounded-3xl p-5 text-center shadow-card-soft transition flex flex-col items-center justify-center min-h-[160px] border-[3px] ${
+                isSelected
+                  ? "border-game-green ring-4 ring-emerald-200"
+                  : "border-emerald-200"
               }`}
             >
               {isMulti && isSelected && (
-                <div className="absolute top-1 right-1 bg-emerald-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">
+                <div className="absolute top-2 right-2 bg-game-green text-white rounded-full w-7 h-7 flex items-center justify-center text-base font-bold shadow">
                   ✓
                 </div>
               )}
-              <div className="text-5xl">{alt.icon}</div>
-              <div className="mt-2 text-sm font-semibold text-slate-700">{alt.text}</div>
+              <div className="text-[58px] leading-none">{alt.icon}</div>
+              <div className="mt-3 text-base font-display font-bold text-game-ink">
+                {alt.text}
+              </div>
             </motion.button>
           );
         })}
       </div>
-      {isMulti && (
-        <div className="mt-5 flex justify-end">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            disabled={selected.size === 0}
-            onClick={confirm}
-            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold rounded-xl shadow-lg transition"
-          >
-            Confirmar
-          </motion.button>
-        </div>
-      )}
-    </motion.div>
+    </CardShell>
   );
 }

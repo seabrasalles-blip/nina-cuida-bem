@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { CardShell } from "./CardShell";
 
 const SITUATIONS = [
   { id: "s1", text: "Antes de comer", icon: "🍽️", match: "c1" },
@@ -21,91 +22,95 @@ export function MatchChallengeCard({
 }) {
   const [selectedSit, setSelectedSit] = useState<string | null>(null);
   const [pairs, setPairs] = useState<Record<string, string>>({});
-  const [shuffledCares] = useState(() => [...CARES].sort(() => Math.random() - 0.5));
+  const [shuffledCares] = useState(() =>
+    [...CARES].sort(() => Math.random() - 0.5),
+  );
 
   const handleCare = (careId: string) => {
     if (!selectedSit) return;
-    const sit = SITUATIONS.find((s) => s.id === selectedSit)!;
     const newPairs = { ...pairs, [selectedSit]: careId };
     setPairs(newPairs);
     setSelectedSit(null);
-
     if (Object.keys(newPairs).length === SITUATIONS.length) {
       const allCorrect = SITUATIONS.every((s) => newPairs[s.id] === s.match);
       setTimeout(() => onFinish(allCorrect), 400);
     }
-    void sit;
   };
 
   const usedCares = new Set(Object.values(pairs));
 
   return (
-    <motion.div
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      className="bg-white rounded-2xl p-6 shadow-2xl border-4 border-orange-300 max-w-3xl w-full"
+    <CardShell
+      tone="orange"
+      tag="Desafio · Associe"
+      cellId={0}
+      prompt="Em cada situação, qual é o cuidado certo?"
+      hint="Toque em uma situação e depois no cuidado que combina."
     >
-      <div className="text-orange-700 font-bold uppercase tracking-wide text-sm">
-        <span className="px-2 py-0.5 bg-orange-100 rounded-full">Desafio • Associe</span>
-      </div>
-      <h3 className="mt-2 text-xl font-bold text-slate-800">
-        Toque em uma situação e depois no cuidado certo.
-      </h3>
-
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <p className="text-sm font-bold text-slate-500 uppercase">Situação</p>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="space-y-3">
+          <p className="font-display text-sm text-game-ink-soft uppercase tracking-wide font-bold">
+            Situação
+          </p>
           {SITUATIONS.map((s) => {
             const done = !!pairs[s.id];
             const active = selectedSit === s.id;
             return (
-              <button
+              <motion.button
                 key={s.id}
+                whileHover={done ? undefined : { scale: 1.02 }}
                 disabled={done}
                 onClick={() => setSelectedSit(s.id)}
-                className={`w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl border-2 transition ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border-[3px] transition shadow-card-soft text-left ${
                   done
-                    ? "bg-emerald-50 border-emerald-300 opacity-70"
+                    ? "bg-emerald-50 border-game-green opacity-80"
                     : active
-                    ? "bg-sky-100 border-sky-500"
-                    : "bg-slate-50 border-slate-200 hover:bg-slate-100"
+                      ? "bg-game-sky-soft border-game-sky"
+                      : "bg-game-cream border-amber-200 hover:bg-amber-50"
                 }`}
               >
-                <span className="text-2xl">{s.icon}</span>
-                <span className="font-semibold text-slate-700">{s.text}</span>
+                <span className="text-3xl">{s.icon}</span>
+                <span className="font-display font-bold text-game-ink text-lg">
+                  {s.text}
+                </span>
                 {done && (
-                  <span className="ml-auto text-xs text-emerald-700">
+                  <span className="ml-auto text-xs text-emerald-700 font-bold">
                     → {CARES.find((c) => c.id === pairs[s.id])?.text}
                   </span>
                 )}
-              </button>
+              </motion.button>
             );
           })}
         </div>
-        <div className="space-y-2">
-          <p className="text-sm font-bold text-slate-500 uppercase">Cuidado</p>
+        <div className="space-y-3">
+          <p className="font-display text-sm text-game-ink-soft uppercase tracking-wide font-bold">
+            Cuidado
+          </p>
           {shuffledCares.map((c) => {
             const used = usedCares.has(c.id);
             return (
-              <button
+              <motion.button
                 key={c.id}
+                whileHover={used || !selectedSit ? undefined : { scale: 1.02 }}
                 disabled={used || !selectedSit}
                 onClick={() => handleCare(c.id)}
-                className={`w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl border-2 transition ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl border-[3px] transition shadow-card-soft text-left ${
                   used
-                    ? "bg-slate-100 border-slate-200 opacity-40"
+                    ? "bg-slate-50 border-slate-200 opacity-40"
                     : selectedSit
-                    ? "bg-emerald-50 border-emerald-300 hover:bg-emerald-100"
-                    : "bg-slate-50 border-slate-200"
+                      ? "bg-emerald-50 border-game-green hover:bg-emerald-100"
+                      : "bg-game-cream border-amber-200"
                 }`}
               >
-                <span className="text-2xl">{c.icon}</span>
-                <span className="font-semibold text-slate-700">{c.text}</span>
-              </button>
+                <span className="text-3xl">{c.icon}</span>
+                <span className="font-display font-bold text-game-ink text-lg">
+                  {c.text}
+                </span>
+              </motion.button>
             );
           })}
         </div>
       </div>
-    </motion.div>
+    </CardShell>
   );
 }
