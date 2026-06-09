@@ -165,16 +165,18 @@ export const CELLS: Cell[] = [
   {
     id: 14,
     type: "object",
-    title: "Escolha o objeto",
-    prompt: "Escolha o lenço.",
+    title: "Nariz escorrendo",
+    prompt: "O nariz da Nina está escorrendo. Como ela pode se cuidar e cuidar das pessoas ao redor?",
     alternatives: [
-      { text: "Lenço", correct: true, icon: "🧻" },
-      { text: "Meia", correct: false, icon: "🧦" },
-      { text: "Livro", correct: false, icon: "📕" },
-      { text: "Brinquedo", correct: false, icon: "🧸" },
+      { text: "Usar um lenço limpo", correct: true, icon: "🧻" },
+      { text: "Limpar na manga da camiseta", correct: false, icon: "👕" },
+      { text: "Limpar com a mão", correct: false, icon: "✋" },
+      { text: "Usar um papel que caiu no chão", correct: false, icon: "📄" },
     ],
-    feedbackCorrect: "Isso! O lenço é o melhor para limpar o nariz.",
-    feedbackWrong: "Procure o objeto certo para limpar o nariz com cuidado.",
+    feedbackCorrect:
+      "Isso mesmo! Usar lenço limpo ajuda a cuidar do nariz. Depois, Nina deve jogar o lenço no lixo e lavar as mãos.",
+    feedbackWrong:
+      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo e lavar as mãos depois.",
   },
   {
     id: 15,
