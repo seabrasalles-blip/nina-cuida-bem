@@ -195,17 +195,17 @@ export const CELLS: Cell[] = [
   {
     id: 17,
     type: "question",
-    title: "Depois do banheiro",
-    prompt: "Depois de usar o banheiro, o que Nina deve fazer?",
+    title: "Antes da fruta",
+    prompt: "Antes de comer a fruta, Nina percebe que as mãos estão sujas. O que fazer?",
     alternatives: [
-      { text: "Lavar as mãos com sabonete", correct: true, icon: "🧼" },
-      { text: "Brincar com a bola", correct: false, icon: "⚽" },
-      { text: "Colocar o casaco", correct: false, icon: "🧥" },
+      { text: "Lavar com água e sabão", correct: true, icon: "🧼" },
+      { text: "Morder a fruta mesmo assim", correct: false, icon: "🍎" },
+      { text: "Passar a mão no cabelo", correct: false, icon: "💁" },
     ],
     feedbackCorrect:
-      "Isso mesmo! Depois de usar o banheiro, lavar as mãos com sabonete ajuda a proteger a saúde.",
+      "Isso mesmo! Lavar as mãos antes de comer a fruta tira microrganismos que podem fazer mal ao corpo.",
     feedbackWrong:
-      "Observe o momento: Nina saiu do banheiro. Qual cuidado ajuda a proteger a saúde?",
+      "Comer com a mão suja pode levar microrganismos para a boca. Lavar as mãos protege a saúde.",
   },
   {
     id: 18,
