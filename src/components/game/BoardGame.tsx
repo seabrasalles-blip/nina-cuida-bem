@@ -93,6 +93,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
       const target = Math.min(30, stage.origin + stage.steps);
       if (cellId === target) {
         setPosition(target);
+        setStage({ kind: "transition" });
         showToast(
           "success",
           "Muito bem! Você contou as casas e levou Nina ao lugar certo.",
@@ -112,6 +113,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
       const target = Math.max(1, Math.min(30, stage.origin + stage.delta));
       if (cellId === target) {
         setPosition(target);
+        setStage({ kind: "transition" });
         showToast("success", "Boa! Nina chegou ao lugar certo.", 1200);
         setTimeout(() => {
           if (target >= 30) {
