@@ -35,32 +35,31 @@ export const CELLS: Cell[] = [
     id: 2,
     type: "question",
     title: "Ao acordar",
-    prompt: "Ao acordar, o que Nina pode fazer para cuidar do rosto?",
+    prompt: "Nina acordou e vai começar o dia. O que ela pode fazer para cuidar do rosto?",
     alternatives: [
       { text: "Lavar o rosto", correct: true, icon: "💧" },
       { text: "Pintar a parede", correct: false, icon: "🎨" },
-      { text: "Guardar o sapato", correct: false, icon: "👟" },
+      { text: "Calçar as meias", correct: false, icon: "🧦" },
     ],
     feedbackCorrect:
-      "Muito bem! Lavar o rosto ajuda a tirar sujeirinhas e deixa a gente mais confortável para começar o dia.",
+      "Muito bem! Lavar o rosto ajuda a tirar suor e sujeirinhas, deixando o corpo mais confortável para começar o dia.",
     feedbackWrong:
-      "Observe a cena. Nina acabou de acordar. Qual cuidado combina com o rosto?",
+      "Observe a situação. Nina acabou de acordar. Que cuidado combina com o rosto?",
   },
   {
     id: 3,
     type: "object",
-    title: "Secar o rosto",
-    prompt: "Escolha a toalha para secar o rosto.",
+    title: "Depois de lavar o rosto",
+    prompt: "Nina lavou o rosto. O que ela deve fazer depois?",
     alternatives: [
-      { text: "Toalha", correct: true, icon: "🧺" },
-      { text: "Pente", correct: false, icon: "🪮" },
-      { text: "Copo", correct: false, icon: "🥤" },
-      { text: "Bola", correct: false, icon: "⚽" },
+      { text: "Secar com uma toalha limpa", correct: true, icon: "🧺" },
+      { text: "Secar na camiseta", correct: false, icon: "👕" },
+      { text: "Sair correndo molhada", correct: false, icon: "💨" },
     ],
     feedbackCorrect:
-      "Isso mesmo! A toalha ajuda a secar o rosto depois de lavar.",
+      "Isso mesmo! Usar uma toalha limpa ajuda a secar o rosto com cuidado e conforto.",
     feedbackWrong:
-      "Pense em qual objeto serve para secar a água do rosto.",
+      "Depois de lavar o rosto, é melhor usar uma toalha limpa. Assim, Nina cuida melhor do corpo.",
   },
   {
     id: 4,
