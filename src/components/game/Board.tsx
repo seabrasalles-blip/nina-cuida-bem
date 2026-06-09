@@ -113,11 +113,12 @@ export function Board({
 
   const onPointerDown = (e: React.PointerEvent<SVGGElement>) => {
     if (!draggable) return;
-    (e.target as Element).setPointerCapture?.(e.pointerId);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
     const local = toLocal(e.clientX, e.clientY);
     setDrag(local);
     setSelected(false);
   };
+
 
   const onPointerMove = (e: React.PointerEvent<SVGGElement>) => {
     if (!draggable || drag === null) return;
