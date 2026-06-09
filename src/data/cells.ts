@@ -35,32 +35,31 @@ export const CELLS: Cell[] = [
     id: 2,
     type: "question",
     title: "Ao acordar",
-    prompt: "Ao acordar, o que Nina pode fazer para cuidar do rosto?",
+    prompt: "Nina acordou e vai começar o dia. O que ela pode fazer para cuidar do rosto?",
     alternatives: [
       { text: "Lavar o rosto", correct: true, icon: "💧" },
       { text: "Pintar a parede", correct: false, icon: "🎨" },
-      { text: "Guardar o sapato", correct: false, icon: "👟" },
+      { text: "Calçar as meias", correct: false, icon: "🧦" },
     ],
     feedbackCorrect:
-      "Muito bem! Lavar o rosto ajuda a tirar sujeirinhas e deixa a gente mais confortável para começar o dia.",
+      "Muito bem! Lavar o rosto ajuda a tirar suor e sujeirinhas, deixando o corpo mais confortável para começar o dia.",
     feedbackWrong:
-      "Observe a cena. Nina acabou de acordar. Qual cuidado combina com o rosto?",
+      "Observe a situação. Nina acabou de acordar. Que cuidado combina com o rosto?",
   },
   {
     id: 3,
     type: "object",
-    title: "Secar o rosto",
-    prompt: "Escolha a toalha para secar o rosto.",
+    title: "Depois de lavar o rosto",
+    prompt: "Nina lavou o rosto. O que ela deve fazer depois?",
     alternatives: [
-      { text: "Toalha", correct: true, icon: "🧺" },
-      { text: "Pente", correct: false, icon: "🪮" },
-      { text: "Copo", correct: false, icon: "🥤" },
-      { text: "Bola", correct: false, icon: "⚽" },
+      { text: "Secar com uma toalha limpa", correct: true, icon: "🧺" },
+      { text: "Secar na camiseta", correct: false, icon: "👕" },
+      { text: "Sair correndo molhada", correct: false, icon: "💨" },
     ],
     feedbackCorrect:
-      "Isso mesmo! A toalha ajuda a secar o rosto depois de lavar.",
+      "Isso mesmo! Usar uma toalha limpa ajuda a secar o rosto com cuidado e conforto.",
     feedbackWrong:
-      "Pense em qual objeto serve para secar a água do rosto.",
+      "Depois de lavar o rosto, é melhor usar uma toalha limpa. Assim, Nina cuida melhor do corpo.",
   },
   {
     id: 4,
@@ -93,16 +92,16 @@ export const CELLS: Cell[] = [
   {
     id: 7,
     type: "object",
-    title: "Escolha o objeto",
-    prompt: "Escolha a escova de dentes.",
+    title: "Depois do café",
+    prompt: "Nina terminou o café da manhã. Qual cuidado ajuda a limpar os dentes?",
     alternatives: [
-      { text: "Escova de dentes", correct: true, icon: "🪥" },
-      { text: "Caneta", correct: false, icon: "🖊️" },
-      { text: "Garfo", correct: false, icon: "🍴" },
-      { text: "Chave", correct: false, icon: "🔑" },
+      { text: "Escovar os dentes", correct: true, icon: "🪥" },
+      { text: "Lavar os sapatos", correct: false, icon: "👟" },
+      { text: "Pentear a mochila", correct: false, icon: "🎒" },
     ],
-    feedbackCorrect: "Boa! A escova de dentes ajuda a cuidar da boca.",
-    feedbackWrong: "Procure o objeto que usamos para limpar os dentes.",
+    feedbackCorrect:
+      "Ótima escolha! Escovar os dentes ajuda a retirar restos de comida e cuidar da boca.",
+    feedbackWrong: "Pense no que usamos para cuidar da boca depois de comer.",
   },
   {
     id: 8,
@@ -128,16 +127,18 @@ export const CELLS: Cell[] = [
   {
     id: 11,
     type: "object",
-    title: "Depois de brincar",
-    prompt: "Depois de brincar, escolha o sabonete.",
+    title: "Antes do lanche",
+    prompt: "Nina brincou no parque e ficou com as mãos sujas. O que ela deve fazer antes do lanche?",
     alternatives: [
-      { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Boné", correct: false, icon: "🧢" },
-      { text: "Lápis", correct: false, icon: "✏️" },
-      { text: "Bola", correct: false, icon: "⚽" },
+      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
+      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
+      { text: "Comer mesmo assim", correct: false, icon: "🍞" },
+      { text: "Esconder as mãos", correct: false, icon: "🙈" },
     ],
-    feedbackCorrect: "Muito bem! O sabonete ajuda a limpar as mãos sujas da brincadeira.",
-    feedbackWrong: "Qual objeto ajuda a tirar a sujeira das mãos com água?",
+    feedbackCorrect:
+      "Muito bem! Lavar as mãos antes de comer ajuda a tirar sujeiras e microrganismos que podem fazer mal à saúde.",
+    feedbackWrong:
+      "Antes de comer, precisamos cuidar das mãos. Limpar na roupa ou comer com as mãos sujas não ajuda a proteger a saúde.",
   },
   {
     id: 12,
@@ -164,16 +165,18 @@ export const CELLS: Cell[] = [
   {
     id: 14,
     type: "object",
-    title: "Escolha o objeto",
-    prompt: "Escolha o lenço.",
+    title: "Nariz escorrendo",
+    prompt: "O nariz da Nina está escorrendo. Como ela pode se cuidar e cuidar das pessoas ao redor?",
     alternatives: [
-      { text: "Lenço", correct: true, icon: "🧻" },
-      { text: "Meia", correct: false, icon: "🧦" },
-      { text: "Livro", correct: false, icon: "📕" },
-      { text: "Brinquedo", correct: false, icon: "🧸" },
+      { text: "Usar um lenço limpo", correct: true, icon: "🧻" },
+      { text: "Limpar na manga da camiseta", correct: false, icon: "👕" },
+      { text: "Limpar com a mão", correct: false, icon: "✋" },
+      { text: "Usar um papel que caiu no chão", correct: false, icon: "📄" },
     ],
-    feedbackCorrect: "Isso! O lenço é o melhor para limpar o nariz.",
-    feedbackWrong: "Procure o objeto certo para limpar o nariz com cuidado.",
+    feedbackCorrect:
+      "Isso mesmo! Usar lenço limpo ajuda a cuidar do nariz. Depois, Nina deve jogar o lenço no lixo e lavar as mãos.",
+    feedbackWrong:
+      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo e lavar as mãos depois.",
   },
   {
     id: 15,
@@ -206,16 +209,18 @@ export const CELLS: Cell[] = [
   {
     id: 18,
     type: "object",
-    title: "Escolha o objeto",
-    prompt: "Escolha o sabonete.",
+    title: "Depois do banheiro",
+    prompt: "Nina acabou de usar o banheiro. Qual cuidado ela precisa fazer agora?",
     alternatives: [
-      { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Caderno", correct: false, icon: "📓" },
-      { text: "Tesoura", correct: false, icon: "✂️" },
-      { text: "Pirulito", correct: false, icon: "🍭" },
+      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
+      { text: "Brincar com a bola", correct: false, icon: "⚽" },
+      { text: "Guardar o travesseiro", correct: false, icon: "🛏️" },
+      { text: "Colocar o casaco", correct: false, icon: "🧥" },
     ],
-    feedbackCorrect: "Boa! O sabonete ajuda na limpeza das mãos.",
-    feedbackWrong: "Pense em qual objeto usamos junto com água para limpar as mãos.",
+    feedbackCorrect:
+      "Muito bem! Depois de usar o banheiro, lavar as mãos com água e sabão ajuda a proteger a saúde.",
+    feedbackWrong:
+      "Observe o momento: Nina saiu do banheiro. O cuidado mais importante agora é lavar as mãos.",
   },
   {
     id: 19,
@@ -241,17 +246,20 @@ export const CELLS: Cell[] = [
   {
     id: 21,
     type: "object",
-    title: "Kit banho",
-    prompt: "Escolha o objeto que faz parte do kit banho.",
+    title: "Hora do banho",
+    prompt: "Depois de correr e suar bastante, Nina vai tomar banho. Qual item ajuda nesse cuidado?",
     alternatives: [
       { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Controle de TV", correct: false, icon: "📺" },
-      { text: "Mochila", correct: false, icon: "🎒" },
-      { text: "Brinquedo", correct: false, icon: "🧸" },
+      { text: "Shampoo", correct: true, icon: "🧴" },
+      { text: "Toalha", correct: true, icon: "🧺" },
+      { text: "Bola", correct: false, icon: "⚽" },
+      { text: "Lápis", correct: false, icon: "✏️" },
+      { text: "Colher", correct: false, icon: "🥄" },
     ],
     feedbackCorrect:
-      "Muito bem! Sabonete, shampoo e toalha são parte do kit banho.",
-    feedbackWrong: "Pense no que usamos durante o banho para limpar o corpo.",
+      "Muito bem! O banho ajuda a limpar o corpo depois de brincar, correr e suar. Sabonete, shampoo e toalha são parte desse cuidado.",
+    feedbackWrong:
+      "Alguns objetos servem para brincar ou estudar. Para o banho, Nina precisa de itens que ajudam a limpar e secar o corpo.",
   },
   {
     id: 22,
@@ -277,16 +285,18 @@ export const CELLS: Cell[] = [
   {
     id: 24,
     type: "object",
-    title: "Escova e creme",
-    prompt: "Escolha a escova e o creme dental.",
+    title: "Cuidar da boca à noite",
+    prompt: "Antes de dormir, Nina precisa cuidar da boca. O que ela deve fazer?",
     alternatives: [
-      { text: "Escova e creme dental", correct: true, icon: "🪥" },
-      { text: "Sapato", correct: false, icon: "👟" },
-      { text: "Boné", correct: false, icon: "🧢" },
-      { text: "Pirulito", correct: false, icon: "🍭" },
+      { text: "Escovar os dentes", correct: true, icon: "🪥" },
+      { text: "Comer doce e dormir", correct: false, icon: "🍭" },
+      { text: "Esquecer os dentes e dormir", correct: false, icon: "💤" },
+      { text: "Lavar apenas as mãos", correct: false, icon: "🧼" },
     ],
-    feedbackCorrect: "Muito bem! São os objetos certos para cuidar dos dentes.",
-    feedbackWrong: "Pense no que usamos para escovar os dentes.",
+    feedbackCorrect:
+      "Boa escolha! Escovar os dentes antes de dormir ajuda a cuidar da boca durante a noite.",
+    feedbackWrong:
+      "Antes de dormir, também precisamos cuidar dos dentes. Qual cuidado ajuda a boca?",
   },
   {
     id: 25,

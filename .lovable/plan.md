@@ -1,96 +1,42 @@
+# Revisão pedagógica — Corpo Bem Cuidado
 
-# Corpo Bem Cuidado — Plano de Implementação
+Foco: substituir perguntas mecânicas ("escolha o objeto X") por situações cotidianas da Nina, mantendo todo o restante (tabuleiro, dado 1–3, 30 casas, layout 1200×675, sem scroll, feedbacks grandes).
 
-Objeto digital de aprendizagem em formato de jogo de tabuleiro, com a personagem Nina, alinhado à habilidade EF01CI03 da BNCC.
+## 1. `src/data/cells.ts` — reescrever conteúdo das casas
 
-## Estrutura de telas
+Aplicar exatamente os textos fornecidos pelo usuário:
 
-1. **Capa** — título "Corpo Bem Cuidado", Nina + elementos de higiene, botão "Começar".
-2. **Instruções** — como jogar + fala da Nina com ícone de áudio (visual), botão "Ir para o jogo".
-3. **Tabuleiro principal** — trilha sinuosa de 30 casas, painel lateral com dado/pino/botão.
-4. **Cards modais** — pergunta, objeto, conversa, cuidado especial, desafios, feedback.
-5. **Tela final** — síntese, Nina sorrindo, botões "Jogar novamente" e "Finalizar".
+- **Casa 2** (pergunta): "Nina acordou e vai começar o dia. O que ela pode fazer para cuidar do rosto?" + 3 alternativas (Lavar o rosto ✓, Pintar a parede, Calçar as meias) + feedbacks novos.
+- **Casa 3** (era objeto "toalha"): vira situação "Nina lavou o rosto. O que ela deve fazer depois?" — 3 alternativas (Secar com toalha limpa ✓, Secar na camiseta, Sair correndo molhada).
+- **Casa 7**: "Nina terminou o café da manhã. Qual cuidado ajuda a limpar os dentes?" — 3 alternativas (Escovar ✓, Lavar sapatos, Pentear mochila).
+- **Casa 11**: "Nina brincou no parque e ficou com as mãos sujas. O que ela deve fazer antes do lanche?" — 4 alternativas (Lavar com água e sabão ✓, Limpar na roupa, Comer mesmo assim, Esconder as mãos).
+- **Casa 14**: "O nariz da Nina está escorrendo. Como ela pode se cuidar e cuidar das pessoas ao redor?" — 4 alternativas (Lenço limpo ✓, Manga da camiseta, Mão, Papel do chão).
+- **Casa 18**: "Nina acabou de usar o banheiro. Qual cuidado ela precisa fazer agora?" — 4 alternativas (Lavar mãos ✓, Brincar com bola, Guardar travesseiro, Colocar casaco).
+- **Casa 21** (kit banho): "Depois de correr e suar bastante, Nina vai tomar banho. Quais itens ajudam nesse cuidado?" — apresentar múltiplos itens, corretos: Sabonete, Shampoo, Toalha; incorretos: Bola, Lápis, Colher. Feedbacks novos.
+- **Casa 24**: "Antes de dormir, Nina precisa cuidar da boca. O que ela deve fazer?" — 4 alternativas (Escovar dentes ✓, Comer doce e dormir, Esquecer os dentes, Só lavar mãos).
 
-Todas as telas em container fixo **1200 × 675 px** (proporção 16:9), centralizado e escalado responsivamente via `transform: scale()` para nunca exibir scrollbars.
+Todas mantêm o tipo existente (`question` ou `object`) — apenas o conteúdo muda. Casa 21 continua usando `object` (seleção múltipla de itens).
 
-## Mecânica
+## 2. Renomear rótulo do tipo "Objeto certo"
 
-- Dado sorteia **1 a 3**.
-- Pino da Nina anima de casa em casa.
-- Casa especial → abre card/modal grande centralizado.
-- Botão "Jogar dado" desativado enquanto card aberto; reativa após "Continuar".
-- Casas de avanço/retorno movem ±1 automaticamente após leitura.
-- Casa 30 → tela final.
+Em `src/components/game/cards/ObjectCard.tsx`, trocar o chip "Objeto certo" por **"Cuidado do momento"**. Também ajustar legenda em `BoardGame.tsx` se houver referência (atualmente diz só "Objeto" — trocar para "Cuidado do momento").
 
-## Tipos de casa (cores)
+## 3. Casa 21 — comportamento de múltipla seleção
 
-- Comum: neutra clara
-- Pergunta: azul
-- Objeto: verde
-- Conversa: amarela
-- Especial (avanço/retorno/desafio/síntese): laranja
+A casa 21 atualmente usa `ObjectCard` (clique único = correto/errado). Como o novo enunciado pede para escolher itens (plural), há duas opções:
 
-Legenda compacta no painel lateral.
+- **A (mínima):** manter clique único, marcando como corretos quaisquer dos 3 itens de banho; criança acerta ao tocar em um item de banho. Simples e mantém o componente.
+- **B (mais fiel):** criar variante multi-select no `ObjectCard` com botão "Confirmar" — mais código.
 
-## Conteúdo
+Recomendo **A** para esta iteração (preserva mecânica atual; enunciado já educa sobre "quais itens"); posso evoluir para B numa próxima rodada se desejado.
 
-Array `cells[30]` tipado, com os dados exatos das 30 casas fornecidas na especificação (início, perguntas das casas 2/5/8/13/17/20/23, objetos, 5 conversas, avanços/retornos, 2 desafios finais — associação e seleção de 3 hábitos, síntese, chegada). Perguntas, alternativas, feedbacks corretos e de erro conforme texto do briefing — sem alterações de redação pedagógica.
+## Fora do escopo
 
-## Componentes (React + TypeScript)
+- Não mexer em mecânica de dado, movimentação, modais ou estilo geral.
+- Casas comuns, conversas, avanços/retornos e síntese permanecem como estão.
 
-```
-src/
-├── routes/index.tsx               (monta <App />)
-├── components/game/
-│   ├── App.tsx                    (estado global: tela, posição, dado, card, etc.)
-│   ├── GameStage.tsx              (wrapper 1200×675 + auto-scale)
-│   ├── StartScreen.tsx
-│   ├── InstructionsScreen.tsx
-│   ├── BoardGame.tsx              (layout tabuleiro + painel)
-│   ├── BoardPath.tsx              (SVG do caminho sinuoso + casas)
-│   ├── BoardCell.tsx
-│   ├── PlayerToken.tsx            (Nina animada via framer-motion)
-│   ├── Dice.tsx                   (animação de rolagem 1–3)
-│   ├── SidePanel.tsx              (dado, casa atual, botão, legenda)
-│   ├── NinaSpeech.tsx             (balão + ícone de áudio visual)
-│   ├── cards/
-│   │   ├── QuestionCard.tsx
-│   │   ├── ObjectCard.tsx
-│   │   ├── ConversationCard.tsx
-│   │   ├── SpecialCard.tsx
-│   │   ├── MatchChallengeCard.tsx (casa 26 — associar pares)
-│   │   ├── HabitsChallengeCard.tsx(casa 27 — escolher 3 hábitos)
-│   │   └── FeedbackCard.tsx
-│   └── FinalScreen.tsx
-└── data/cells.ts                  (tipos + array das 30 casas)
-```
+## Arquivos alterados
 
-Estado em `App.tsx` com `useReducer` controlando: `screen`, `position`, `diceValue`, `isRolling`, `activeCard`, `selectedAnswer`, `feedback`, `pendingMove`.
-
-## Design visual
-
-- Paleta acolhedora infantil sem infantilizar (azul céu, verde menta, amarelo suave, laranja coral, neutros creme).
-- Fonte sem serifa (Nunito ou Fredoka via `<link>` no `__root.tsx`, registrada em `@theme` no `src/styles.css`).
-- Botões e cards grandes, alto contraste, fundo claro.
-- Ícones de higiene em SVG/emoji estilizado (sabonete, escova, toalha, lenço, etc.) gerados inline para evitar dependências.
-- Animações leves com **framer-motion**: dado girando, pino deslizando entre casas, card com fade+scale.
-
-## Dependências
-
-- `framer-motion` (instalar via `bun add framer-motion`)
-- Sem libs adicionais; ícones inline SVG.
-
-## SEO / Head
-
-Route `index` com title "Corpo Bem Cuidado — Atividade EF01CI03" e description curta.
-
-## Garantias
-
-- Nenhuma scrollbar: `overflow: hidden` no `body` + stage com auto-scale.
-- Nenhuma menção à palavra "missão".
-- Feedbacks sempre explicativos, conforme textos fornecidos.
-- Habilidade EF01CI03 preservada nas razões dos cuidados.
-
-## Entrega
-
-Primeira versão funcional completa do fluxo: capa → instruções → tabuleiro jogável de 30 casas com todos os cards e feedbacks → tela final com reinício.
+- `src/data/cells.ts` (conteúdo das casas 2, 3, 7, 11, 14, 18, 21, 24)
+- `src/components/game/cards/ObjectCard.tsx` (rótulo do chip)
+- `src/components/game/BoardGame.tsx` (texto da legenda)

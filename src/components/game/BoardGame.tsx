@@ -198,7 +198,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         <div className="bg-white/80 rounded-2xl border-2 border-slate-200 p-3 text-xs space-y-1.5 mt-auto">
           <p className="font-bold text-slate-600 uppercase tracking-wide text-[10px]">Legenda</p>
           <LegendItem color="#bae6fd" border="#0284c7" label="Pergunta" />
-          <LegendItem color="#bbf7d0" border="#16a34a" label="Objeto" />
+          <LegendItem color="#bbf7d0" border="#16a34a" label="Cuidado do momento" />
           <LegendItem color="#fde68a" border="#d97706" label="Conversa" />
           <LegendItem color="#fed7aa" border="#ea580c" label="Avanço / Cuidado especial" />
         </div>
