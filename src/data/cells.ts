@@ -209,16 +209,18 @@ export const CELLS: Cell[] = [
   {
     id: 18,
     type: "object",
-    title: "Escolha o objeto",
-    prompt: "Escolha o sabonete.",
+    title: "Depois do banheiro",
+    prompt: "Nina acabou de usar o banheiro. Qual cuidado ela precisa fazer agora?",
     alternatives: [
-      { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Caderno", correct: false, icon: "📓" },
-      { text: "Tesoura", correct: false, icon: "✂️" },
-      { text: "Pirulito", correct: false, icon: "🍭" },
+      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
+      { text: "Brincar com a bola", correct: false, icon: "⚽" },
+      { text: "Guardar o travesseiro", correct: false, icon: "🛏️" },
+      { text: "Colocar o casaco", correct: false, icon: "🧥" },
     ],
-    feedbackCorrect: "Boa! O sabonete ajuda na limpeza das mãos.",
-    feedbackWrong: "Pense em qual objeto usamos junto com água para limpar as mãos.",
+    feedbackCorrect:
+      "Muito bem! Depois de usar o banheiro, lavar as mãos com água e sabão ajuda a proteger a saúde.",
+    feedbackWrong:
+      "Observe o momento: Nina saiu do banheiro. O cuidado mais importante agora é lavar as mãos.",
   },
   {
     id: 19,
