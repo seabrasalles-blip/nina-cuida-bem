@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CELLS } from "@/data/cells";
 import { Board } from "./Board";
 import { Dice } from "./Dice";
 import { NinaSpeech } from "./NinaSpeech";
+import { MoveToast } from "./MoveToast";
 import { QuestionCard } from "./cards/QuestionCard";
 import { ObjectCard } from "./cards/ObjectCard";
 import { ConversationCard } from "./cards/ConversationCard";
@@ -15,18 +16,41 @@ import { FeedbackCard } from "./cards/FeedbackCard";
 type Stage =
   | { kind: "idle" }
   | { kind: "rolling" }
-  | { kind: "moving" }
+  | { kind: "awaitingDrag"; steps: number; origin: number }
+  | { kind: "transition" }
   | { kind: "card" }
-  | { kind: "feedback"; correct: boolean; text: string; afterDelta?: number };
+  | { kind: "feedback"; correct: boolean; text: string }
+  | { kind: "awaitingSpecialDrag"; delta: number; origin: number };
+
+
+type Toast = { id: number; variant: "success" | "hint"; text: string };
 
 export function BoardGame({ onFinish }: { onFinish: () => void }) {
   const [position, setPosition] = useState(1);
   const [dice, setDice] = useState(1);
   const [stage, setStage] = useState<Stage>({ kind: "idle" });
+  const [toast, setToast] = useState<Toast | null>(null);
+  const [rejectSignal, setRejectSignal] = useState(0);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const cell = CELLS.find((c) => c.id === position)!;
 
-  const openCardForCell = useCallback((id: number) => {
+  const showToast = (variant: Toast["variant"], text: string, ms = 1600) => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    const id = Date.now();
+    setToast({ id, variant, text });
+    toastTimer.current = setTimeout(() => {
+      setToast((t) => (t && t.id === id ? null : t));
+    }, ms);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
+
+  const openCardForCell = (id: number) => {
     const c = CELLS.find((x) => x.id === id)!;
     if (
       c.type === "question" ||
@@ -41,18 +65,11 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
       setStage({ kind: "card" });
     } else if (c.type === "finish") {
       setTimeout(onFinish, 500);
+      setStage({ kind: "idle" });
     } else {
       setStage({ kind: "idle" });
     }
-  }, [onFinish]);
-
-  // Auto-open card after movement completes
-  useEffect(() => {
-    if (stage.kind === "moving") {
-      const t = setTimeout(() => openCardForCell(position), 700);
-      return () => clearTimeout(t);
-    }
-  }, [stage, position, openCardForCell]);
+  };
 
   const rollDice = () => {
     if (stage.kind !== "idle") return;
@@ -65,11 +82,58 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         clearInterval(interval);
         const finalVal = Math.floor(Math.random() * 3) + 1;
         setDice(finalVal);
-        const target = Math.min(30, position + finalVal);
-        setPosition(target);
-        setStage({ kind: "moving" });
+        setStage({ kind: "awaitingDrag", steps: finalVal, origin: position });
       }
     }, 80);
+  };
+
+  // Drop handler used during awaitingDrag and awaitingSpecialDrag
+  const handleDrop = (cellId: number | null) => {
+    if (stage.kind === "awaitingDrag") {
+      const target = Math.min(30, stage.origin + stage.steps);
+      if (cellId === target) {
+        setPosition(target);
+        setStage({ kind: "transition" });
+        showToast(
+          "success",
+          "Muito bem! Você contou as casas e levou Nina ao lugar certo.",
+          1300,
+        );
+        setTimeout(() => openCardForCell(target), 900);
+      } else {
+        setRejectSignal((n) => n + 1);
+        const n = stage.steps;
+        showToast(
+          "hint",
+          `Vamos contar de novo? O dado mostrou ${n}. Arraste Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`,
+          2200,
+        );
+      }
+    } else if (stage.kind === "awaitingSpecialDrag") {
+      const target = Math.max(1, Math.min(30, stage.origin + stage.delta));
+      if (cellId === target) {
+        setPosition(target);
+        setStage({ kind: "transition" });
+        showToast("success", "Boa! Nina chegou ao lugar certo.", 1200);
+        setTimeout(() => {
+          if (target >= 30) {
+            onFinish();
+            return;
+          }
+          setStage({ kind: "idle" });
+        }, 800);
+      } else {
+        setRejectSignal((n) => n + 1);
+        const d = stage.delta;
+        const abs = Math.abs(d);
+        const dir = d > 0 ? "para frente" : "para trás";
+        showToast(
+          "hint",
+          `Arraste Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`,
+          2200,
+        );
+      }
+    }
   };
 
   const handleAnswer = (correct: boolean) => {
@@ -89,18 +153,13 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
   };
 
   const handleSpecial = () => {
+    // Special advance/retreat: close card, go to drag phase
     const delta = cell.delta ?? 0;
-    setStage({
-      kind: "feedback",
-      correct: delta >= 0,
-      text:
-        delta > 0
-          ? "Que bom! Esse cuidado ajuda Nina e ela pode avançar."
-          : delta < 0
-          ? "Tudo bem, vamos voltar e lembrar do cuidado certo."
-          : "Vamos seguir!",
-      afterDelta: delta,
-    });
+    if (delta === 0) {
+      setStage({ kind: "idle" });
+    } else {
+      setStage({ kind: "awaitingSpecialDrag", delta, origin: position });
+    }
   };
 
   const handleMatch = (correct: boolean) => {
@@ -133,11 +192,6 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
 
   const closeFeedback = () => {
     if (stage.kind !== "feedback") return;
-    const delta = stage.afterDelta ?? 0;
-    if (delta !== 0) {
-      const next = Math.max(1, Math.min(30, position + delta));
-      setPosition(next);
-    }
     setStage({ kind: "idle" });
     if (position >= 30) {
       setTimeout(onFinish, 400);
@@ -167,11 +221,65 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
     }
   };
 
+  const { highlightedCells, targetCell, draggable } = useMemo(() => {
+    if (stage.kind === "awaitingDrag") {
+      const cells: number[] = [];
+      for (let i = 1; i <= stage.steps; i++) {
+        cells.push(Math.min(30, stage.origin + i));
+      }
+      return {
+        highlightedCells: cells,
+        targetCell: Math.min(30, stage.origin + stage.steps),
+        draggable: true,
+      };
+    }
+    if (stage.kind === "awaitingSpecialDrag") {
+      const cells: number[] = [];
+      const step = stage.delta > 0 ? 1 : -1;
+      for (let i = 1; i <= Math.abs(stage.delta); i++) {
+        cells.push(Math.max(1, Math.min(30, stage.origin + step * i)));
+      }
+      return {
+        highlightedCells: cells,
+        targetCell: Math.max(1, Math.min(30, stage.origin + stage.delta)),
+        draggable: true,
+      };
+    }
+    return { highlightedCells: [] as number[], targetCell: undefined, draggable: false };
+  }, [stage]);
+
+  const orientationText = (() => {
+    if (stage.kind === "awaitingDrag") {
+      const n = stage.steps;
+      return `O dado mostrou ${n}. Arraste Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`;
+    }
+    if (stage.kind === "awaitingSpecialDrag") {
+      const d = stage.delta;
+      const abs = Math.abs(d);
+      const dir = d > 0 ? "para frente" : "para trás";
+      return `Arraste Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`;
+    }
+    if (stage.kind === "rolling") return "Sorteando o dado...";
+    return "Toque no dado e vamos juntas!";
+  })();
+
   return (
     <div className="w-full h-full bg-gradient-to-br from-sky-50 to-amber-50 grid grid-cols-[1fr_320px] gap-4 p-5 relative">
       {/* Board */}
-      <div className="bg-white/70 rounded-2xl border-2 border-sky-200 shadow-inner p-3">
-        <Board position={position} />
+      <div className="relative bg-white/70 rounded-2xl border-2 border-sky-200 shadow-inner p-3">
+        <Board
+          position={position}
+          highlightedCells={highlightedCells}
+          targetCell={targetCell}
+          draggable={draggable}
+          onDrop={handleDrop}
+          rejectSignal={rejectSignal}
+        />
+        <AnimatePresence>
+          {toast && (
+            <MoveToast key={toast.id} text={toast.text} variant={toast.variant} />
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Side panel */}
@@ -193,7 +301,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
           </button>
         </div>
 
-        <NinaSpeech text="Toque no dado e vamos juntas!" />
+        <NinaSpeech text={orientationText} />
 
         <div className="bg-white/80 rounded-2xl border-2 border-slate-200 p-3 text-xs space-y-1.5 mt-auto">
           <p className="font-bold text-slate-600 uppercase tracking-wide text-[10px]">Legenda</p>

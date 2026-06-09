@@ -1,53 +1,74 @@
-## Contexto
+## Objetivo
 
-As substituições de texto das casas 2, 3, 7, 11, 14, 18, 21 e 24 já foram aplicadas em `src/data/cells.ts` na rodada anterior, junto com o renome do chip para "Cuidado do momento". Esta rodada foca em fechar o que ficou pendente para cumprir a diretriz pedagógica por completo.
+Trocar o avanço automático da Nina por uma mecânica em que o aluno **arrasta** a personagem até a casa de destino após o sorteio do dado. Mantém tabuleiro, 30 casas, dado 1–3, cards, feedbacks, layout 1200×675 e ausência de scroll.
 
-## Pendências identificadas
+## Nova máquina de estados
 
-1. **Casa 21 — múltipla seleção real**
-   O enunciado pergunta "Quais itens ajudam nesse cuidado?" (plural), mas o `ObjectCard` atual fecha no primeiro clique. A criança não consegue marcar Sabonete + Shampoo + Toalha juntos. Precisa virar seleção múltipla com confirmação.
+`src/components/game/BoardGame.tsx` passa a usar:
 
-2. **Casas duplicadas/redundantes (8, 13, 17, 23)**
-   Após a reescrita, surgiram pares quase idênticos:
-   - Casa 7 (object) e Casa 8 (question) — ambas "depois de comer, escovar os dentes".
-   - Casa 13 (question) e Casa 14 (object) — ambas "nariz escorrendo, usar lenço".
-   - Casa 17 (question) e Casa 18 (object) — ambas "depois do banheiro, lavar as mãos".
-   - Casa 23 (question) e Casa 24 (object) — ambas "antes de dormir, escovar os dentes".
+```text
+idle
+  → rolling                       (sortei dado)
+  → awaitingDrag { steps, origin }(dado parado, aluno arrasta Nina)
+       ├─ drop correto  → moveSuccess (toast breve) → card / próxima fase
+       └─ drop errado   → toast de orientação + Nina volta à origem (continua awaitingDrag)
+  → card
+  → feedback
+  → awaitingSpecialDrag { delta, origin } (após SpecialCard de avanço/retorno)
+       └─ mesma regra de drop
+  → idle
+```
 
-   Cada par cobre o mesmo hábito duas vezes em poucas casas, o que enfraquece a progressão. Vou reescrever 8, 13, 17 e 23 com situações diferentes do mesmo eixo (higiene), mantendo o tipo `question` e preservando 30 casas no total.
+Regras derivadas:
+- `Jogar dado` só fica habilitado em `idle`.
+- Em `awaitingDrag` / `awaitingSpecialDrag`, o dado fica desabilitado.
+- Posição da Nina só muda quando o drop é validado.
+- Avanço/retorno especial não move sozinho: o `SpecialCard` fecha e entra em `awaitingSpecialDrag`.
 
-3. **Enunciados mais naturais nas casas comuns/conversa** (ajustes leves de linguagem em casas como 4, 9, 15, 19, 25) para alinhar ao tom pedido — sem mudar mecânica.
+## Mudanças por arquivo
 
-## Mudanças propostas
+### `src/components/game/Board.tsx`
+Novos props: `position`, `highlightedCells: number[]`, `targetCell?: number`, `draggable: boolean`, `onDrop?: (cellId | null) => void`.
 
-### `src/data/cells.ts`
+- Cada casa em `highlightedCells` ganha um anel pulsante (animação opacity/scale via `motion.circle`); a `targetCell` ganha um anel extra dourado mais forte.
+- Nina vira `motion.g` com handlers de `onPointerDown` / `onPointerMove` / `onPointerUp` quando `draggable=true`. Converte coordenadas do ponteiro para o espaço SVG via `getScreenCTM().inverse()`.
+- Enquanto arrasta, Nina segue o ponteiro (sem animação spring). No `pointerup`, calcula a casa mais próxima dentro de raio ~40px; se nenhuma dentro do raio → `onDrop(null)`. Se há casa próxima → `onDrop(id)`.
+- Após `onDrop`, o componente pai decide: se aceitou, atualiza `position`; se rejeitou, Nina anima de volta para `position` atual.
+- Exporta `getCellPosition` (já existe) para o pai gerar a lista de destacadas.
 
-- **Casa 8** → "Nina vai começar a aula e quer se sentir bem. Que cuidado ajuda o corpo de manhã?" (alt.: tomar um copo de água e estar limpo ✓ / correr sem parar / pular o café).
-- **Casa 13** → "Nina vai espirrar. O que ela pode fazer para não espalhar microrganismos?" (alt.: cobrir com o braço dobrado ✓ / espirrar para cima / espirrar na mão do colega).
-- **Casa 17** → "Antes de comer a fruta, Nina percebe que as mãos estão sujas. O que fazer?" (alt.: lavar com água e sabão ✓ / morder a fruta com casca suja / passar a mão no cabelo).
-- **Casa 23** → "Nina vai dormir. O que ajuda o corpo a descansar bem?" (alt.: tomar banho e vestir roupa limpa ✓ / ir suja para a cama / pular na cama com sapato).
+Fallback de acessibilidade: clique em Nina seleciona; clique em uma das `highlightedCells` dispara `onDrop(id)` igual ao drag.
 
-Todas com feedbacks explicativos no mesmo padrão (por que esse cuidado ajuda a saúde).
+### `src/components/game/BoardGame.tsx`
+- Remove o `useEffect` que abria o card 700ms após `moving`.
+- `rollDice` agora termina em `awaitingDrag { steps: finalVal, origin: position }` (não muda `position`).
+- Calcula `highlightedCells = [origin+1 .. origin+steps]` clamp em 30; `targetCell = min(30, origin+steps)`.
+- `handleDrop(id)`:
+  - se `id === targetCell` → atualiza `position`, mostra toast verde "Muito bem! Você contou as casas e levou Nina ao lugar certo." por ~1.2 s e em seguida `openCardForCell(target)`.
+  - se incorreto → toast laranja "Vamos contar de novo? O dado mostrou {n}. Arraste Nina {n} casa(s) para frente." por ~2 s, Nina volta à origem, permanece em `awaitingDrag`.
+- `handleSpecial` (avanço/retorno) deixa de aplicar delta automaticamente. Ao continuar o `SpecialCard`, se `delta !== 0`, entra em `awaitingSpecialDrag { delta, origin: position }` com `targetCell = position + delta`; se delta = 0 vai para `idle`. Remove o uso de `afterDelta` em feedback.
+- Painel lateral ganha uma área de orientação que troca o texto da `NinaSpeech` conforme o estado:
+  - `idle`: "Toque no dado e vamos juntas!"
+  - `awaitingDrag`: "O dado mostrou {n}. Arraste Nina {n} casa(s) para frente."
+  - `awaitingSpecialDrag` com delta>0: "Arraste Nina {delta} casa(s) para frente."
+  - `awaitingSpecialDrag` com delta<0: "Arraste Nina {|delta|} casa(s) para trás."
 
-### `src/components/game/cards/ObjectCard.tsx`
+### Toasts breves
+Componente leve novo `src/components/game/MoveToast.tsx` (overlay absoluto no canto superior central do tabuleiro), com variant `success` (verde) e `hint` (laranja). Auto-fecha por timeout controlado no `BoardGame`. Card grande de feedback pedagógico (após responder pergunta) continua usando `FeedbackCard` como hoje — esses toasts são só para a etapa de movimentação.
 
-Adicionar modo múltipla seleção quando a casa tem mais de uma alternativa correta:
-- Estado local `selected: Set<index>`.
-- Clique alterna seleção (borda e check visíveis).
-- Botão "Confirmar" no rodapé.
-- Acerto = conjunto selecionado é exatamente o conjunto das alternativas `correct: true` (Sabonete, Shampoo, Toalha — sem nenhum incorreto marcado).
-- Quando há apenas uma alternativa correta, mantém o comportamento atual (clique único).
+## Detalhes técnicos
 
-### Ajustes leves de linguagem
-
-Reescrever os `body` das casas 4, 9, 15, 19, 25 para soarem mais como conversa com a criança (frases curtas e diretas), sem mudar a mecânica nem o tipo.
+- Conversão de coordenadas: `pt = svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; const local = pt.matrixTransform(svg.getScreenCTM()!.inverse())`.
+- `setPointerCapture` no `pointerdown` para garantir captura mesmo se o ponteiro sair do raio da Nina.
+- Snap-back animado via state local `dragPos` em Board; quando `onDrop` é rejeitado, pai sinaliza via prop `rejectCount` (incrementa) e Board faz `animate` de volta para `position`.
+- Tamanho da Nina aumenta levemente (raio 22 → 26) e área de cada casa permanece 32 — suficiente para drop tátil.
 
 ## Fora do escopo
 
-- Tabuleiro, dado 1–3, Nina, número de casas, layout 1200×675, ausência de scroll, telas de início/instruções/final, modais e estilo geral permanecem intactos.
-- Casas de avanço/retorno (6, 12, 16, 22, 28), match (26), habits (27), synthesis (29) e finish (30) não mudam.
+- Conteúdo das casas, perguntas, feedbacks pedagógicos, dado 1–3, número de casas, layout, telas de início/instruções/final, estilo geral.
+- Não mudar `cells.ts` nem nenhum card de conteúdo.
 
 ## Arquivos afetados
 
-- `src/data/cells.ts` — reescreve casas 8, 13, 17, 23 e ajusta texto de 4, 9, 15, 19, 25.
-- `src/components/game/cards/ObjectCard.tsx` — implementa múltipla seleção condicional.
+- `src/components/game/BoardGame.tsx` — nova máquina de estados, handlers de drop, orientação dinâmica.
+- `src/components/game/Board.tsx` — props de destaque, Nina arrastável, drop-zones, fallback por clique.
+- `src/components/game/MoveToast.tsx` — novo componente de toast curto.
