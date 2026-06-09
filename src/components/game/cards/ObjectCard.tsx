@@ -15,7 +15,7 @@ export function ObjectCard({
       className="bg-white rounded-2xl p-7 shadow-2xl border-4 border-emerald-300 max-w-3xl w-full"
     >
       <div className="flex items-center gap-2 text-emerald-700 font-bold uppercase tracking-wide text-sm">
-        <span className="px-2 py-0.5 bg-emerald-100 rounded-full">Objeto certo</span>
+        <span className="px-2 py-0.5 bg-emerald-100 rounded-full">Cuidado do momento</span>
         <span>Casa {cell.id}</span>
       </div>
       <h3 className="mt-3 text-2xl font-bold text-slate-800">{cell.prompt}</h3>
