@@ -334,7 +334,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
           <div className="flex flex-wrap gap-1.5">
             <LegendChip color="#3fa9f5" label="Pergunta" />
             <LegendChip color="#7ed957" label="Cuidado do momento" />
-            <LegendChip color="#ffd93d" label="Conversa" />
+            <LegendChip color="#a78bfa" label="Você sabia?" />
             <LegendChip color="#ff8c42" label="Especial" />
           </div>
         </div>
