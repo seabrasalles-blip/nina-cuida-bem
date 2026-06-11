@@ -1,76 +1,60 @@
-# Revisão pedagógica do Corpo Bem Cuidado
 
-Reescrever o conteúdo das 30 casas para alinhar à BNCC EF01CI03, com situações reais da rotina da Nina, distratores plausíveis, feedbacks explicativos e "Você sabia?" com microdesafios fechados. A mecânica do jogo (dado 1–3, drag-and-drop da Nina, layout 1200×675, cards) e o visual permanecem intactos.
+# Inserção do banco fechado — Corpo Bem Cuidado
 
-## 1. Reestruturação das 30 casas (`src/data/cells.ts`)
+Objetivo: substituir o conteúdo das casas atuais pelos textos do banco enviado, sem editar enunciados, alternativas, gabaritos nem feedbacks. Mecânica, layout, visual e componentes permanecem.
 
-Nova ordem narrativa (acordar → café → escola/parque → lanche → nariz → banheiro → banho → dormir → síntese):
+## Decisões (já que as perguntas foram puladas)
 
-| # | Tipo | Tema |
-|---|------|------|
-| 1 | start | O dia da Nina começou |
-| 2 | question | Acordar — cuidar do rosto |
-| 3 | question | Como secar o rosto |
-| 4 | didYouKnow | Cuidar do corpo todos os dias |
-| 5 | question | Antes do café — lavar mãos |
-| 6 | advance | Nina lembrou de lavar as mãos (+1) |
-| 7 | question | Depois do café — proteger os dentes |
-| 8 | didYouKnow | O que são cáries? |
-| 9 | common | Nina vai para a escola/brincar |
-| 10 | question | Parque + lanche — mãos sujas |
-| 11 | question | Antes da fruta — lavar a maçã |
-| 12 | didYouKnow | Água limpa e alimentos |
-| 13 | question | Nariz escorrendo — usar lenço |
-| 14 | question | Depois do lenço — jogar fora + lavar mãos |
-| 15 | didYouKnow | Cuidar de mim e dos outros |
-| 16 | advance | Jogou lenço no lixo (+1) |
-| 17 | question | Depois do banheiro — lavar mãos |
-| 18 | didYouKnow | Mãos limpas ajudam a proteger |
-| 19 | question | Mãos "parecem limpas" → água e sabão |
-| 20 | question | Depois de suar — tomar banho |
-| 21 | question | Item do banho (sabonete) — escolha única, sem múltipla seleção |
-| 22 | advance | Nina tomou banho (+1) |
-| 23 | didYouKnow | Cuidado com os pés |
-| 24 | question | Antes de dormir — escovar os dentes |
-| 25 | didYouKnow | Água parada merece atenção |
-| 26 | match | Associar situação ↔ cuidado |
-| 27 | habits | Escolher hábitos saudáveis |
-| 28 | advance | Rotina bem cuidada (+1) |
-| 29 | synthesis | Síntese fechada (escolha única) |
-| 30 | finish | Corpo bem cuidado! |
+- **Casas extras sem questão correspondente**: as 12 casas `question` recebem exatamente as 12 questões do banco, em ordem narrativa do banco. Os títulos das casas são reescritos para refletir o tema da questão atribuída.
+- **Casa 21 (`object` — sabonete)**: o banco não traz item equivalente. Vira casa `common` ("Hora do banho") apenas com narração, sem card.
+- **10 "Você sabia?" → 7 casas**: mantenho 7 textos e descarto 3 cujo tema já é coberto por questão (VS5 banho, VS8 água contaminada, VS9 pés).
+- **Microdesafio do `DidYouKnowCard`**: o banco não fornece microdesafios. Para preservar os textos como você pediu, torno as alternativas opcionais no componente: quando ausentes, o card mostra selo + título + texto + ícone grande + "Continuar".
 
-Mudanças estruturais relevantes:
-- Remover a casa de retorno (`retreat`) atual que contradiz a narrativa ("Nina esqueceu de lavar as mãos antes do lanche"). Substituir por avanço positivo.
-- Casa 21 vira **escolha única** (sabonete vs bola/lápis), eliminando a necessidade de múltipla seleção e mantendo o `ObjectCard` atual.
-- Casa 23 passa a ser `didYouKnow` (Cuidado com os pés) — antes era `question` "antes de dormir".
-- Casa 25 passa a ser `didYouKnow` (Água parada) — antes era `didYouKnow` de água/fruta, agora deslocado para a casa 12.
-- Casa 29 vira síntese **fechada** com alternativas; tipo `synthesis` ganha campos `prompt`/`alternatives`/`feedbackCorrect`/`feedbackWrong` opcionais.
+## Mapeamento das 12 questões → casas `question`
 
-Todos os textos de `prompt`, `alternatives`, `feedbackCorrect`, `feedbackWrong`, `infoTitle`, `infoText`, `infoIcon` serão substituídos exatamente pelos enunciados fornecidos no briefing (casas 2, 3, 5, 7, 10, 11, 13, 14, 17, 19, 20, 21, 24 e 7 "Você sabia?").
+| Casa | Questão do banco | Tema |
+|------|------------------|------|
+| 2 | Q1 | Lavar as mãos antes de comer |
+| 3 | Q2 | Depois de usar o banheiro |
+| 5 | Q3 | Escovação e cáries |
+| 7 | Q4 | Escovar os dentes antes de dormir |
+| 10 | Q5 | Nariz escorrendo |
+| 11 | Q6 | Depois de assoar o nariz |
+| 13 | Q7 | Tossir ou espirrar |
+| 14 | Q8 | Banho e bem-estar |
+| 17 | Q9 | Frutas e verduras |
+| 19 | Q10 | Água potável |
+| 20 | Q11 | Água contaminada |
+| 24 | Q12 | Andar descalço em locais inadequados |
 
-## 2. Síntese fechada (`src/components/game/cards/SpecialCard.tsx`)
+Cada casa recebe: `title` (do banco), `prompt` (contexto + pergunta concatenados, exatamente como no banco), `alternatives` (4, na ordem A–D, com `correct: true` no gabarito), `feedbackCorrect` (dica/feedback do banco) e `feedbackWrong` (mesmo texto da dica, já que o banco fornece um único feedback).
 
-Hoje `SpecialCard` cobre `advance`/`retreat`/`synthesis` apenas com botão "Continuar". Para a casa 29:
-- Quando `cell.type === "synthesis"` e existir `cell.alternatives`, renderizar via `QuestionCard` (ou um modo "single-choice" dentro do `SpecialCard`) com feedback inline curto + "Continuar".
-- Comportamento: ao acertar/errar mostra feedback e avança para a casa 30. Não conta pontos diferentes — apenas fecha o jogo.
+## Mapeamento dos 7 "Você sabia?" → casas `didYouKnow`
 
-Decisão: reaproveitar `QuestionCard` no roteamento de `BoardGame.tsx` quando `synthesis` tiver alternativas; caso contrário cai no `SpecialCard` original.
+| Casa | Você sabia? | Tema |
+|------|-------------|------|
+| 4 | VS1 | Microrganismos nas mãos |
+| 8 | VS2 | Cáries |
+| 12 | VS3 | Gripe e resfriado |
+| 15 | VS4 | Lenço usado |
+| 18 | VS6 | Frutas e verduras |
+| 23 | VS7 | Água potável |
+| 25 | VS10 | Saúde coletiva |
 
-## 3. Roteamento (`src/components/game/BoardGame.tsx`)
+Descartados: VS5 (banho — coberto pela Q8), VS8 (água contaminada — Q11), VS9 (cuidado com os pés — Q12).
 
-- No switch por `cell.type`, no caso `synthesis`: se `cell.alternatives?.length`, renderizar `QuestionCard` com `onAnswer` que apenas avança (sem alterar pontuação) e mostra feedback; senão manter `SpecialCard`.
-- Remover qualquer tratamento do `retreat` se nenhuma casa o usar mais (manter o `case` por segurança, mas pode ficar inerte).
-- Atualizar a legenda se houver chip "Voltar".
+Cada casa recebe `infoTitle`, `infoText` e `infoIcon` (emoji apropriado), e fica **sem** `prompt`/`alternatives`.
 
-## 4. Tela de instruções (`src/components/game/InstructionsScreen.tsx`)
+## Demais casas (sem alteração de tipo)
 
-Atualizar descrições para refletir: só casas de **avanço** (sem retorno) e que a síntese final é uma escolha fechada.
+- 1 start, 6/16/22/28 advance, 9 common, 21 common (novo), 26 match, 27 habits, 29 synthesis, 30 finish — mantêm tipo e conteúdo atual.
 
-## Fora de escopo
+## Detalhes técnicos
 
-- Mecânica do dado, drag-and-drop, layout 1200×675, visual da Nina, paleta, fontes, estilos dos cards, `Board.tsx` (cores/ícones por tipo já existem).
-- Componentes `DidYouKnowCard`, `ObjectCard`, `MatchChallengeCard`, `HabitsChallengeCard`, `FeedbackCard` — não precisam de mudança estrutural; só recebem novo conteúdo via `cells.ts`.
+Arquivos a editar:
 
-## Arquivos
+- **`src/data/cells.ts`** — reescrever as 12 casas `question`, as 7 casas `didYouKnow`, e converter a casa 21 de `object` para `common`. Sem mudanças no `CellType`/`Cell` interface.
+- **`src/components/game/cards/DidYouKnowCard.tsx`** — tornar o bloco de microdesafio opcional. Quando `cell.alternatives` estiver vazio/ausente, renderizar apenas selo "Você sabia?", `infoTitle`, `infoText`, `infoIcon` (grande) e botão "Continuar" que chama o handler de avanço.
+- **`src/components/game/BoardGame.tsx`** — `handleDidYouKnow` passa a aceitar o caso sem resposta (continuar = avançar). Remover o `case "object"` se a casa 21 não usar mais esse tipo (ou manter o case inerte; preferir manter para segurança, sem cell que o acione).
 
-- editar: `src/data/cells.ts`, `src/components/game/BoardGame.tsx`, `src/components/game/cards/SpecialCard.tsx`, `src/components/game/InstructionsScreen.tsx`
+Fora de escopo: textos do banco (inalterados), `Board.tsx` (cores/ícones), demais componentes de card, layout 1200×675, paleta, fontes.

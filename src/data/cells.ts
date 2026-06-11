@@ -38,70 +38,65 @@ export const CELLS: Cell[] = [
   {
     id: 2,
     type: "question",
-    title: "Ao acordar",
+    title: "Lavar as mãos antes de comer",
     prompt:
-      "Nina acordou e vai começar o dia. Qual cuidado ajuda a limpar o rosto?",
+      "Nina brincou no parque e depois foi lanchar. Mesmo que suas mãos não parecessem muito sujas, ela lavou as mãos com água e sabão antes de comer. Por que esse cuidado é importante?",
     alternatives: [
-      { text: "Lavar o rosto", correct: true, icon: "💧" },
-      { text: "Colocar o sapato", correct: false, icon: "👟" },
-      { text: "Guardar o brinquedo", correct: false, icon: "🧸" },
+      { text: "Porque ajuda a tirar sujeiras e microrganismos que podem fazer mal à saúde.", correct: true },
+      { text: "Porque deixa o lanche mais doce.", correct: false },
+      { text: "Porque faz a comida durar mais tempo.", correct: false },
+      { text: "Porque muda a cor das mãos.", correct: false },
     ],
     feedbackCorrect:
-      "Muito bem! Lavar o rosto ajuda a tirar suor e sujeirinhas, deixando o corpo mais confortável para começar o dia.",
+      "Lavar as mãos antes de comer ajuda a evitar que sujeiras e microrganismos cheguem à boca.",
     feedbackWrong:
-      "Observe a situação. Nina acabou de acordar. Qual cuidado combina com o rosto?",
+      "Lavar as mãos antes de comer ajuda a evitar que sujeiras e microrganismos cheguem à boca.",
   },
 
   {
     id: 3,
     type: "question",
-    title: "Depois de lavar o rosto",
-    prompt: "Nina lavou o rosto. Como pode secar o rosto com cuidado?",
+    title: "Depois de usar o banheiro",
+    prompt:
+      "Depois de usar o banheiro, Nina foi até a pia e lavou as mãos com água e sabão. Esse hábito ajuda a:",
     alternatives: [
-      { text: "Usar uma toalha limpa", correct: true, icon: "🧺" },
-      { text: "Secar na camiseta", correct: false, icon: "👕" },
-      { text: "Sair correndo com o rosto molhado", correct: false, icon: "💨" },
+      { text: "espalhar sujeiras pela casa.", correct: false },
+      { text: "proteger a saúde e evitar que microrganismos passem para objetos, alimentos ou pessoas.", correct: true },
+      { text: "deixar o banheiro mais bonito.", correct: false },
+      { text: "fazer a água ficar colorida.", correct: false },
     ],
     feedbackCorrect:
-      "Isso mesmo! Usar uma toalha limpa ajuda a secar o rosto com cuidado e conforto.",
+      "Depois de usar o banheiro, lavar as mãos ajuda a evitar a transmissão de microrganismos.",
     feedbackWrong:
-      "Depois de lavar o rosto, é melhor usar uma toalha limpa.",
+      "Depois de usar o banheiro, lavar as mãos ajuda a evitar a transmissão de microrganismos.",
   },
 
   {
     id: 4,
     type: "didYouKnow",
-    title: "Cuidar do corpo todos os dias",
-    infoIcon: "🧼",
-    infoTitle: "Cuidar do corpo todos os dias",
+    title: "Microrganismos nas mãos",
+    infoIcon: "🦠",
+    infoTitle: "Microrganismos nas mãos",
     infoText:
-      "Lavar o rosto, tomar banho e lavar as mãos são cuidados que fazem parte da rotina. Eles ajudam o corpo a ficar limpo e confortável.",
-    prompt: "Qual atitude ajuda a cuidar do corpo?",
-    alternatives: [
-      { text: "Lavar as mãos", correct: true, icon: "🧼" },
-      { text: "Comer com as mãos sujas", correct: false, icon: "🙅" },
-      { text: "Usar a camiseta como toalha", correct: false, icon: "👕" },
-    ],
-    feedbackCorrect:
-      "Muito bem! Lavar as mãos é um cuidado importante da rotina.",
-    feedbackWrong:
-      "Essa atitude não ajuda tanto o corpo. Para cuidar da higiene, lavar as mãos é uma boa escolha.",
+      "Nas mãos podem existir microrganismos tão pequenos que não conseguimos ver. Lavar as mãos com água e sabão ajuda a retirar muitos deles.",
   },
 
   {
     id: 5,
     type: "question",
-    title: "Antes do café",
-    prompt: "Nina vai tomar café. O que deve fazer antes de comer?",
+    title: "Escovação e cáries",
+    prompt:
+      "Depois do almoço, Nina escovou os dentes. Esse cuidado ajuda a retirar restos de comida que ficam na boca. Escovar os dentes depois das refeições ajuda a evitar:",
     alternatives: [
-      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
-      { text: "Comer com as mãos sujas", correct: false, icon: "🙅" },
-      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
+      { text: "cáries.", correct: true },
+      { text: "tosse.", correct: false },
+      { text: "machucados no pé.", correct: false },
+      { text: "sujeira no cabelo.", correct: false },
     ],
     feedbackCorrect:
-      "Isso mesmo! Lavar as mãos antes de comer ajuda a tirar sujeiras e microrganismos que podem fazer mal à saúde.",
+      "A cárie pode aparecer quando restos de comida ficam nos dentes e favorecem a ação de bactérias.",
     feedbackWrong:
-      "Antes de comer, precisamos cuidar das mãos. Lavar com água e sabão ajuda a proteger a saúde.",
+      "A cárie pode aparecer quando restos de comida ficam nos dentes e favorecem a ação de bactérias.",
   },
 
   {
@@ -115,37 +110,29 @@ export const CELLS: Cell[] = [
   {
     id: 7,
     type: "question",
-    title: "Depois do café",
-    prompt: "Nina terminou o café da manhã. Qual cuidado ajuda a proteger os dentes?",
+    title: "Escovar os dentes antes de dormir",
+    prompt:
+      "Antes de dormir, Nina escovou os dentes. Ela aprendeu que a boca também precisa de cuidado durante a noite. Por que é importante escovar os dentes antes de dormir?",
     alternatives: [
-      { text: "Escovar os dentes", correct: true, icon: "🪥" },
-      { text: "Lavar os sapatos", correct: false, icon: "👟" },
-      { text: "Guardar o prato e esquecer os dentes", correct: false, icon: "🍽️" },
+      { text: "Porque a escova serve para brincar.", correct: false },
+      { text: "Porque ajuda a proteger os dentes por muitas horas.", correct: true },
+      { text: "Porque faz o travesseiro ficar limpo.", correct: false },
+      { text: "Porque impede a pessoa de sonhar.", correct: false },
     ],
     feedbackCorrect:
-      "Ótima escolha! Escovar os dentes ajuda a retirar restos de comida e cuidar da boca.",
+      "Durante a noite, ficamos muitas horas sem escovar os dentes novamente; por isso, dormir com a boca limpa ajuda a proteger os dentes.",
     feedbackWrong:
-      "Depois de comer, também precisamos cuidar dos dentes.",
+      "Durante a noite, ficamos muitas horas sem escovar os dentes novamente; por isso, dormir com a boca limpa ajuda a proteger os dentes.",
   },
 
   {
     id: 8,
     type: "didYouKnow",
-    title: "O que são cáries?",
+    title: "Cáries",
     infoIcon: "🦷",
-    infoTitle: "O que são cáries?",
+    infoTitle: "Cáries",
     infoText:
-      "Cáries podem aparecer quando restos de comida ficam nos dentes. Escovar os dentes ajuda a proteger a boca.",
-    prompt: "Qual atitude ajuda a evitar cáries?",
-    alternatives: [
-      { text: "Escovar os dentes depois das refeições", correct: true, icon: "🪥" },
-      { text: "Dormir sem escovar os dentes", correct: false, icon: "💤" },
-      { text: "Comer e nunca cuidar da boca", correct: false, icon: "🍭" },
-    ],
-    feedbackCorrect:
-      "Isso mesmo! Escovar os dentes ajuda a retirar restos de comida e cuidar da boca.",
-    feedbackWrong:
-      "Depois de comer, precisamos cuidar dos dentes. Escovar os dentes ajuda a proteger a boca.",
+      "Na boca vivem bactérias invisíveis que gostam de restos de açúcar dos alimentos. Quando elas se alimentam desses pedacinhos, produzem um ácido que pode machucar o dente e formar a cárie.",
   },
 
   { id: 9, type: "common", title: "A caminho do parque", body: "Nina vai brincar." },
@@ -153,107 +140,93 @@ export const CELLS: Cell[] = [
   {
     id: 10,
     type: "question",
-    title: "Antes do lanche",
+    title: "Nariz escorrendo",
     prompt:
-      "Nina brincou no parque e ficou com as mãos sujas. O que deve fazer antes do lanche?",
+      "Nina está resfriada e com o nariz escorrendo. Ela usa um lenço limpo para assoar o nariz. Por que essa atitude é importante?",
     alternatives: [
-      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
-      { text: "Comer mesmo assim", correct: false, icon: "🍞" },
-      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
+      { text: "Porque ajuda a limpar o nariz e evita espalhar secreções.", correct: true },
+      { text: "Porque deixa a camiseta mais limpa.", correct: false },
+      { text: "Porque faz o resfriado sumir na hora.", correct: false },
+      { text: "Porque o lenço deve ser guardado no bolso.", correct: false },
     ],
     feedbackCorrect:
-      "Muito bem! Lavar as mãos antes do lanche ajuda a proteger a saúde.",
+      "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
     feedbackWrong:
-      "Antes de comer, lavar as mãos é o cuidado mais seguro.",
+      "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
   },
 
   {
     id: 11,
     type: "question",
-    title: "Antes da fruta",
-    prompt: "Nina quer comer uma maçã. O que precisa fazer antes?",
+    title: "Depois de assoar o nariz",
+    prompt:
+      "Depois de assoar o nariz, Nina joga o lenço usado no lixo e lava as mãos. Essa atitude ajuda a:",
     alternatives: [
-      { text: "Lavar a maçã com água limpa", correct: true, icon: "🍎" },
-      { text: "Comer sem lavar", correct: false, icon: "🙈" },
-      { text: "Limpar a maçã na camiseta", correct: false, icon: "👕" },
+      { text: "cuidar apenas dos brinquedos.", correct: false },
+      { text: "evitar que secreções e microrganismos se espalhem.", correct: true },
+      { text: "deixar o lenço pronto para outra pessoa usar.", correct: false },
+      { text: "fazer o lixo desaparecer.", correct: false },
     ],
     feedbackCorrect:
-      "Isso mesmo! Lavar frutas com água limpa ajuda a tirar sujeiras antes de comer.",
+      "Lenços usados podem carregar secreções. Jogar no lixo e lavar as mãos ajuda a cuidar da saúde coletiva.",
     feedbackWrong:
-      "Antes de comer frutas, é importante lavá-las com água limpa.",
+      "Lenços usados podem carregar secreções. Jogar no lixo e lavar as mãos ajuda a cuidar da saúde coletiva.",
   },
 
   {
     id: 12,
     type: "didYouKnow",
-    title: "Água limpa e alimentos",
-    infoIcon: "💧",
-    infoTitle: "Água limpa e alimentos",
+    title: "Gripe e resfriado",
+    infoIcon: "🤧",
+    infoTitle: "Gripe e resfriado",
     infoText:
-      "Para beber água e lavar alimentos, é importante usar água limpa. Isso ajuda a evitar doenças e cuida da saúde de todos.",
-    prompt: "Qual é a melhor atitude antes de comer uma fruta?",
-    alternatives: [
-      { text: "Lavar a fruta com água limpa", correct: true, icon: "🍎" },
-      { text: "Comer a fruta sem lavar", correct: false, icon: "🙈" },
-      { text: "Lavar a fruta em água suja", correct: false, icon: "🪣" },
-    ],
-    feedbackCorrect:
-      "Isso mesmo! Lavar alimentos com água limpa ajuda a cuidar da saúde.",
-    feedbackWrong:
-      "Antes de comer frutas, é importante lavá-las com água limpa.",
+      "Quando uma pessoa gripada tosse, espirra ou assoa o nariz, pequenas gotinhas podem espalhar microrganismos. Por isso, usar lenço, cobrir boca e nariz e lavar as mãos ajuda a cuidar de todos.",
   },
 
   {
     id: 13,
     type: "question",
-    title: "Nariz escorrendo",
+    title: "Tossir ou espirrar",
     prompt:
-      "O nariz da Nina está escorrendo. Qual atitude ajuda a cuidar dela e das pessoas ao redor?",
+      "Quando Nina espirra, ela cobre a boca e o nariz com o braço ou com um lenço. Depois, lava as mãos. Essa atitude ajuda a:",
     alternatives: [
-      { text: "Usar um lenço limpo", correct: true, icon: "🧻" },
-      { text: "Limpar na manga da camiseta", correct: false, icon: "👕" },
-      { text: "Limpar com a mão", correct: false, icon: "✋" },
+      { text: "espalhar gotinhas pelo ar.", correct: false },
+      { text: "diminuir a chance de transmitir gripe ou resfriado para outras pessoas.", correct: true },
+      { text: "deixar a sala mais barulhenta.", correct: false },
+      { text: "fazer as mãos ficarem sujas por mais tempo.", correct: false },
     ],
     feedbackCorrect:
-      "Muito bem! Usar lenço limpo ajuda a cuidar do nariz. Depois, Nina deve jogar o lenço no lixo e lavar as mãos.",
+      "Ao tossir ou espirrar, pequenas gotinhas podem sair da boca e do nariz. Cobrir e lavar as mãos ajuda a proteger todos.",
     feedbackWrong:
-      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo.",
+      "Ao tossir ou espirrar, pequenas gotinhas podem sair da boca e do nariz. Cobrir e lavar as mãos ajuda a proteger todos.",
   },
 
   {
     id: 14,
     type: "question",
-    title: "Depois do lenço",
-    prompt: "Nina usou um lenço para limpar o nariz. O que deve fazer depois?",
+    title: "Banho e bem-estar",
+    prompt:
+      "Depois de correr, brincar e suar, Nina tomou banho e colocou uma roupa limpa. Esse cuidado ajuda porque:",
     alternatives: [
-      { text: "Jogar o lenço no lixo e lavar as mãos", correct: true, icon: "🗑️" },
-      { text: "Guardar o lenço usado", correct: false, icon: "👖" },
-      { text: "Deixar o lenço em cima da mesa", correct: false, icon: "📄" },
+      { text: "limpa o corpo e traz conforto.", correct: true },
+      { text: "impede a criança de brincar novamente.", correct: false },
+      { text: "faz os brinquedos ficarem limpos.", correct: false },
+      { text: "muda o tamanho da roupa.", correct: false },
     ],
     feedbackCorrect:
-      "Isso mesmo! Esse cuidado ajuda Nina e também as pessoas ao redor.",
+      "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
     feedbackWrong:
-      "Depois de usar o lenço, o melhor é jogá-lo no lixo e lavar as mãos.",
+      "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
   },
 
   {
     id: 15,
     type: "didYouKnow",
-    title: "Cuidar de mim e dos outros",
-    infoIcon: "🤧",
-    infoTitle: "Cuidar de mim e dos outros",
+    title: "Lenço usado",
+    infoIcon: "🧻",
+    infoTitle: "Lenço usado",
     infoText:
-      "Quando usamos lenço para limpar o nariz e lavamos as mãos depois, ajudamos a cuidar da nossa saúde e da saúde das pessoas ao redor.",
-    prompt: "Nina usou um lenço. O que ela deve fazer depois?",
-    alternatives: [
-      { text: "Jogar o lenço no lixo e lavar as mãos", correct: true, icon: "🧻" },
-      { text: "Guardar o lenço usado no bolso", correct: false, icon: "👖" },
-      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
-    ],
-    feedbackCorrect:
-      "Muito bem! Esse cuidado ajuda Nina e também as pessoas ao redor.",
-    feedbackWrong:
-      "Depois de usar o lenço, o melhor é jogá-lo no lixo e lavar as mãos.",
+      "O lenço usado pode ficar com secreções do nariz. Jogá-lo no lixo e lavar as mãos depois ajuda a evitar que microrganismos se espalhem.",
   },
 
   {
@@ -267,86 +240,72 @@ export const CELLS: Cell[] = [
   {
     id: 17,
     type: "question",
-    title: "Depois do banheiro",
-    prompt: "Nina acabou de usar o banheiro. Qual cuidado vem agora?",
+    title: "Frutas e verduras",
+    prompt:
+      "Nina vai comer uma maçã. Antes disso, um adulto ajuda a lavar a fruta com água limpa. Por que lavar frutas e verduras antes de comer é importante?",
     alternatives: [
-      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
-      { text: "Sair correndo para brincar", correct: false, icon: "🏃" },
-      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
+      { text: "Porque ajuda a retirar sujeiras que podem estar na casca ou nas folhas.", correct: true },
+      { text: "Porque faz todas as frutas ficarem quentes.", correct: false },
+      { text: "Porque transforma fruta em doce.", correct: false },
+      { text: "Porque muda o nome do alimento.", correct: false },
     ],
     feedbackCorrect:
-      "Muito bem! Depois de usar o banheiro, lavar as mãos com água e sabão ajuda a proteger a saúde.",
+      "Frutas e verduras podem ter poeira, terra ou microrganismos. Lavar com água limpa ajuda a cuidar da saúde.",
     feedbackWrong:
-      "Depois de usar o banheiro, lavar as mãos é um cuidado importante.",
+      "Frutas e verduras podem ter poeira, terra ou microrganismos. Lavar com água limpa ajuda a cuidar da saúde.",
   },
 
   {
     id: 18,
     type: "didYouKnow",
-    title: "Mãos limpas ajudam a proteger",
-    infoIcon: "🦠",
-    infoTitle: "Mãos limpas ajudam a proteger",
+    title: "Frutas e verduras",
+    infoIcon: "🍎",
+    infoTitle: "Frutas e verduras",
     infoText:
-      "Nas mãos podem existir microrganismos, seres tão pequenos que não conseguimos ver. Lavar as mãos com água e sabão ajuda a retirar muitos deles.",
-    prompt: "Quando é importante lavar as mãos?",
-    alternatives: [
-      { text: "Antes de comer e depois de usar o banheiro", correct: true, icon: "🧼" },
-      { text: "Só quando a mão parece limpa", correct: false, icon: "✋" },
-      { text: "Nunca precisa lavar", correct: false, icon: "🙅" },
-    ],
-    feedbackCorrect:
-      "Ótima escolha! Lavar as mãos nesses momentos ajuda a proteger a saúde.",
-    feedbackWrong:
-      "Mesmo quando parecem limpas, as mãos podem ter microrganismos. Por isso, lavamos as mãos antes de comer e depois de usar o banheiro.",
+      "Frutas e verduras podem trazer poeira, terra ou microrganismos na casca e nas folhas. Lavar os alimentos com água limpa antes de comer ajuda a proteger a saúde.",
   },
 
   {
     id: 19,
     type: "question",
-    title: "Mesmo quando parecem limpas",
+    title: "Água potável",
     prompt:
-      "Mesmo quando as mãos parecem limpas, ainda podem ter microrganismos. O que ajuda a retirá-los?",
+      "Nina aprendeu que nem toda água é própria para beber. Para matar a sede, ela deve beber água limpa e segura. Por que não devemos beber água de qualquer lugar?",
     alternatives: [
-      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
-      { text: "Assoprar as mãos", correct: false, icon: "💨" },
-      { text: "Esconder as mãos no bolso", correct: false, icon: "👖" },
+      { text: "Porque algumas águas podem estar contaminadas e causar doenças.", correct: true },
+      { text: "Porque água limpa faz mal ao corpo.", correct: false },
+      { text: "Porque beber água nunca é importante.", correct: false },
+      { text: "Porque toda água tem o mesmo cuidado.", correct: false },
     ],
     feedbackCorrect:
-      "Isso mesmo! Água e sabão ajudam a retirar muitos microrganismos das mãos.",
+      "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
     feedbackWrong:
-      "Para limpar bem as mãos, usamos água e sabão.",
+      "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
   },
 
   {
     id: 20,
     type: "question",
-    title: "Depois de suar",
-    prompt: "Depois de correr e suar bastante, qual cuidado ajuda o corpo?",
+    title: "Água contaminada",
+    prompt:
+      "Depois da chuva, apareceu uma poça de água suja perto da rua. Nina não brincou nessa água. Por que é melhor evitar contato com água suja ou contaminada?",
     alternatives: [
-      { text: "Tomar banho", correct: true, icon: "🚿" },
-      { text: "Colocar a mesma roupa suada para dormir", correct: false, icon: "👕" },
-      { text: "Não cuidar do corpo", correct: false, icon: "🙅" },
+      { text: "Porque essa água pode ter sujeiras e microrganismos que causam doenças.", correct: true },
+      { text: "Porque toda poça de água é limpa.", correct: false },
+      { text: "Porque a água suja sempre tem cheiro bom.", correct: false },
+      { text: "Porque microrganismos sempre aparecem bem grandes.", correct: false },
     ],
     feedbackCorrect:
-      "Muito bem! O banho ajuda a limpar o corpo e traz bem-estar depois de brincar e suar.",
+      "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
     feedbackWrong:
-      "Depois de correr e suar, o banho ajuda a limpar o corpo.",
+      "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
   },
 
   {
     id: 21,
-    type: "object",
+    type: "common",
     title: "Hora do banho",
-    prompt: "Nina vai tomar banho. Qual item ajuda a lavar o corpo?",
-    alternatives: [
-      { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Bola", correct: false, icon: "⚽" },
-      { text: "Lápis", correct: false, icon: "✏️" },
-    ],
-    feedbackCorrect:
-      "Muito bem! O sabonete ajuda a limpar o corpo durante o banho.",
-    feedbackWrong:
-      "Para lavar o corpo no banho, usamos sabonete.",
+    body: "Nina se prepara para o banho.",
   },
 
   {
@@ -360,58 +319,39 @@ export const CELLS: Cell[] = [
   {
     id: 23,
     type: "didYouKnow",
-    title: "Cuidado com os pés",
-    infoIcon: "🦶",
-    infoTitle: "Cuidado com os pés",
+    title: "Água potável",
+    infoIcon: "💧",
+    infoTitle: "Água potável",
     infoText:
-      "Em alguns lugares, andar descalço pode machucar os pés ou colocar o corpo em contato com sujeiras. Usar calçado ajuda a proteger.",
-    prompt: "Onde é melhor usar calçado?",
-    alternatives: [
-      { text: "Em lugar com sujeira, pedras ou água duvidosa", correct: true, icon: "👟" },
-      { text: "No tapete limpo de casa, sempre", correct: false, icon: "🏠" },
-      { text: "Dentro da cama", correct: false, icon: "🛏️" },
-    ],
-    feedbackCorrect:
-      "Isso mesmo! Em alguns lugares, o calçado ajuda a proteger os pés e a saúde.",
-    feedbackWrong:
-      "Em lugares com sujeira, pedras ou água duvidosa, é melhor proteger os pés.",
+      "Água potável é a água própria para beber. Ela precisa estar limpa e segura, porque água contaminada pode causar doenças.",
   },
 
   {
     id: 24,
     type: "question",
-    title: "Antes de dormir",
+    title: "Andar descalço em locais inadequados",
     prompt:
-      "Nina está se preparando para dormir. Qual cuidado ajuda a proteger os dentes durante a noite?",
+      "Nina gosta de ficar descalça em casa, mas usa calçados quando está em lugares com sujeira, pedras ou água duvidosa. Por que usar calçados nesses lugares é uma atitude de cuidado?",
     alternatives: [
-      { text: "Escovar os dentes", correct: true, icon: "🪥" },
-      { text: "Comer doce e dormir", correct: false, icon: "🍭" },
-      { text: "Lavar só as mãos e esquecer os dentes", correct: false, icon: "🙈" },
+      { text: "Porque ajuda a proteger os pés e evita contato com sujeiras que podem fazer mal.", correct: true },
+      { text: "Porque os pés nunca precisam de cuidado.", correct: false },
+      { text: "Porque andar descalço limpa o chão.", correct: false },
+      { text: "Porque os calçados fazem a sujeira desaparecer.", correct: false },
     ],
     feedbackCorrect:
-      "Boa escolha! Escovar os dentes antes de dormir ajuda a cuidar da boca durante a noite.",
+      "Em alguns lugares, o calçado protege os pés de machucados, sujeiras e possíveis contaminações.",
     feedbackWrong:
-      "Antes de dormir, também precisamos cuidar dos dentes.",
+      "Em alguns lugares, o calçado protege os pés de machucados, sujeiras e possíveis contaminações.",
   },
 
   {
     id: 25,
     type: "didYouKnow",
-    title: "Água parada merece atenção",
-    infoIcon: "🪣",
-    infoTitle: "Água parada merece atenção",
+    title: "Saúde coletiva",
+    infoIcon: "🤝",
+    infoTitle: "Saúde coletiva",
     infoText:
-      "Água parada pode juntar sujeira e atrair insetos. Manter os espaços limpos ajuda a cuidar da saúde de todos.",
-    prompt: "Qual atitude ajuda a cuidar do ambiente?",
-    alternatives: [
-      { text: "Evitar água parada em potes e quintais", correct: true, icon: "🪣" },
-      { text: "Deixar água parada acumulando", correct: false, icon: "💧" },
-      { text: "Jogar lixo perto da água", correct: false, icon: "🗑️" },
-    ],
-    feedbackCorrect:
-      "Muito bem! Cuidar do ambiente também ajuda a proteger a saúde coletiva.",
-    feedbackWrong:
-      "Água parada pode trazer problemas. O melhor é manter os espaços limpos e sem água acumulada.",
+      "Alguns hábitos de higiene cuidam de uma pessoa e também das outras. Lavar as mãos, usar lenço e não compartilhar objetos sujos ajudam a proteger a saúde coletiva.",
   },
 
   { id: 26, type: "match", title: "Associe", prompt: "Ligue cada momento ao cuidado certo." },
