@@ -9,8 +9,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
       <motion.div
         className="absolute -top-10 -right-10 w-56 h-56 rounded-full"
         style={{
-          background:
-            "radial-gradient(circle at 35% 35%, #fff3a8, #ffd93d 60%, #ff8c42)",
+          background: "radial-gradient(circle at 35% 35%, #fff3a8, #ffd93d 60%, #ff8c42)",
           filter: "blur(1px)",
         }}
         animate={{ rotate: 360 }}
@@ -22,10 +21,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
       <Cloud className="absolute top-6 right-1/3 w-24 opacity-85" />
 
       {/* Decorative board trail */}
-      <svg
-        viewBox="0 0 1200 675"
-        className="absolute inset-0 w-full h-full pointer-events-none"
-      >
+      <svg viewBox="0 0 1200 675" className="absolute inset-0 w-full h-full pointer-events-none">
         <path
           d="M -20 540 Q 200 460 380 520 T 760 500 T 1180 460"
           fill="none"
@@ -65,7 +61,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
           className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full bg-white/90 border-2 border-game-sky-soft text-game-sky text-xs font-bold tracking-wide uppercase shadow-card-soft"
         >
           <span>🎲</span>
-          <span>Atividade · 1º ano · EF01CI03</span>
+          <span>Jogo de Tabuleiro</span>
         </motion.div>
         <motion.h1
           initial={{ y: 12, opacity: 0 }}
@@ -97,9 +93,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
           </span>
           Começar
         </motion.button>
-        <p className="mt-3 text-sm text-game-ink-soft font-semibold">
-          Para crianças de 6 a 7 anos
-        </p>
+        <p className="mt-3 text-sm text-game-ink-soft font-semibold"></p>
       </div>
 
       {/* Nina + satellites */}
@@ -111,8 +105,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
           transition={{ delay: 0.2 }}
           className="absolute bottom-16 w-[360px] h-[360px] rounded-full"
           style={{
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%)",
           }}
         />
         <motion.div
@@ -149,9 +142,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
               right: it.right,
             }}
           >
-            <span
-              className="inline-flex w-16 h-16 items-center justify-center rounded-2xl bg-white border-[3px] border-game-sky-soft shadow-card-soft"
-            >
+            <span className="inline-flex w-16 h-16 items-center justify-center rounded-2xl bg-white border-[3px] border-game-sky-soft shadow-card-soft">
               {it.emoji}
             </span>
           </motion.div>
