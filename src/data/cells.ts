@@ -3,7 +3,7 @@ export type CellType =
   | "common"
   | "question"
   | "object"
-  | "conversation"
+  | "didYouKnow"
   | "advance"
   | "retreat"
   | "match"
@@ -26,7 +26,10 @@ export interface Cell {
   feedbackCorrect?: string;
   feedbackWrong?: string;
   delta?: number; // for advance/retreat
-  body?: string; // for conversation / special
+  body?: string; // for special / synthesis / common
+  infoTitle?: string; // for didYouKnow
+  infoText?: string; // for didYouKnow (max 2 short sentences)
+  infoIcon?: string; // for didYouKnow
 }
 
 export const CELLS: Cell[] = [
