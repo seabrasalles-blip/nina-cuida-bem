@@ -8,7 +8,7 @@ import { NinaSpeech } from "./NinaSpeech";
 import { MoveToast } from "./MoveToast";
 import { QuestionCard } from "./cards/QuestionCard";
 import { ObjectCard } from "./cards/ObjectCard";
-import { ConversationCard } from "./cards/ConversationCard";
+import { DidYouKnowCard } from "./cards/DidYouKnowCard";
 import { SpecialCard } from "./cards/SpecialCard";
 import { MatchChallengeCard } from "./cards/MatchChallengeCard";
 import { HabitsChallengeCard } from "./cards/HabitsChallengeCard";
@@ -55,7 +55,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
     if (
       c.type === "question" ||
       c.type === "object" ||
-      c.type === "conversation" ||
+      c.type === "didYouKnow" ||
       c.type === "advance" ||
       c.type === "retreat" ||
       c.type === "match" ||
@@ -143,12 +143,11 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
     });
   };
 
-  const handleConversation = () => {
-    setStage({
-      kind: "feedback",
-      correct: true,
-      text: "Muito bem! Conversar ajuda a aprender com outras pessoas.",
-    });
+  const handleDidYouKnow = () => {
+    setStage({ kind: "idle" });
+    if (position >= 30) {
+      setTimeout(onFinish, 400);
+    }
   };
 
   const handleSpecial = () => {
@@ -203,8 +202,8 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         return <QuestionCard cell={cell} onAnswer={handleAnswer} />;
       case "object":
         return <ObjectCard cell={cell} onAnswer={handleAnswer} />;
-      case "conversation":
-        return <ConversationCard cell={cell} onDone={handleConversation} />;
+      case "didYouKnow":
+        return <DidYouKnowCard cell={cell} onDone={handleDidYouKnow} />;
       case "advance":
       case "retreat":
         return <SpecialCard cell={cell} onContinue={handleSpecial} />;
@@ -335,7 +334,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
           <div className="flex flex-wrap gap-1.5">
             <LegendChip color="#3fa9f5" label="Pergunta" />
             <LegendChip color="#7ed957" label="Cuidado do momento" />
-            <LegendChip color="#ffd93d" label="Conversa" />
+            <LegendChip color="#a78bfa" label="Você sabia?" />
             <LegendChip color="#ff8c42" label="Especial" />
           </div>
         </div>
