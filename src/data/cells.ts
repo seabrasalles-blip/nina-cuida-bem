@@ -66,9 +66,22 @@ export const CELLS: Cell[] = [
   },
   {
     id: 4,
-    type: "conversation",
-    title: "Converse",
-    body: "Que cuidados você faz quando acorda? Converse com um colega ou professor.",
+    type: "didYouKnow",
+    title: "Cuidar do corpo todos os dias",
+    infoIcon: "🧼",
+    infoTitle: "Cuidar do corpo todos os dias",
+    infoText:
+      "Lavar o rosto, tomar banho e lavar as mãos são cuidados que fazem parte da rotina. Eles ajudam o corpo a ficar limpo e confortável.",
+    prompt: "Qual dessas ações ajuda a cuidar do corpo?",
+    alternatives: [
+      { text: "Lavar as mãos", correct: true, icon: "🧼" },
+      { text: "Comer com as mãos sujas", correct: false, icon: "🙅" },
+      { text: "Usar a camiseta como toalha", correct: false, icon: "👕" },
+    ],
+    feedbackCorrect:
+      "Muito bem! Lavar as mãos é um cuidado importante da rotina.",
+    feedbackWrong:
+      "Essa atitude não ajuda tanto o corpo. Para cuidar da higiene, lavar as mãos é uma boa escolha.",
   },
   {
     id: 5,
@@ -123,9 +136,22 @@ export const CELLS: Cell[] = [
   },
   {
     id: 9,
-    type: "conversation",
-    title: "Converse",
-    body: "Por que precisamos cuidar dos dentes? Converse e conte uma ideia.",
+    type: "didYouKnow",
+    title: "O que são cáries?",
+    infoIcon: "🦷",
+    infoTitle: "O que são cáries?",
+    infoText:
+      "Cáries podem aparecer quando restos de comida ficam nos dentes. Escovar os dentes ajuda a proteger a boca.",
+    prompt: "Qual atitude ajuda a evitar cáries?",
+    alternatives: [
+      { text: "Escovar os dentes depois das refeições", correct: true, icon: "🪥" },
+      { text: "Dormir sem escovar os dentes", correct: false, icon: "💤" },
+      { text: "Comer e nunca cuidar da boca", correct: false, icon: "🍭" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Escovar os dentes ajuda a retirar restos de comida e cuidar da boca.",
+    feedbackWrong:
+      "Depois de comer, precisamos cuidar dos dentes. Escovar os dentes ajuda a proteger a boca.",
   },
   { id: 10, type: "common", title: "Parque", body: "Nina vai brincar no parque." },
   {
@@ -184,9 +210,22 @@ export const CELLS: Cell[] = [
   },
   {
     id: 15,
-    type: "conversation",
-    title: "Converse",
-    body: "Como cuidamos dos colegas quando estamos gripados? Converse com a turma.",
+    type: "didYouKnow",
+    title: "Cuidar de mim e dos outros",
+    infoIcon: "🤧",
+    infoTitle: "Cuidar de mim e dos outros",
+    infoText:
+      "Quando usamos lenço para limpar o nariz e lavamos as mãos depois, ajudamos a cuidar da nossa saúde e da saúde das pessoas ao redor.",
+    prompt: "Nina espirrou e limpou o nariz. O que ela deve fazer depois?",
+    alternatives: [
+      { text: "Jogar o lenço no lixo e lavar as mãos", correct: true, icon: "🧻" },
+      { text: "Guardar o lenço usado no bolso", correct: false, icon: "👖" },
+      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
+    ],
+    feedbackCorrect:
+      "Muito bem! Esse cuidado ajuda Nina e também as pessoas ao redor.",
+    feedbackWrong:
+      "Depois de usar o lenço, o melhor é jogá-lo no lixo e lavar as mãos.",
   },
   {
     id: 16,
@@ -228,9 +267,22 @@ export const CELLS: Cell[] = [
   },
   {
     id: 19,
-    type: "conversation",
-    title: "Converse",
-    body: "Em quais momentos lavamos as mãos? Converse e lembre de exemplos.",
+    type: "didYouKnow",
+    title: "Mãos limpas ajudam a proteger",
+    infoIcon: "🦠",
+    infoTitle: "Mãos limpas ajudam a proteger",
+    infoText:
+      "Nas mãos podem existir microrganismos, seres tão pequenos que não conseguimos ver. Lavar as mãos com água e sabão ajuda a retirar muitos deles.",
+    prompt: "Quando é importante lavar as mãos?",
+    alternatives: [
+      { text: "Antes de comer e depois de usar o banheiro", correct: true, icon: "🧼" },
+      { text: "Só quando a mão parece limpa", correct: false, icon: "✋" },
+      { text: "Nunca precisa lavar", correct: false, icon: "🙅" },
+    ],
+    feedbackCorrect:
+      "Ótima escolha! Lavar as mãos nesses momentos ajuda a proteger a saúde.",
+    feedbackWrong:
+      "Mesmo quando parecem limpas, as mãos podem ter microrganismos. Por isso, lavamos as mãos antes de comer e depois de usar o banheiro.",
   },
   {
     id: 20,
@@ -305,9 +357,22 @@ export const CELLS: Cell[] = [
   },
   {
     id: 25,
-    type: "conversation",
-    title: "Converse",
-    body: "Qual cuidado com o corpo você acha importante? Conte para alguém.",
+    type: "didYouKnow",
+    title: "Água limpa também é cuidado",
+    infoIcon: "💧",
+    infoTitle: "Água limpa também é cuidado",
+    infoText:
+      "Para beber água e lavar alimentos, é importante usar água limpa. Isso ajuda a evitar doenças e cuida da saúde de todos.",
+    prompt: "Qual é a melhor atitude antes de comer uma fruta?",
+    alternatives: [
+      { text: "Lavar a fruta com água limpa", correct: true, icon: "🍎" },
+      { text: "Comer a fruta sem lavar", correct: false, icon: "🙈" },
+      { text: "Lavar a fruta em água suja", correct: false, icon: "🪣" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Lavar alimentos com água limpa ajuda a cuidar da saúde.",
+    feedbackWrong:
+      "Antes de comer frutas, é importante lavá-las com água limpa.",
   },
   { id: 26, type: "match", title: "Associe", prompt: "Ligue cada momento ao cuidado certo." },
   {
