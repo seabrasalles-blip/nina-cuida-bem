@@ -212,7 +212,11 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
       case "habits":
         return <HabitsChallengeCard onFinish={handleHabits} />;
       case "synthesis":
-        return <SpecialCard cell={cell} onContinue={handleSynthesis} />;
+        return cell.alternatives?.length ? (
+          <QuestionCard cell={cell} onAnswer={handleAnswer} />
+        ) : (
+          <SpecialCard cell={cell} onContinue={handleSynthesis} />
+        );
       default:
         return null;
     }

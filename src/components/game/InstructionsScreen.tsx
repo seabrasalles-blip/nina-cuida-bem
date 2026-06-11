@@ -66,7 +66,7 @@ export function InstructionsScreen({ onContinue }: { onContinue: () => void }) {
               </motion.div>
             ))}
           </div>
-          <NinaSpeech text="Vamos descobrir juntos como cuidar do corpo e da saúde?" />
+          <NinaSpeech text="Vamos viver um dia comigo e descobrir como cuidar do corpo e da saúde?" />
         </div>
 
         <div className="flex flex-col items-center">

@@ -25,45 +25,49 @@ export interface Cell {
   alternatives?: Alternative[];
   feedbackCorrect?: string;
   feedbackWrong?: string;
-  delta?: number; // for advance/retreat
-  body?: string; // for special / synthesis / common
-  infoTitle?: string; // for didYouKnow
-  infoText?: string; // for didYouKnow (max 2 short sentences)
-  infoIcon?: string; // for didYouKnow
+  delta?: number;
+  body?: string;
+  infoTitle?: string;
+  infoText?: string;
+  infoIcon?: string;
 }
 
 export const CELLS: Cell[] = [
   { id: 1, type: "start", title: "Início", body: "O dia da Nina começou." },
+
   {
     id: 2,
     type: "question",
     title: "Ao acordar",
-    prompt: "Nina acordou e vai começar o dia. O que ela pode fazer para cuidar do rosto?",
+    prompt:
+      "Nina acordou e vai começar o dia. Qual cuidado ajuda a limpar o rosto?",
     alternatives: [
       { text: "Lavar o rosto", correct: true, icon: "💧" },
-      { text: "Pintar a parede", correct: false, icon: "🎨" },
-      { text: "Calçar as meias", correct: false, icon: "🧦" },
+      { text: "Colocar o sapato", correct: false, icon: "👟" },
+      { text: "Guardar o brinquedo", correct: false, icon: "🧸" },
     ],
     feedbackCorrect:
       "Muito bem! Lavar o rosto ajuda a tirar suor e sujeirinhas, deixando o corpo mais confortável para começar o dia.",
     feedbackWrong:
-      "Observe a situação. Nina acabou de acordar. Que cuidado combina com o rosto?",
+      "Observe a situação. Nina acabou de acordar. Qual cuidado combina com o rosto?",
   },
+
   {
     id: 3,
-    type: "object",
+    type: "question",
     title: "Depois de lavar o rosto",
-    prompt: "Nina lavou o rosto. O que ela deve fazer depois?",
+    prompt: "Nina lavou o rosto. Como pode secar o rosto com cuidado?",
     alternatives: [
-      { text: "Secar com uma toalha limpa", correct: true, icon: "🧺" },
+      { text: "Usar uma toalha limpa", correct: true, icon: "🧺" },
       { text: "Secar na camiseta", correct: false, icon: "👕" },
-      { text: "Sair correndo molhada", correct: false, icon: "💨" },
+      { text: "Sair correndo com o rosto molhado", correct: false, icon: "💨" },
     ],
     feedbackCorrect:
       "Isso mesmo! Usar uma toalha limpa ajuda a secar o rosto com cuidado e conforto.",
     feedbackWrong:
-      "Depois de lavar o rosto, é melhor usar uma toalha limpa. Assim, Nina cuida melhor do corpo.",
+      "Depois de lavar o rosto, é melhor usar uma toalha limpa.",
   },
+
   {
     id: 4,
     type: "didYouKnow",
@@ -72,7 +76,7 @@ export const CELLS: Cell[] = [
     infoTitle: "Cuidar do corpo todos os dias",
     infoText:
       "Lavar o rosto, tomar banho e lavar as mãos são cuidados que fazem parte da rotina. Eles ajudam o corpo a ficar limpo e confortável.",
-    prompt: "Qual dessas ações ajuda a cuidar do corpo?",
+    prompt: "Qual atitude ajuda a cuidar do corpo?",
     alternatives: [
       { text: "Lavar as mãos", correct: true, icon: "🧼" },
       { text: "Comer com as mãos sujas", correct: false, icon: "🙅" },
@@ -83,59 +87,49 @@ export const CELLS: Cell[] = [
     feedbackWrong:
       "Essa atitude não ajuda tanto o corpo. Para cuidar da higiene, lavar as mãos é uma boa escolha.",
   },
+
   {
     id: 5,
     type: "question",
     title: "Antes do café",
-    prompt: "Antes do café, o que Nina deve fazer com as mãos?",
+    prompt: "Nina vai tomar café. O que deve fazer antes de comer?",
     alternatives: [
-      { text: "Lavar as mãos", correct: true, icon: "🧼" },
-      { text: "Pular no sofá", correct: false, icon: "🛋️" },
-      { text: "Guardar o copo", correct: false, icon: "🥛" },
+      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
+      { text: "Comer com as mãos sujas", correct: false, icon: "🙅" },
+      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
     ],
     feedbackCorrect:
       "Isso mesmo! Lavar as mãos antes de comer ajuda a tirar sujeiras e microrganismos que podem fazer mal à saúde.",
     feedbackWrong:
-      "Esse cuidado pode servir para outro momento. Antes de comer, precisamos cuidar das mãos.",
+      "Antes de comer, precisamos cuidar das mãos. Lavar com água e sabão ajuda a proteger a saúde.",
   },
+
   {
     id: 6,
     type: "advance",
     title: "Avanço",
-    body: "Nina lavou as mãos antes de comer. Avance 1 casa.",
+    body: "Nina lembrou de lavar as mãos antes de comer. Avance 1 casa.",
     delta: 1,
   },
+
   {
     id: 7,
-    type: "object",
+    type: "question",
     title: "Depois do café",
-    prompt: "Nina terminou o café da manhã. Qual cuidado ajuda a limpar os dentes?",
+    prompt: "Nina terminou o café da manhã. Qual cuidado ajuda a proteger os dentes?",
     alternatives: [
       { text: "Escovar os dentes", correct: true, icon: "🪥" },
       { text: "Lavar os sapatos", correct: false, icon: "👟" },
-      { text: "Pentear a mochila", correct: false, icon: "🎒" },
+      { text: "Guardar o prato e esquecer os dentes", correct: false, icon: "🍽️" },
     ],
     feedbackCorrect:
       "Ótima escolha! Escovar os dentes ajuda a retirar restos de comida e cuidar da boca.",
-    feedbackWrong: "Pense no que usamos para cuidar da boca depois de comer.",
+    feedbackWrong:
+      "Depois de comer, também precisamos cuidar dos dentes.",
   },
+
   {
     id: 8,
-    type: "question",
-    title: "Hora da aula",
-    prompt: "Nina vai começar a aula e quer se sentir bem. Que cuidado ajuda o corpo de manhã?",
-    alternatives: [
-      { text: "Estar limpa e beber água", correct: true, icon: "💧" },
-      { text: "Correr sem parar", correct: false, icon: "🏃" },
-      { text: "Pular o café da manhã", correct: false, icon: "🚫" },
-    ],
-    feedbackCorrect:
-      "Muito bem! Começar o dia com o corpo limpo e bem hidratado ajuda Nina a se sentir disposta e saudável.",
-    feedbackWrong:
-      "Pense no que ajuda o corpo a ficar bem para começar o dia: cuidar da higiene e se alimentar.",
-  },
-  {
-    id: 9,
     type: "didYouKnow",
     title: "O que são cáries?",
     infoIcon: "🦷",
@@ -153,61 +147,95 @@ export const CELLS: Cell[] = [
     feedbackWrong:
       "Depois de comer, precisamos cuidar dos dentes. Escovar os dentes ajuda a proteger a boca.",
   },
-  { id: 10, type: "common", title: "Parque", body: "Nina vai brincar no parque." },
+
+  { id: 9, type: "common", title: "A caminho do parque", body: "Nina vai brincar." },
+
   {
-    id: 11,
-    type: "object",
+    id: 10,
+    type: "question",
     title: "Antes do lanche",
-    prompt: "Nina brincou no parque e ficou com as mãos sujas. O que ela deve fazer antes do lanche?",
+    prompt:
+      "Nina brincou no parque e ficou com as mãos sujas. O que deve fazer antes do lanche?",
     alternatives: [
       { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
-      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
       { text: "Comer mesmo assim", correct: false, icon: "🍞" },
-      { text: "Esconder as mãos", correct: false, icon: "🙈" },
+      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
     ],
     feedbackCorrect:
-      "Muito bem! Lavar as mãos antes de comer ajuda a tirar sujeiras e microrganismos que podem fazer mal à saúde.",
+      "Muito bem! Lavar as mãos antes do lanche ajuda a proteger a saúde.",
     feedbackWrong:
-      "Antes de comer, precisamos cuidar das mãos. Limpar na roupa ou comer com as mãos sujas não ajuda a proteger a saúde.",
+      "Antes de comer, lavar as mãos é o cuidado mais seguro.",
   },
+
+  {
+    id: 11,
+    type: "question",
+    title: "Antes da fruta",
+    prompt: "Nina quer comer uma maçã. O que precisa fazer antes?",
+    alternatives: [
+      { text: "Lavar a maçã com água limpa", correct: true, icon: "🍎" },
+      { text: "Comer sem lavar", correct: false, icon: "🙈" },
+      { text: "Limpar a maçã na camiseta", correct: false, icon: "👕" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Lavar frutas com água limpa ajuda a tirar sujeiras antes de comer.",
+    feedbackWrong:
+      "Antes de comer frutas, é importante lavá-las com água limpa.",
+  },
+
   {
     id: 12,
-    type: "retreat",
-    title: "Voltar 1 casa",
-    body: "Nina esqueceu de lavar as mãos antes do lanche. Volte 1 casa.",
-    delta: -1,
+    type: "didYouKnow",
+    title: "Água limpa e alimentos",
+    infoIcon: "💧",
+    infoTitle: "Água limpa e alimentos",
+    infoText:
+      "Para beber água e lavar alimentos, é importante usar água limpa. Isso ajuda a evitar doenças e cuida da saúde de todos.",
+    prompt: "Qual é a melhor atitude antes de comer uma fruta?",
+    alternatives: [
+      { text: "Lavar a fruta com água limpa", correct: true, icon: "🍎" },
+      { text: "Comer a fruta sem lavar", correct: false, icon: "🙈" },
+      { text: "Lavar a fruta em água suja", correct: false, icon: "🪣" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Lavar alimentos com água limpa ajuda a cuidar da saúde.",
+    feedbackWrong:
+      "Antes de comer frutas, é importante lavá-las com água limpa.",
   },
+
   {
     id: 13,
     type: "question",
-    title: "Hora de espirrar",
-    prompt: "Nina vai espirrar. O que ela pode fazer para não espalhar microrganismos?",
-    alternatives: [
-      { text: "Cobrir com o braço dobrado", correct: true, icon: "💪" },
-      { text: "Espirrar para cima", correct: false, icon: "⬆️" },
-      { text: "Espirrar na mão do colega", correct: false, icon: "🙅" },
-    ],
-    feedbackCorrect:
-      "Muito bem! Cobrir o nariz e a boca com o braço ajuda a proteger os colegas dos microrganismos do espirro.",
-    feedbackWrong:
-      "Espirrar para o ar ou nas pessoas espalha microrganismos. Cobrir com o braço protege a turma.",
-  },
-  {
-    id: 14,
-    type: "object",
     title: "Nariz escorrendo",
-    prompt: "O nariz da Nina está escorrendo. Como ela pode se cuidar e cuidar das pessoas ao redor?",
+    prompt:
+      "O nariz da Nina está escorrendo. Qual atitude ajuda a cuidar dela e das pessoas ao redor?",
     alternatives: [
       { text: "Usar um lenço limpo", correct: true, icon: "🧻" },
       { text: "Limpar na manga da camiseta", correct: false, icon: "👕" },
       { text: "Limpar com a mão", correct: false, icon: "✋" },
-      { text: "Usar um papel que caiu no chão", correct: false, icon: "📄" },
     ],
     feedbackCorrect:
-      "Isso mesmo! Usar lenço limpo ajuda a cuidar do nariz. Depois, Nina deve jogar o lenço no lixo e lavar as mãos.",
+      "Muito bem! Usar lenço limpo ajuda a cuidar do nariz. Depois, Nina deve jogar o lenço no lixo e lavar as mãos.",
     feedbackWrong:
-      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo e lavar as mãos depois.",
+      "Usar a mão ou a camiseta pode espalhar sujeiras. O melhor é usar um lenço limpo.",
   },
+
+  {
+    id: 14,
+    type: "question",
+    title: "Depois do lenço",
+    prompt: "Nina usou um lenço para limpar o nariz. O que deve fazer depois?",
+    alternatives: [
+      { text: "Jogar o lenço no lixo e lavar as mãos", correct: true, icon: "🗑️" },
+      { text: "Guardar o lenço usado", correct: false, icon: "👖" },
+      { text: "Deixar o lenço em cima da mesa", correct: false, icon: "📄" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Esse cuidado ajuda Nina e também as pessoas ao redor.",
+    feedbackWrong:
+      "Depois de usar o lenço, o melhor é jogá-lo no lixo e lavar as mãos.",
+  },
+
   {
     id: 15,
     type: "didYouKnow",
@@ -216,7 +244,7 @@ export const CELLS: Cell[] = [
     infoTitle: "Cuidar de mim e dos outros",
     infoText:
       "Quando usamos lenço para limpar o nariz e lavamos as mãos depois, ajudamos a cuidar da nossa saúde e da saúde das pessoas ao redor.",
-    prompt: "Nina espirrou e limpou o nariz. O que ela deve fazer depois?",
+    prompt: "Nina usou um lenço. O que ela deve fazer depois?",
     alternatives: [
       { text: "Jogar o lenço no lixo e lavar as mãos", correct: true, icon: "🧻" },
       { text: "Guardar o lenço usado no bolso", correct: false, icon: "👖" },
@@ -227,6 +255,7 @@ export const CELLS: Cell[] = [
     feedbackWrong:
       "Depois de usar o lenço, o melhor é jogá-lo no lixo e lavar as mãos.",
   },
+
   {
     id: 16,
     type: "advance",
@@ -234,39 +263,25 @@ export const CELLS: Cell[] = [
     body: "Nina jogou o lenço no lixo e lavou as mãos. Avance 1 casa.",
     delta: 1,
   },
+
   {
     id: 17,
     type: "question",
-    title: "Antes da fruta",
-    prompt: "Antes de comer a fruta, Nina percebe que as mãos estão sujas. O que fazer?",
-    alternatives: [
-      { text: "Lavar com água e sabão", correct: true, icon: "🧼" },
-      { text: "Morder a fruta mesmo assim", correct: false, icon: "🍎" },
-      { text: "Passar a mão no cabelo", correct: false, icon: "💁" },
-    ],
-    feedbackCorrect:
-      "Isso mesmo! Lavar as mãos antes de comer a fruta tira microrganismos que podem fazer mal ao corpo.",
-    feedbackWrong:
-      "Comer com a mão suja pode levar microrganismos para a boca. Lavar as mãos protege a saúde.",
-  },
-  {
-    id: 18,
-    type: "object",
     title: "Depois do banheiro",
-    prompt: "Nina acabou de usar o banheiro. Qual cuidado ela precisa fazer agora?",
+    prompt: "Nina acabou de usar o banheiro. Qual cuidado vem agora?",
     alternatives: [
       { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
-      { text: "Brincar com a bola", correct: false, icon: "⚽" },
-      { text: "Guardar o travesseiro", correct: false, icon: "🛏️" },
-      { text: "Colocar o casaco", correct: false, icon: "🧥" },
+      { text: "Sair correndo para brincar", correct: false, icon: "🏃" },
+      { text: "Limpar as mãos na roupa", correct: false, icon: "👕" },
     ],
     feedbackCorrect:
       "Muito bem! Depois de usar o banheiro, lavar as mãos com água e sabão ajuda a proteger a saúde.",
     feedbackWrong:
-      "Observe o momento: Nina saiu do banheiro. O cuidado mais importante agora é lavar as mãos.",
+      "Depois de usar o banheiro, lavar as mãos é um cuidado importante.",
   },
+
   {
-    id: 19,
+    id: 18,
     type: "didYouKnow",
     title: "Mãos limpas ajudam a proteger",
     infoIcon: "🦠",
@@ -284,39 +299,56 @@ export const CELLS: Cell[] = [
     feedbackWrong:
       "Mesmo quando parecem limpas, as mãos podem ter microrganismos. Por isso, lavamos as mãos antes de comer e depois de usar o banheiro.",
   },
+
+  {
+    id: 19,
+    type: "question",
+    title: "Mesmo quando parecem limpas",
+    prompt:
+      "Mesmo quando as mãos parecem limpas, ainda podem ter microrganismos. O que ajuda a retirá-los?",
+    alternatives: [
+      { text: "Lavar as mãos com água e sabão", correct: true, icon: "🧼" },
+      { text: "Assoprar as mãos", correct: false, icon: "💨" },
+      { text: "Esconder as mãos no bolso", correct: false, icon: "👖" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Água e sabão ajudam a retirar muitos microrganismos das mãos.",
+    feedbackWrong:
+      "Para limpar bem as mãos, usamos água e sabão.",
+  },
+
   {
     id: 20,
     type: "question",
     title: "Depois de suar",
-    prompt: "Depois de brincar e suar, qual cuidado ajuda o corpo?",
+    prompt: "Depois de correr e suar bastante, qual cuidado ajuda o corpo?",
     alternatives: [
       { text: "Tomar banho", correct: true, icon: "🚿" },
-      { text: "Esconder o sabonete", correct: false, icon: "🙈" },
-      { text: "Comer sem lavar as mãos", correct: false, icon: "🍞" },
+      { text: "Colocar a mesma roupa suada para dormir", correct: false, icon: "👕" },
+      { text: "Não cuidar do corpo", correct: false, icon: "🙅" },
     ],
     feedbackCorrect:
-      "Muito bem! Depois de brincar e suar, o banho ajuda a limpar o corpo e traz bem-estar.",
+      "Muito bem! O banho ajuda a limpar o corpo e traz bem-estar depois de brincar e suar.",
     feedbackWrong:
-      "Depois de brincar, o corpo pode ficar suado ou sujo. Que cuidado ajuda a limpar o corpo?",
+      "Depois de correr e suar, o banho ajuda a limpar o corpo.",
   },
+
   {
     id: 21,
     type: "object",
     title: "Hora do banho",
-    prompt: "Depois de correr e suar bastante, Nina vai tomar banho. Qual item ajuda nesse cuidado?",
+    prompt: "Nina vai tomar banho. Qual item ajuda a lavar o corpo?",
     alternatives: [
       { text: "Sabonete", correct: true, icon: "🧼" },
-      { text: "Shampoo", correct: true, icon: "🧴" },
-      { text: "Toalha", correct: true, icon: "🧺" },
       { text: "Bola", correct: false, icon: "⚽" },
       { text: "Lápis", correct: false, icon: "✏️" },
-      { text: "Colher", correct: false, icon: "🥄" },
     ],
     feedbackCorrect:
-      "Muito bem! O banho ajuda a limpar o corpo depois de brincar, correr e suar. Sabonete, shampoo e toalha são parte desse cuidado.",
+      "Muito bem! O sabonete ajuda a limpar o corpo durante o banho.",
     feedbackWrong:
-      "Alguns objetos servem para brincar ou estudar. Para o banho, Nina precisa de itens que ajudam a limpar e secar o corpo.",
+      "Para lavar o corpo no banho, usamos sabonete.",
   },
+
   {
     id: 22,
     type: "advance",
@@ -324,62 +356,70 @@ export const CELLS: Cell[] = [
     body: "Nina tomou banho depois da brincadeira. Avance 1 casa.",
     delta: 1,
   },
+
   {
     id: 23,
-    type: "question",
-    title: "Antes de dormir",
-    prompt: "Nina vai dormir. O que ajuda o corpo a descansar bem?",
+    type: "didYouKnow",
+    title: "Cuidado com os pés",
+    infoIcon: "🦶",
+    infoTitle: "Cuidado com os pés",
+    infoText:
+      "Em alguns lugares, andar descalço pode machucar os pés ou colocar o corpo em contato com sujeiras. Usar calçado ajuda a proteger.",
+    prompt: "Onde é melhor usar calçado?",
     alternatives: [
-      { text: "Tomar banho e vestir roupa limpa", correct: true, icon: "🛁" },
-      { text: "Ir suja para a cama", correct: false, icon: "🙅" },
-      { text: "Pular na cama com sapato", correct: false, icon: "👟" },
+      { text: "Em lugar com sujeira, pedras ou água duvidosa", correct: true, icon: "👟" },
+      { text: "No tapete limpo de casa, sempre", correct: false, icon: "🏠" },
+      { text: "Dentro da cama", correct: false, icon: "🛏️" },
     ],
     feedbackCorrect:
-      "Boa escolha! Estar limpa e com roupa de dormir ajuda o corpo a relaxar e descansar bem.",
+      "Isso mesmo! Em alguns lugares, o calçado ajuda a proteger os pés e a saúde.",
     feedbackWrong:
-      "Ir suja ou com sapato para a cama leva microrganismos para o lugar de descanso. O banho ajuda o corpo a relaxar.",
+      "Em lugares com sujeira, pedras ou água duvidosa, é melhor proteger os pés.",
   },
+
   {
     id: 24,
-    type: "object",
-    title: "Cuidar da boca à noite",
-    prompt: "Antes de dormir, Nina precisa cuidar da boca. O que ela deve fazer?",
+    type: "question",
+    title: "Antes de dormir",
+    prompt:
+      "Nina está se preparando para dormir. Qual cuidado ajuda a proteger os dentes durante a noite?",
     alternatives: [
       { text: "Escovar os dentes", correct: true, icon: "🪥" },
       { text: "Comer doce e dormir", correct: false, icon: "🍭" },
-      { text: "Esquecer os dentes e dormir", correct: false, icon: "💤" },
-      { text: "Lavar apenas as mãos", correct: false, icon: "🧼" },
+      { text: "Lavar só as mãos e esquecer os dentes", correct: false, icon: "🙈" },
     ],
     feedbackCorrect:
       "Boa escolha! Escovar os dentes antes de dormir ajuda a cuidar da boca durante a noite.",
     feedbackWrong:
-      "Antes de dormir, também precisamos cuidar dos dentes. Qual cuidado ajuda a boca?",
+      "Antes de dormir, também precisamos cuidar dos dentes.",
   },
+
   {
     id: 25,
     type: "didYouKnow",
-    title: "Água limpa também é cuidado",
-    infoIcon: "💧",
-    infoTitle: "Água limpa também é cuidado",
+    title: "Água parada merece atenção",
+    infoIcon: "🪣",
+    infoTitle: "Água parada merece atenção",
     infoText:
-      "Para beber água e lavar alimentos, é importante usar água limpa. Isso ajuda a evitar doenças e cuida da saúde de todos.",
-    prompt: "Qual é a melhor atitude antes de comer uma fruta?",
+      "Água parada pode juntar sujeira e atrair insetos. Manter os espaços limpos ajuda a cuidar da saúde de todos.",
+    prompt: "Qual atitude ajuda a cuidar do ambiente?",
     alternatives: [
-      { text: "Lavar a fruta com água limpa", correct: true, icon: "🍎" },
-      { text: "Comer a fruta sem lavar", correct: false, icon: "🙈" },
-      { text: "Lavar a fruta em água suja", correct: false, icon: "🪣" },
+      { text: "Evitar água parada em potes e quintais", correct: true, icon: "🪣" },
+      { text: "Deixar água parada acumulando", correct: false, icon: "💧" },
+      { text: "Jogar lixo perto da água", correct: false, icon: "🗑️" },
     ],
     feedbackCorrect:
-      "Isso mesmo! Lavar alimentos com água limpa ajuda a cuidar da saúde.",
+      "Muito bem! Cuidar do ambiente também ajuda a proteger a saúde coletiva.",
     feedbackWrong:
-      "Antes de comer frutas, é importante lavá-las com água limpa.",
+      "Água parada pode trazer problemas. O melhor é manter os espaços limpos e sem água acumulada.",
   },
+
   { id: 26, type: "match", title: "Associe", prompt: "Ligue cada momento ao cuidado certo." },
   {
     id: 27,
     type: "habits",
-    title: "Escolha três hábitos",
-    prompt: "Escolha três hábitos que ajudam a cuidar da saúde.",
+    title: "Escolha hábitos saudáveis",
+    prompt: "Escolha os hábitos que ajudam a cuidar da saúde.",
   },
   {
     id: 28,
@@ -391,8 +431,18 @@ export const CELLS: Cell[] = [
   {
     id: 29,
     type: "synthesis",
-    title: "Síntese",
-    body: "O que Nina aprendeu hoje? Lavar as mãos, escovar os dentes, usar lenço e tomar banho são hábitos que ajudam a manter a saúde.",
+    title: "O que Nina aprendeu hoje?",
+    prompt:
+      "O que Nina aprendeu hoje? Escolha a frase que melhor combina com o jogo.",
+    alternatives: [
+      { text: "Cuidar do corpo ajuda a proteger a saúde", correct: true, icon: "💚" },
+      { text: "Higiene só é importante quando a roupa está suja", correct: false, icon: "🙅" },
+      { text: "Lavar as mãos não faz diferença", correct: false, icon: "❌" },
+    ],
+    feedbackCorrect:
+      "Isso mesmo! Os hábitos de higiene ajudam a proteger a saúde e o bem-estar.",
+    feedbackWrong:
+      "O jogo mostrou que cuidar do corpo ajuda a proteger a saúde em muitos momentos do dia.",
   },
   { id: 30, type: "finish", title: "Chegada", body: "Corpo bem cuidado!" },
 ];
