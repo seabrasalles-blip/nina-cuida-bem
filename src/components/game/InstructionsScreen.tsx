@@ -23,7 +23,7 @@ const STEPS = [
     icon: HelpCircle,
     color: "bg-game-orange",
     title: "Responda",
-    text: "Pense no momento do dia e escolha o melhor cuidado.",
+    text: "Escolha a melhor resposta.",
   },
 ];
 
