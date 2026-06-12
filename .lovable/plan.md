@@ -1,50 +1,24 @@
 ## Objetivo
 
-Substituir completamente o SVG da personagem Nina em `src/components/game/Nina.tsx` por uma nova versão mais simples, proporcional e carismática, mantendo a API atual intacta (`size`, `mood`, viewBox `0 0 220 260`).
+Substituir o SVG da Nina por uma única imagem (a `ninalovabele.png` enviada pelo usuário), usada como asset final em todos os lugares do jogo. Nenhum redesenho, nenhum SVG novo, nenhuma variação gerada por código.
 
-Nenhum outro arquivo do projeto será alterado — perguntas, tabuleiro, dado e lógica do jogo permanecem como estão.
+## Mudanças
 
-## Direção visual
+1. **Subir a imagem como asset CDN** via `lovable-assets`, gerando `src/assets/nina.png.asset.json`. A imagem original não fica no repositório.
 
-- Menina infantil, traço limpo, bem proporcionada
-- **Cabelo**: castanho médio arredondado com franja suave + tiara laranja simples (substitui as maria-chiquinhas que pareciam "fones")
-- **Roupa**: camiseta azul + jardineira laranja + sapatos escuros
-- **Rosto**: olhos grandes amigáveis, bochechas rosadas, sorriso simples
-- Sombra suave no chão, gradientes leves de pele/cabelo/roupa
+2. **Reescrever `src/components/game/Nina.tsx`** mantendo exatamente a mesma API pública:
+   - mesmo nome `Nina`
+   - mesmo tipo `NinaMood` exportado (`"happy" | "wave" | "cheer" | "think"`)
+   - mesmas props (`size`, `mood`)
+   - internamente passa a renderizar apenas um `<img>` com a URL do asset, com `width={size}`, `height` automático (preservando proporção), `alt="Nina"`, `draggable={false}` e `select-none`
+   - **a prop `mood` é aceita mas ignorada** (a imagem é única); isso garante que nenhum dos componentes que já passam `mood` quebre
 
-## Estrutura do SVG (ordem de camadas)
-
-1. Sombra no chão
-2. Pernas + sapatos
-3. Braços (atrás do corpo)
-4. Corpo/jardineira/camiseta
-5. Pescoço
-6. Cabelo de trás (volume arredondado, sem bolas laterais)
-7. Rosto (oval centralizado)
-8. Franja
-9. Tiara
-10. Sobrancelhas, olhos, bochechas, boca
-
-## Moods — poses estáveis
-
-Cada mood altera **apenas** os paths de braços + boca + sobrancelhas. O resto da personagem é compartilhado.
-
-- **happy**: dois braços levemente abertos ao lado do corpo, sorriso leve
-- **wave**: braço direito levantado em arco a partir do ombro, mão aberta ao lado da cabeça **sem encostar no rosto** (mão posicionada fora do oval facial); braço esquerdo abaixado
-- **cheer**: dois braços levantados em "V" simétrico, mãos visíveis acima dos ombros, sorriso aberto
-- **think**: ambos braços abaixados, sobrancelhas levemente inclinadas, boca pequena curiosa (sem mão no rosto — opção mais estável que mão no queixo)
-
-Braços desenhados como paths suaves (curvas Bézier), não retângulos. Mãos como círculos pequenos na ponta de cada braço.
-
-## Arquivo alterado
-
-- `src/components/game/Nina.tsx` — reescrita completa do JSX interno. Assinatura, exports e tipo `NinaMood` mantidos exatamente como hoje.
+3. **Não alterar mais nada**: `FeedbackCard`, `SpecialCard`, `StartScreen`, `NinaSpeech`, cards de perguntas, tabuleiro, dado, dados das perguntas, rotas, lógica do jogo — tudo permanece como está. Só a implementação interna de `Nina.tsx` muda.
 
 ## Validação
 
-Após a reescrita, verificar visualmente na tela inicial (já usa `<Nina size={340} mood="wave" />`) e nos cards (`mood="think"`, `mood="cheer"`) que:
-
-- Braço de `wave` não cobre o rosto
-- Cabelo não parece capacete nem tem "orelhas/fones" laterais
-- Nenhum braço/pé é cortado pelo viewBox em tamanhos 80/120/180/240
-- Layout do jogo permanece intacto
+Após a troca, verificar que:
+- A Nina aparece corretamente na tela inicial e nos cards (feedback correto/errado, especiais, etc.)
+- Não há erros no console
+- O layout não quebra em nenhum dos tamanhos já usados no projeto (ex.: 96, 180, 340)
+- A imagem mantém proporção e fica nítida
