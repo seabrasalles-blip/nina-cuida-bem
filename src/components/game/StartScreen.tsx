@@ -114,7 +114,7 @@ export function StartScreen({ onStart }: { onStart: () => void }) {
           transition={{ delay: 0.25 }}
           className="relative"
         >
-          <Nina size={340} mood="wave" />
+          <Nina size={170} mood="wave" />
         </motion.div>
 
         {/* Floating items */}
