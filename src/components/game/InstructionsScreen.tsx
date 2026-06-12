@@ -50,19 +50,15 @@ export function InstructionsScreen({ onContinue }: { onContinue: () => void }) {
                 className="bg-white rounded-3xl p-5 border-[3px] border-game-sky-soft shadow-toy relative"
               >
                 <div
-                  className={`absolute -top-4 -left-4 w-10 h-10 rounded-full ${color} text-white font-display text-xl font-bold flex items-center justify-center shadow-md`}
+                  className={`absolute -top-4 -right-4 w-10 h-10 rounded-full ${color} text-white font-display text-xl font-bold flex items-center justify-center shadow-md`}
                 >
                   {n}
                 </div>
                 <div className={`w-12 h-12 rounded-2xl ${color}/15 flex items-center justify-center`}>
                   <Icon className="text-game-ink" size={28} />
                 </div>
-                <h3 className="font-display mt-3 text-xl text-game-ink font-bold">
-                  {title}
-                </h3>
-                <p className="mt-1 text-sm text-game-ink-soft font-semibold leading-snug">
-                  {text}
-                </p>
+                <h3 className="font-display mt-3 text-xl text-game-ink font-bold">{title}</h3>
+                <p className="mt-1 text-sm text-game-ink-soft font-semibold leading-snug">{text}</p>
               </motion.div>
             ))}
           </div>
