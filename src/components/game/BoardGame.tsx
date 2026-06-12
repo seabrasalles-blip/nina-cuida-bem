@@ -93,18 +93,14 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
       if (cellId === target) {
         setPosition(target);
         setStage({ kind: "transition" });
-        showToast(
-          "success",
-          "Muito bem! Você contou as casas e levou a Nina ao lugar certo.",
-          1300,
-        );
+        showToast("success", "Muito bem! Você contou as casas e levou a Nina ao lugar certo.", 1300);
         setTimeout(() => openCardForCell(target), 900);
       } else {
         setRejectSignal((n) => n + 1);
         const n = stage.steps;
         showToast(
           "hint",
-          `Vamos contar de novo? O dado mostrou ${n}. Arraste ${n} ${n === 1 ? "casa" : "casas"} para frente.`,
+          `Vamos contar de novo? O dado mostrou ${n}. Movimente ${n} ${n === 1 ? "casa" : "casas"} para frente.`,
           2200,
         );
       }
@@ -126,11 +122,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         const d = stage.delta;
         const abs = Math.abs(d);
         const dir = d > 0 ? "para frente" : "para trás";
-        showToast(
-          "hint",
-          `Arraste ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`,
-          2200,
-        );
+        showToast("hint", `Arraste ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`, 2200);
       }
     }
   };
@@ -256,13 +248,13 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
   const orientationText = (() => {
     if (stage.kind === "awaitingDrag") {
       const n = stage.steps;
-      return `O dado mostrou ${n}. Arraste a Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`;
+      return `O dado mostrou ${n}. Movimente a Nina ${n} ${n === 1 ? "casa" : "casas"} para frente.`;
     }
     if (stage.kind === "awaitingSpecialDrag") {
       const d = stage.delta;
       const abs = Math.abs(d);
       const dir = d > 0 ? "para frente" : "para trás";
-      return `Arraste a Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`;
+      return `Movimente a Nina ${abs} ${abs === 1 ? "casa" : "casas"} ${dir}.`;
     }
     if (stage.kind === "rolling") return "Sorteando o dado...";
     return "Toque no dado e vamos juntas!";
@@ -281,13 +273,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
           rejectSignal={rejectSignal}
         />
         <AnimatePresence>
-          {toast && (
-            <MoveToast
-              key={toast.id}
-              text={toast.text}
-              variant={toast.variant}
-            />
-          )}
+          {toast && <MoveToast key={toast.id} text={toast.text} variant={toast.variant} />}
         </AnimatePresence>
       </div>
 
@@ -296,15 +282,9 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
         {/* Current cell */}
         <div className="bg-white rounded-3xl border-[3px] border-game-sky-soft p-4 shadow-toy text-center relative overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-2 bg-game-sky" />
-          <p className="font-display text-xs uppercase tracking-wide text-game-ink-soft font-bold">
-            Casa atual
-          </p>
-          <p className="font-display text-4xl font-bold text-game-sky leading-none mt-1">
-            {position}
-          </p>
-          <p className="text-sm text-game-ink font-semibold mt-1">
-            {cell.title}
-          </p>
+          <p className="font-display text-xs uppercase tracking-wide text-game-ink-soft font-bold">Casa atual</p>
+          <p className="font-display text-4xl font-bold text-game-sky leading-none mt-1">{position}</p>
+          <p className="text-sm text-game-ink font-semibold mt-1">{cell.title}</p>
         </div>
 
         {/* Dice */}
@@ -332,9 +312,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
 
         {/* Legend */}
         <div className="bg-white/90 rounded-3xl border-[3px] border-game-sky-soft p-3 mt-auto shadow-card-soft">
-          <p className="font-display text-[11px] uppercase tracking-wide text-game-ink-soft font-bold mb-2">
-            Legenda
-          </p>
+          <p className="font-display text-[11px] uppercase tracking-wide text-game-ink-soft font-bold mb-2">Legenda</p>
           <div className="flex flex-wrap gap-1.5">
             <LegendChip color="#3fa9f5" label="Pergunta" />
             <LegendChip color="#7ed957" label="Cuidado do momento" />
@@ -355,11 +333,7 @@ export function BoardGame({ onFinish }: { onFinish: () => void }) {
           >
             {stage.kind === "card" && renderCard()}
             {stage.kind === "feedback" && (
-              <FeedbackCard
-                correct={stage.correct}
-                text={stage.text}
-                onContinue={closeFeedback}
-              />
+              <FeedbackCard correct={stage.correct} text={stage.text} onContinue={closeFeedback} />
             )}
           </motion.div>
         )}
@@ -374,10 +348,7 @@ function LegendChip({ color, label }: { color: string; label: string }) {
       className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border-2 text-[11px] font-bold text-game-ink"
       style={{ borderColor: color }}
     >
-      <span
-        className="w-2.5 h-2.5 rounded-full"
-        style={{ background: color }}
-      />
+      <span className="w-2.5 h-2.5 rounded-full" style={{ background: color }} />
       {label}
     </span>
   );
