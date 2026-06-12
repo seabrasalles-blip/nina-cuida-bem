@@ -154,7 +154,7 @@ export const CELLS: Cell[] = [
     title: "Depois de assoar o nariz",
     prompt: "Depois de assoar o nariz, Nina joga o lenço usado no lixo e lava as mãos. Essa atitude ajuda a:",
     alternatives: [
-      { text: "cuidar apenas dos brinquedos.", correct: false },
+      { text: "proteger apenas os brinquedos.", correct: false },
       { text: "evitar que secreções e microrganismos se espalhem.", correct: true },
       { text: "deixar o lenço pronto para outra pessoa usar.", correct: false },
       { text: "fazer o lixo desaparecer.", correct: false },
@@ -236,7 +236,7 @@ export const CELLS: Cell[] = [
       { text: "Porque ajuda a retirar sujeiras que podem estar na casca ou nas folhas.", correct: true },
       { text: "Porque faz todas as frutas ficarem quentes.", correct: false },
       { text: "Porque transforma fruta em doce.", correct: false },
-      { text: "Porque muda o nome do alimento.", correct: false },
+      { text: "Porque muda o sabor.", correct: false },
     ],
     feedbackCorrect:
       "Frutas e verduras podem ter poeira, terra ou microrganismos. Lavar com água limpa ajuda a cuidar da saúde.",
@@ -263,7 +263,7 @@ export const CELLS: Cell[] = [
     alternatives: [
       { text: "Porque algumas águas podem estar contaminadas e causar doenças.", correct: true },
       { text: "Porque água limpa faz mal ao corpo.", correct: false },
-      { text: "Porque beber água nunca é importante.", correct: false },
+      { text: "Porque beber água é importante.", correct: false },
       { text: "Porque toda água tem o mesmo cuidado.", correct: false },
     ],
     feedbackCorrect: "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
@@ -280,7 +280,7 @@ export const CELLS: Cell[] = [
       { text: "Porque essa água pode ter sujeiras e microrganismos que causam doenças.", correct: true },
       { text: "Porque toda poça de água é limpa.", correct: false },
       { text: "Porque a água suja sempre tem cheiro bom.", correct: false },
-      { text: "Porque microrganismos sempre aparecem bem grandes.", correct: false },
+      { text: "Porque microrganismos sempre ficam maiores.", correct: false },
     ],
     feedbackCorrect: "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
     feedbackWrong: "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
