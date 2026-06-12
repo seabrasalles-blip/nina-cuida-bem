@@ -1,60 +1,50 @@
+## Objetivo
 
-# Inserção do banco fechado — Corpo Bem Cuidado
+Substituir completamente o SVG da personagem Nina em `src/components/game/Nina.tsx` por uma nova versão mais simples, proporcional e carismática, mantendo a API atual intacta (`size`, `mood`, viewBox `0 0 220 260`).
 
-Objetivo: substituir o conteúdo das casas atuais pelos textos do banco enviado, sem editar enunciados, alternativas, gabaritos nem feedbacks. Mecânica, layout, visual e componentes permanecem.
+Nenhum outro arquivo do projeto será alterado — perguntas, tabuleiro, dado e lógica do jogo permanecem como estão.
 
-## Decisões (já que as perguntas foram puladas)
+## Direção visual
 
-- **Casas extras sem questão correspondente**: as 12 casas `question` recebem exatamente as 12 questões do banco, em ordem narrativa do banco. Os títulos das casas são reescritos para refletir o tema da questão atribuída.
-- **Casa 21 (`object` — sabonete)**: o banco não traz item equivalente. Vira casa `common` ("Hora do banho") apenas com narração, sem card.
-- **10 "Você sabia?" → 7 casas**: mantenho 7 textos e descarto 3 cujo tema já é coberto por questão (VS5 banho, VS8 água contaminada, VS9 pés).
-- **Microdesafio do `DidYouKnowCard`**: o banco não fornece microdesafios. Para preservar os textos como você pediu, torno as alternativas opcionais no componente: quando ausentes, o card mostra selo + título + texto + ícone grande + "Continuar".
+- Menina infantil, traço limpo, bem proporcionada
+- **Cabelo**: castanho médio arredondado com franja suave + tiara laranja simples (substitui as maria-chiquinhas que pareciam "fones")
+- **Roupa**: camiseta azul + jardineira laranja + sapatos escuros
+- **Rosto**: olhos grandes amigáveis, bochechas rosadas, sorriso simples
+- Sombra suave no chão, gradientes leves de pele/cabelo/roupa
 
-## Mapeamento das 12 questões → casas `question`
+## Estrutura do SVG (ordem de camadas)
 
-| Casa | Questão do banco | Tema |
-|------|------------------|------|
-| 2 | Q1 | Lavar as mãos antes de comer |
-| 3 | Q2 | Depois de usar o banheiro |
-| 5 | Q3 | Escovação e cáries |
-| 7 | Q4 | Escovar os dentes antes de dormir |
-| 10 | Q5 | Nariz escorrendo |
-| 11 | Q6 | Depois de assoar o nariz |
-| 13 | Q7 | Tossir ou espirrar |
-| 14 | Q8 | Banho e bem-estar |
-| 17 | Q9 | Frutas e verduras |
-| 19 | Q10 | Água potável |
-| 20 | Q11 | Água contaminada |
-| 24 | Q12 | Andar descalço em locais inadequados |
+1. Sombra no chão
+2. Pernas + sapatos
+3. Braços (atrás do corpo)
+4. Corpo/jardineira/camiseta
+5. Pescoço
+6. Cabelo de trás (volume arredondado, sem bolas laterais)
+7. Rosto (oval centralizado)
+8. Franja
+9. Tiara
+10. Sobrancelhas, olhos, bochechas, boca
 
-Cada casa recebe: `title` (do banco), `prompt` (contexto + pergunta concatenados, exatamente como no banco), `alternatives` (4, na ordem A–D, com `correct: true` no gabarito), `feedbackCorrect` (dica/feedback do banco) e `feedbackWrong` (mesmo texto da dica, já que o banco fornece um único feedback).
+## Moods — poses estáveis
 
-## Mapeamento dos 7 "Você sabia?" → casas `didYouKnow`
+Cada mood altera **apenas** os paths de braços + boca + sobrancelhas. O resto da personagem é compartilhado.
 
-| Casa | Você sabia? | Tema |
-|------|-------------|------|
-| 4 | VS1 | Microrganismos nas mãos |
-| 8 | VS2 | Cáries |
-| 12 | VS3 | Gripe e resfriado |
-| 15 | VS4 | Lenço usado |
-| 18 | VS6 | Frutas e verduras |
-| 23 | VS7 | Água potável |
-| 25 | VS10 | Saúde coletiva |
+- **happy**: dois braços levemente abertos ao lado do corpo, sorriso leve
+- **wave**: braço direito levantado em arco a partir do ombro, mão aberta ao lado da cabeça **sem encostar no rosto** (mão posicionada fora do oval facial); braço esquerdo abaixado
+- **cheer**: dois braços levantados em "V" simétrico, mãos visíveis acima dos ombros, sorriso aberto
+- **think**: ambos braços abaixados, sobrancelhas levemente inclinadas, boca pequena curiosa (sem mão no rosto — opção mais estável que mão no queixo)
 
-Descartados: VS5 (banho — coberto pela Q8), VS8 (água contaminada — Q11), VS9 (cuidado com os pés — Q12).
+Braços desenhados como paths suaves (curvas Bézier), não retângulos. Mãos como círculos pequenos na ponta de cada braço.
 
-Cada casa recebe `infoTitle`, `infoText` e `infoIcon` (emoji apropriado), e fica **sem** `prompt`/`alternatives`.
+## Arquivo alterado
 
-## Demais casas (sem alteração de tipo)
+- `src/components/game/Nina.tsx` — reescrita completa do JSX interno. Assinatura, exports e tipo `NinaMood` mantidos exatamente como hoje.
 
-- 1 start, 6/16/22/28 advance, 9 common, 21 common (novo), 26 match, 27 habits, 29 synthesis, 30 finish — mantêm tipo e conteúdo atual.
+## Validação
 
-## Detalhes técnicos
+Após a reescrita, verificar visualmente na tela inicial (já usa `<Nina size={340} mood="wave" />`) e nos cards (`mood="think"`, `mood="cheer"`) que:
 
-Arquivos a editar:
-
-- **`src/data/cells.ts`** — reescrever as 12 casas `question`, as 7 casas `didYouKnow`, e converter a casa 21 de `object` para `common`. Sem mudanças no `CellType`/`Cell` interface.
-- **`src/components/game/cards/DidYouKnowCard.tsx`** — tornar o bloco de microdesafio opcional. Quando `cell.alternatives` estiver vazio/ausente, renderizar apenas selo "Você sabia?", `infoTitle`, `infoText`, `infoIcon` (grande) e botão "Continuar" que chama o handler de avanço.
-- **`src/components/game/BoardGame.tsx`** — `handleDidYouKnow` passa a aceitar o caso sem resposta (continuar = avançar). Remover o `case "object"` se a casa 21 não usar mais esse tipo (ou manter o case inerte; preferir manter para segurança, sem cell que o acione).
-
-Fora de escopo: textos do banco (inalterados), `Board.tsx` (cores/ícones), demais componentes de card, layout 1200×675, paleta, fontes.
+- Braço de `wave` não cobre o rosto
+- Cabelo não parece capacete nem tem "orelhas/fones" laterais
+- Nenhum braço/pé é cortado pelo viewBox em tamanhos 80/120/180/240
+- Layout do jogo permanece intacto
