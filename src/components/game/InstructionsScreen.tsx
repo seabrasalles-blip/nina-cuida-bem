@@ -15,7 +15,7 @@ const STEPS = [
     n: 2,
     icon: Hand,
     color: "bg-game-green",
-    title: "Arraste a Nina",
+    title: "Movimente a Nina",
     text: "Conte as casas e leve a Nina até o ponto certo.",
   },
   {
