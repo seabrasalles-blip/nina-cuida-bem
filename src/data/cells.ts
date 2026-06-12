@@ -130,7 +130,14 @@ export const CELLS: Cell[] = [
       "Na boca vivem bactérias invisíveis que gostam de restos de açúcar dos alimentos. Quando elas se alimentam desses pedacinhos, produzem um ácido que pode machucar o dente e formar a cárie.",
   },
 
-  { id: 9, type: "common", title: "A caminho do parque", body: "Nina vai brincar." },
+  {
+    id: 9,
+    type: "retreat",
+    title: "Penalidade",
+    body:
+      "Atenção! Nina brincou na terra e foi comer sem lavar as mãos. Sujeiras e microrganismos podem chegar à boca pelas mãos. Volte 1 casa e lembre-se: antes de comer, é importante lavar as mãos com água e sabão.",
+    delta: -1,
+  },
 
   {
     id: 10,
@@ -288,9 +295,11 @@ export const CELLS: Cell[] = [
 
   {
     id: 21,
-    type: "common",
-    title: "Hora do banho",
-    body: "Nina se prepara para o banho.",
+    type: "retreat",
+    title: "Penalidade",
+    body:
+      "Ops! Nina chegou perto de uma poça de água suja para brincar. Água contaminada pode ter microrganismos ou parasitas que fazem mal à saúde. Volte 1 casa e procure uma atitude mais segura para cuidar do corpo.",
+    delta: -1,
   },
 
   {
