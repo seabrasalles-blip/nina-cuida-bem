@@ -47,28 +47,26 @@ export const CELLS: Cell[] = [
       { text: "Porque faz a comida durar mais tempo.", correct: false },
       { text: "Porque muda a cor das mãos.", correct: false },
     ],
-    feedbackCorrect:
-      "Lavar as mãos antes de comer ajuda a evitar que sujeiras e microrganismos cheguem à boca.",
-    feedbackWrong:
-      "Lavar as mãos antes de comer ajuda a evitar que sujeiras e microrganismos cheguem à boca.",
+    feedbackCorrect: "Lavar as mãos antes de comer ajuda a evitar que sujeiras e microrganismos cheguem à boca.",
+    feedbackWrong: "Lavar as mãos antes de comer ajuda a evitar que sujeiras e microrganismos cheguem à boca.",
   },
 
   {
     id: 3,
     type: "question",
     title: "Depois de usar o banheiro",
-    prompt:
-      "Depois de usar o banheiro, Nina foi até a pia e lavou as mãos com água e sabão. Esse hábito ajuda a:",
+    prompt: "Depois de usar o banheiro, Nina foi até a pia e lavou as mãos com água e sabão. Esse hábito ajuda a:",
     alternatives: [
-      { text: "espalhar sujeiras pela casa.", correct: false },
-      { text: "proteger a saúde e evitar que microrganismos passem para objetos, alimentos ou pessoas.", correct: true },
-      { text: "deixar o banheiro mais bonito.", correct: false },
-      { text: "fazer a água ficar colorida.", correct: false },
+      { text: "Espalhar sujeiras pela casa.", correct: false },
+      {
+        text: "Proteger a saúde e evitar que microrganismos passem para objetos, alimentos ou pessoas.",
+        correct: true,
+      },
+      { text: "Deixar o banheiro mais limpo.", correct: false },
+      { text: "Fazer a água ficar colorida.", correct: false },
     ],
-    feedbackCorrect:
-      "Depois de usar o banheiro, lavar as mãos ajuda a evitar a transmissão de microrganismos.",
-    feedbackWrong:
-      "Depois de usar o banheiro, lavar as mãos ajuda a evitar a transmissão de microrganismos.",
+    feedbackCorrect: "Depois de usar o banheiro, lavar as mãos ajuda a evitar a transmissão de microrganismos.",
+    feedbackWrong: "Depois de usar o banheiro, lavar as mãos ajuda a evitar a transmissão de microrganismos.",
   },
 
   {
@@ -90,20 +88,18 @@ export const CELLS: Cell[] = [
     alternatives: [
       { text: "cáries.", correct: true },
       { text: "tosse.", correct: false },
-      { text: "machucados no pé.", correct: false },
-      { text: "sujeira no cabelo.", correct: false },
+      { text: "machucados na língua.", correct: false },
+      { text: "sujeira nos lábios.", correct: false },
     ],
-    feedbackCorrect:
-      "A cárie pode aparecer quando restos de comida ficam nos dentes e favorecem a ação de bactérias.",
-    feedbackWrong:
-      "A cárie pode aparecer quando restos de comida ficam nos dentes e favorecem a ação de bactérias.",
+    feedbackCorrect: "A cárie pode aparecer quando restos de comida ficam nos dentes e favorecem a ação de bactérias.",
+    feedbackWrong: "A cárie pode aparecer quando restos de comida ficam nos dentes e favorecem a ação de bactérias.",
   },
 
   {
     id: 6,
     type: "advance",
     title: "Avanço",
-    body: "Nina lembrou de lavar as mãos antes de comer. Avance 1 casa.",
+    body: "Nina cuidou de suas unhas e evitou que sujeiras fiquem escondidas nelas. Avance 1 casa.",
     delta: 1,
   },
 
@@ -111,13 +107,12 @@ export const CELLS: Cell[] = [
     id: 7,
     type: "question",
     title: "Escovar os dentes antes de dormir",
-    prompt:
-      "Antes de dormir, Nina escovou os dentes. Ela aprendeu que a boca também precisa de cuidado durante a noite. Por que é importante escovar os dentes antes de dormir?",
+    prompt: "Antes de dormir, Nina escovou os dentes. Por que é importante escovar os dentes antes de dormir?",
     alternatives: [
       { text: "Porque a escova serve para brincar.", correct: false },
       { text: "Porque ajuda a proteger os dentes por muitas horas.", correct: true },
       { text: "Porque faz o travesseiro ficar limpo.", correct: false },
-      { text: "Porque impede a pessoa de sonhar.", correct: false },
+      { text: "Porque ajuda a pessoa de sonhar.", correct: false },
     ],
     feedbackCorrect:
       "Durante a noite, ficamos muitas horas sem escovar os dentes novamente; por isso, dormir com a boca limpa ajuda a proteger os dentes.",
@@ -149,18 +144,15 @@ export const CELLS: Cell[] = [
       { text: "Porque faz o resfriado sumir na hora.", correct: false },
       { text: "Porque o lenço deve ser guardado no bolso.", correct: false },
     ],
-    feedbackCorrect:
-      "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
-    feedbackWrong:
-      "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
+    feedbackCorrect: "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
+    feedbackWrong: "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
   },
 
   {
     id: 11,
     type: "question",
     title: "Depois de assoar o nariz",
-    prompt:
-      "Depois de assoar o nariz, Nina joga o lenço usado no lixo e lava as mãos. Essa atitude ajuda a:",
+    prompt: "Depois de assoar o nariz, Nina joga o lenço usado no lixo e lava as mãos. Essa atitude ajuda a:",
     alternatives: [
       { text: "cuidar apenas dos brinquedos.", correct: false },
       { text: "evitar que secreções e microrganismos se espalhem.", correct: true },
@@ -205,18 +197,15 @@ export const CELLS: Cell[] = [
     id: 14,
     type: "question",
     title: "Banho e bem-estar",
-    prompt:
-      "Depois de correr, brincar e suar, Nina tomou banho e colocou uma roupa limpa. Esse cuidado ajuda porque:",
+    prompt: "Depois de correr, brincar e suar, Nina tomou banho e colocou uma roupa limpa. Esse cuidado ajuda porque:",
     alternatives: [
       { text: "limpa o corpo e traz conforto.", correct: true },
       { text: "impede a criança de brincar novamente.", correct: false },
       { text: "faz os brinquedos ficarem limpos.", correct: false },
       { text: "muda o tamanho da roupa.", correct: false },
     ],
-    feedbackCorrect:
-      "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
-    feedbackWrong:
-      "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
+    feedbackCorrect: "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
+    feedbackWrong: "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
   },
 
   {
@@ -277,10 +266,8 @@ export const CELLS: Cell[] = [
       { text: "Porque beber água nunca é importante.", correct: false },
       { text: "Porque toda água tem o mesmo cuidado.", correct: false },
     ],
-    feedbackCorrect:
-      "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
-    feedbackWrong:
-      "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
+    feedbackCorrect: "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
+    feedbackWrong: "Água potável é a água própria para beber. Ela precisa estar limpa e segura.",
   },
 
   {
@@ -295,10 +282,8 @@ export const CELLS: Cell[] = [
       { text: "Porque a água suja sempre tem cheiro bom.", correct: false },
       { text: "Porque microrganismos sempre aparecem bem grandes.", correct: false },
     ],
-    feedbackCorrect:
-      "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
-    feedbackWrong:
-      "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
+    feedbackCorrect: "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
+    feedbackWrong: "Nem sempre conseguimos ver o que há na água. Por isso, água suja pode oferecer riscos à saúde.",
   },
 
   {
@@ -338,10 +323,8 @@ export const CELLS: Cell[] = [
       { text: "Porque andar descalço limpa o chão.", correct: false },
       { text: "Porque os calçados fazem a sujeira desaparecer.", correct: false },
     ],
-    feedbackCorrect:
-      "Em alguns lugares, o calçado protege os pés de machucados, sujeiras e possíveis contaminações.",
-    feedbackWrong:
-      "Em alguns lugares, o calçado protege os pés de machucados, sujeiras e possíveis contaminações.",
+    feedbackCorrect: "Em alguns lugares, o calçado protege os pés de machucados, sujeiras e possíveis contaminações.",
+    feedbackWrong: "Em alguns lugares, o calçado protege os pés de machucados, sujeiras e possíveis contaminações.",
   },
 
   {
@@ -372,17 +355,14 @@ export const CELLS: Cell[] = [
     id: 29,
     type: "synthesis",
     title: "O que Nina aprendeu hoje?",
-    prompt:
-      "O que Nina aprendeu hoje? Escolha a frase que melhor combina com o jogo.",
+    prompt: "O que Nina aprendeu hoje? Escolha a frase que melhor combina com o jogo.",
     alternatives: [
       { text: "Cuidar do corpo ajuda a proteger a saúde", correct: true, icon: "💚" },
       { text: "Higiene só é importante quando a roupa está suja", correct: false, icon: "🙅" },
       { text: "Lavar as mãos não faz diferença", correct: false, icon: "❌" },
     ],
-    feedbackCorrect:
-      "Isso mesmo! Os hábitos de higiene ajudam a proteger a saúde e o bem-estar.",
-    feedbackWrong:
-      "O jogo mostrou que cuidar do corpo ajuda a proteger a saúde em muitos momentos do dia.",
+    feedbackCorrect: "Isso mesmo! Os hábitos de higiene ajudam a proteger a saúde e o bem-estar.",
+    feedbackWrong: "O jogo mostrou que cuidar do corpo ajuda a proteger a saúde em muitos momentos do dia.",
   },
   { id: 30, type: "finish", title: "Chegada", body: "Corpo bem cuidado!" },
 ];
