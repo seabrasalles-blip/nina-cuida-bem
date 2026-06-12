@@ -142,7 +142,7 @@ export const CELLS: Cell[] = [
       { text: "Porque ajuda a limpar o nariz e evita espalhar secreções.", correct: true },
       { text: "Porque deixa a camiseta mais limpa.", correct: false },
       { text: "Porque faz o resfriado sumir na hora.", correct: false },
-      { text: "Porque o lenço deve ser guardado no bolso.", correct: false },
+      { text: "Porque, se ela não usar o lenço, o nariz pode parar de funcionar.", correct: false },
     ],
     feedbackCorrect: "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
     feedbackWrong: "Usar lenço limpo ajuda a cuidar de si e também das pessoas ao redor.",
@@ -184,7 +184,7 @@ export const CELLS: Cell[] = [
     alternatives: [
       { text: "espalhar gotinhas pelo ar.", correct: false },
       { text: "diminuir a chance de transmitir gripe ou resfriado para outras pessoas.", correct: true },
-      { text: "deixar a sala mais barulhenta.", correct: false },
+      { text: "desperdiçar água e papel.", correct: false },
       { text: "fazer as mãos ficarem sujas por mais tempo.", correct: false },
     ],
     feedbackCorrect:
@@ -200,8 +200,8 @@ export const CELLS: Cell[] = [
     prompt: "Depois de correr, brincar e suar, Nina tomou banho e colocou uma roupa limpa. Esse cuidado ajuda porque:",
     alternatives: [
       { text: "limpa o corpo e traz conforto.", correct: true },
-      { text: "impede a criança de brincar novamente.", correct: false },
-      { text: "faz os brinquedos ficarem limpos.", correct: false },
+      { text: "faz a roupa ficar com cheiro de perfume mesmo sem lavar.", correct: false },
+      { text: "assim ela não derrete de tanto calor", correct: false },
       { text: "muda o tamanho da roupa.", correct: false },
     ],
     feedbackCorrect: "O banho ajuda a retirar suor e sujeiras da pele, contribuindo para o bem-estar.",
